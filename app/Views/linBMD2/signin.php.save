@@ -1,0 +1,71 @@
+<?php $session = session(); ?>	
+	
+	<form action="<?php echo(base_url('identity/signin_step2')) ?>" method="post">
+		<div class="form-group row">
+			<label for="identity" class="col-2 pl-0">Identity</label>
+			<input type="text" class="form-control col-2" id="identity" name="identity" aria-describedby="userHelp">
+			<small id="userHelp" class="form-text text-muted col-2">This must be your <?php echo $session->current_project[0]['project_name']; ?> user name.</small>
+			<label for="password" class="col-2">Password</label>
+			<input type="password" class="form-control col-2" id="password" name="password">
+			<small id="userHelp" class="form-text text-muted col-2">This must be your <?php echo $session->current_project[0]['project_name']; ?> password.</small>
+		</div>
+	
+		<div class="row mt-4 d-flex justify-content-between">
+			
+			<a id="return" class="btn btn-primary mr-0" href="<?php echo(base_url("home/close/")); ?>">
+				<span>Close application</span>
+			</a>
+			
+			<a id="return" class="btn btn-primary mr-0" href="<?php echo(base_url("home/index/")); ?>">
+				<span>Select project</span>
+			</a>
+			
+			<button type="submit" class="btn btn-primary mr-0 d-flex">
+				<span>Sign in</span>	
+			</button>
+				
+		</div>
+	</form>
+	
+	<br><br>
+	
+	<div class="row">
+		<label for="create_freebmd_identity" class="col-8 pl-0">You don't have a <?php echo $session->current_project[0]['project_name']; ?> Identity?</label>
+		<a id="create_freebmd_identity" class="btn btn-outline-primary btn-sm col-4 d-flex" href="https://www.freebmd.org.uk/Signup.html">
+			<span>Start the <?php echo $session->current_project[0]['project_name']; ?> project registration process</span>
+		</a>
+	</div>
+	
+	<br><br>
+	
+	<?php 
+		if ( $session->show_message == 'show' )
+			{ 
+				foreach ( $session->current_message as $message )
+					{
+						$lines = explode('\n', $message['message']);
+						foreach ( $lines as $line )
+						{
+							?>
+								<div class="row">
+									<p 	
+										class="col-12 pl-0"
+										style="	overflow-wrap: break-word;
+												font-weight: bold;
+												line-height: 0.1;
+												color: <?php echo $message['colour']; ?>;">
+										<?php echo $line; ?>	
+									</p>
+								</div>
+						<?php
+						}
+						?>
+						<hr />
+					<?php
+					} ?>
+			<?php
+			} ?>
+			
+				
+
+
