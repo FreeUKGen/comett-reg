@@ -11,7 +11,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes, user-scalable=yes" />
 
 		<!-- Optional JavaScript -->
-		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		<!-- jQuery first, then Popper.js, then Bootstrap js -->
 		<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
@@ -24,7 +24,7 @@
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
 		
 		<script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
-		<script src="<?php echo base_url().'/JS/resizeableInputs/dynamic-width-resize/jquery.dynamicWidth.js'; ?>"></script>
+		<script src="<?php echo base_url().'/js/resizeableInputs/dynamic-width-resize/jquery.dynamicWidth.js'; ?>"></script>
 
 		<style>
 			.ui-autocomplete 
@@ -243,18 +243,18 @@
 		</style>
 		
 		<!-- this is for the speed test -->
-		<script type="text/javascript" src="<?=base_url('JS/speedtest/speedtest.js')?>"></script>
+		<script type="text/javascript" src="<?=base_url('js/speedtest/speedtest.js')?>"></script>
 		
 		<!-- this is for the resizeable table columns -->
 		<!-- http://www.bacubacu.com/colresizable/ -->
-		<script type="text/javascript" src="<?=base_url('JS/colresizable/colResizable-1.6.min.js')?>"></script>
+		<script type="text/javascript" src="<?=base_url('js/colresizable/colResizable-1.6.min.js')?>"></script>
 		<style>
 			.grip
 				{
 					width:20px;
 					height:15px;
 					margin-top:-3px;
-					background-image:url("<?=base_url('JS/colresizable/grip.png')?>");
+					background-image:url("<?=base_url('js/colresizable/grip.png')?>");
 					margin-left:-5px;
 					position:relative;
 					z-index:88;
@@ -354,7 +354,7 @@
 				<?php endif ?>
 				<span class="small font-weight-bold"><?= esc(date("jS F Y")); ?></span>
 				<span class="small font-weight-bold">
-					<img src="<?php echo base_url().'/Icons/FreeComETT.png' ?>" alt="FreeComETT" style="width:10vw;height:auto">
+					<img src="<?php echo base_url().'/images/FreeComETT.png' ?>" alt="FreeComETT" style="width:10vw;height:auto">
 					<?= esc('Version '.$session->version); ?>
 				</span>
 			</div>

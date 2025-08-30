@@ -66,8 +66,8 @@
 	<!-- show logo -->
 		<br>
 		<div class="row mt-4 d-flex justify-content-between">
-				<img src="<?php echo base_url().'/Icons/freeukgen-icon.png' ?>" alt="freeukreg">
-				<img src="<?php echo base_url().'/Icons/FreeComETT.png' ?>" alt="FreeComETT" style="width:400px;height:100px">		
+				<img src="<?php echo base_url().'/images/freeukgen-icon.png' ?>" alt="freeukreg">
+				<img src="<?php echo base_url().'/images/FreeComETT.png' ?>" alt="FreeComETT" style="width:400px;height:100px">		
 		</div>
 		<div class="text-right">
 				<h1><b>Com</b>munity <b>E</b>ntry <b>T</b>ranscription <b>T</b>ool</h1>	

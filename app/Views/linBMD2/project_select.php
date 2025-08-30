@@ -85,9 +85,9 @@
 		<!-- show logo -->
 			<br>
 			<div class="row mt-4 d-flex justify-content-between">
-				<a class="" href="https://www.freeukgenealogy.org.uk" target="_blank"><img src="<?php echo base_url().'/Icons/freeukgen-icon.png' ?>" alt="freeukgen" style="width:30vw;height:auto"></a>
+				<a class="" href="https://www.freeukgenealogy.org.uk" target="_blank"><img src="<?php echo base_url().'/images/freeukgen-icon.png' ?>" alt="freeukgen" style="width:30vw;height:auto"></a>
 					
-				<img src="<?php echo base_url().'/Icons/FreeComETT.png' ?>" alt="FreeComETT" style="width:30vw;height:auto">		
+				<img src="<?php echo base_url().'/images/FreeComETT.png' ?>" alt="FreeComETT" style="width:30vw;height:auto">		
 			</div>
 			<div class="text-right">
 					<p><b>Com</b>munity <b>E</b>ntry <b>T</b>ranscription <b>T</b>ool</p>	
