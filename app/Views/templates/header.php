@@ -354,7 +354,7 @@
 				<?php endif ?>
 				<span class="small font-weight-bold"><?= esc(date("jS F Y")); ?></span>
 				<span class="small font-weight-bold">
-					<img src="<?php echo base_url().'/images/FreeComETT.png' ?>" alt="FreeComETT" style="width:10vw;height:auto">
+					<img src="<?php echo base_url().'/Icons/FreeComETT.png' ?>" alt="FreeComETT" style="width:10vw;height:auto">
 					<?= esc('Version '.$session->version); ?>
 				</span>
 			</div>

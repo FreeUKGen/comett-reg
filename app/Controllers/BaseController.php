@@ -18,6 +18,7 @@ use CodeIgniter\Controller;
 
 class BaseController extends Controller
 {
+	protected mixed $session;
 
 	/**
 	 * An array of helpers to be loaded automatically upon

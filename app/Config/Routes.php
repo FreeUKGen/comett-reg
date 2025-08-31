@@ -5,4 +5,257 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
+
+/*
+ * --------------------------------------------------------------------
+ * Router Setup
+ * --------------------------------------------------------------------
+ */
+//$routes->setTranslateURIDashes(false);
+//$routes->set404Override();
+//$routes->setAutoRoute(true);
+
+/*
+ * --------------------------------------------------------------------
+ * Route Definitions
+ * --------------------------------------------------------------------
+ */
+
+// We get a performance increase by specifying the default
+// route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
+
+// home routes group
+$routes->group
+	("home", ['filter' => 'sessionexists'], function($routes)
+		{
+			$routes->post('test_javascript', 'Home::test_javascript');
+			$routes->get('no_javascript', 'Home::no_javascript');
+			$routes->get('signout', 'Home::signout');
+			$routes->get('close', 'Home::close');
+		}
+	);
+	
+// help routes group
+$routes->group
+	("help", ['filter' => 'sessionexists'], function($routes)
+		{
+			$routes->get('help_show/(:segment)', 'Help::help_show/$1');
+			$routes->get('help_manage/(:segment)', 'Help::help_manage/$1');
+			$routes->get('help_change_step1/(:segment)', 'Help::help_change_step1/$1');
+			$routes->get('help_change_step2', 'Help::help_change_step2');
+			$routes->get('help_create_step1/(:segment)', 'Help::help_create_step1/$1');
+			$routes->get('help_create_step2', 'Help::help_create_step2');
+		}
+	);
+	
+// identity routes group
+$routes->group
+	("identity", ['filter' => 'sessionexists'], function($routes)
+		{
+			$routes->get('signin_step1/(:segment)', 'Identity::signin_step1/$1');
+			$routes->post('signin_step2', 'Identity::signin_step2');
+			$routes->get('admin_user_step1/(:segment)', 'Identity::admin_user_step1/$1');
+			$routes->get('delete_user_data_step1/(:segment)', 'Identity::delete_user_data_step1/$1');
+			$routes->post('delete_user_data_step2/(:segment)', 'Identity::delete_user_data_step2/s1');
+			$routes->post('delete_user_data_step3', 'Identity::delete_user_data_step3');
+			$routes->post('change_details_step2/(:segment)', 'Identity::change_details_step2/$1');
+		}
+	);
+
+// transcriibe routes group
+$routes->group
+	("transcribe", ['filter' => 'sessionexists'], function($routes)
+		{
+			$routes->get('/', 'Transcribe::index');
+			$routes->get('transcribe_step1/(:segment)', 'Transcribe::transcribe_step1/$1');
+			$routes->post('next_action', 'Transcribe::transcribe_next_action');
+			$routes->get('create_BMD_file/(:segment)', 'Transcribe::create_BMD_file/$1');
+			$routes->get('upload_BMD_file', 'Transcribe::upload_BMD_file');
+			$routes->get('submit_details/(:segment)', 'Transcribe::submit_details/$1');
+			$routes->get('close_header_step1/(:segment)', 'Transcribe::close_header_step1/$1');
+			$routes->post('close_header_step2', 'Transcribe::close_header_step2');
+			$routes->get('verify_BMD_file_step1/(:segment)', 'Transcribe::verify_BMD_file_step1/$1');
+			$routes->get('verify_BMD_trans_step1/(:segment)', 'Transcribe::verify_BMD_trans_step1/$1');
+			$routes->get('search_synonyms', 'Transcribe::search_synonyms');
+			$routes->get('search_districts', 'Transcribe::search_districts');
+			$routes->get('search_volumes', 'Transcribe::search_volumes');
+			$routes->get('search_firstnames', 'Transcribe::search_firstnames');
+			$routes->get('search_surnames', 'Transcribe::search_surnames');
+			$routes->get('update_firstnames/(:segment)', 'Transcribe::update_firstnames/$1');
+			$routes->get('update_surnames/(:segment)', 'Transcribe::update_surnames/$1');
+			$routes->get('image_parameters_step1/(:segment)', 'Transcribe::image_parameters_step1/$1');
+			$routes->post('image_parameters_step2/(:segment)', 'Transcribe::image_parameters_step2/$1');
+			$routes->get('enter_parameters_step/(:segment)', 'Transcribe::enter_parameters_step/$1');
+			$routes->get('enter_parameters_step1/(:segment)', 'Transcribe::enter_parameters_step1/$1');
+			$routes->post('reset_defaults', 'Transcribe::reset_defaults');
+			$routes->get('toggle_line_step1/(:segment)', 'Transcribe::toogle_line_step1/$1');
+			$routes->post('toogle_line_step2', 'Transcribe::toogle_line_step2');
+			$routes->post('insert_line_step1/(:segment)', 'Transcribe::insert_line_step1/$1');
+			$routes->get('toogle_transcriptions', 'Transcribe::toogle_transcriptions');
+			$routes->get('calibrate_step1/(:segment)', 'Transcribe::calibrate_step1/$1');
+			$routes->post('calibrate_step2', 'Transcribe::calibrate_step2');
+			$routes->post('sort/(:segment)', 'Transcribe::sort/$1');
+			$routes->get('message_to_coord_step1/(:segment)', 'Transcribe::message_to_coord_step1/$1');
+			$routes->post('message_to_coord_step2', 'Transcribe::message_to_coord_step2');
+			$routes->post('verify_onthefly_confirm', 'Transcribe::verify_onthefly_confirm');
+		}
+	);
+
+// transcription routes group
+$routes->group
+	("transcription", ['filter' => 'sessionexists'], function($routes)
+		{
+			$routes->get('create_BMD_step1/(:segment)', 'Transcription::create_BMD_step1/$1');
+			$routes->post('create_BMD_step2', 'Transcription::create_BMD_step2');
+			$routes->get('reopen_BMD_step1/(:segment)', 'Transcription::reopen_BMD_step1/$1');
+			$routes->post('reopen_BMD_step2', 'Transcription::reopen_BMD_step2');
+			$routes->get('download_transcription_step1/(:segment)', 'Transcription::download_transcription_step1/$1');
+			$routes->post('download_transcription_step2', 'Transcription::download_transcription_step2');
+			$routes->get('delete/(:segment)', 'Transcription::delete/$1');
+		}
+	);
+	
+// allocation routes group
+$routes->group
+	("allocation", ['filter' => 'sessionexists'], function($routes)
+		{
+			$routes->get('create_allocation_step1/(:segment)', 'Allocation::create_allocation_step1/$1');
+			$routes->post('create_allocation_step2', 'Allocation::create_allocation_step2');
+			$routes->get('manage_allocations/(:segment)', 'Allocation::manage_allocations/$1');
+			$routes->post('next_action', 'Allocation::next_action');
+			$routes->post('sort/(:segment)', 'Allocation::sort/$1');
+		}
+	);
+
+// births routes group
+$routes->group
+	("births", ['filter' => 'sessionexists'], function($routes)
+		{
+			$routes->get('transcribe_births_step1/(:segment)', 'Births::transcribe_births_step1/$1');
+			$routes->post('transcribe_births_step2', 'Births::transcribe_births_step2');
+			$routes->get('select_line/(:segment)', 'Births::select_line/$1');
+			$routes->get('delete_line_step1/(:segment)', 'Births::delete_line_step1/$1');
+			$routes->post('delete_line_step2', 'Births::delete_line_step2');
+			$routes->get('comment_step1/(:segment)', 'Births::comment_step1/$1');
+			$routes->post('comment_step2', 'Births::comment_step2');
+			$routes->get('select_comment/(:segment)', 'Births::select_comment/$1');
+			$routes->get('remove_comments/(:segment)/(:segment)', 'Births::remove_comments/$1/$2');
+		}
+	);
+
+// marriages routes group
+$routes->group
+	("marriages", ['filter' => 'sessionexists'], function($routes)
+		{
+			$routes->get('transcribe_marriages_step1/(:segment)', 'Marriages::transcribe_marriages_step1/$1');
+			$routes->post('transcribe_marriages_step2', 'Marriages::transcribe_marriages_step2');
+			$routes->get('select_line/(:segment)', 'Marriages::select_line/$1');
+			$routes->get('delete_line_step1/(:segment)', 'Marriages::delete_line_step1/$1');
+			$routes->post('delete_line_step2', 'Marriages::delete_line_step2');
+			$routes->get('comment_step1/(:segment)', 'Marriages::comment_step1/$1');
+			$routes->post('comment_step2', 'Marriages::comment_step2');
+			$routes->get('select_comment/(:segment)', 'Marriages::select_comment/$1');
+			$routes->get('remove_comments/(:segment)/(:segment)', 'Marriages::remove_comments/$1/$2');
+		}
+	);
+
+// deaths routes group
+$routes->group
+	("deaths", ['filter' => 'sessionexists'], function($routes)
+		{
+			$routes->get('transcribe_deaths_step1/(:segment)', 'Deaths::transcribe_deaths_step1/$1');
+			$routes->post('transcribe_deaths_step2', 'Deaths::transcribe_deaths_step2');
+			$routes->get('select_line/(:segment)', 'Deaths::select_line/$1');
+			$routes->get('delete_line_step1/(:segment)', 'Deaths::delete_line_step1/$1');
+			$routes->post('delete_line_step2', 'Deaths::delete_line_step2');
+			$routes->get('comment_step1/(:segment)', 'Deaths::comment_step1/$1');
+			$routes->post('comment_step2', 'Deaths::comment_step2');
+			$routes->get('select_comment/(:segment)', 'Deaths::select_comment/$1');
+			$routes->get('remove_comments/(:segment)/(:segment)', 'Deaths::remove_comments/$1/$2');
+		}
+	);
+
+// housekeeping routes group
+$routes->group
+	("housekeeping", ['filter' => 'sessionexists'], function($routes)
+		{
+			$routes->get("index/(:segment)", "Housekeeping::index/$1");
+			$routes->get("export_names", "Housekeeping::export_names");
+			$routes->get("import_names", "Housekeeping::import_names");
+			$routes->get("firstnames", "Housekeeping::firstnames");
+			$routes->get("surnames", "Housekeeping::surnames");
+			$routes->get("phpinfo", "Housekeeping::phpinfo");
+			$routes->get("merge_names", "Housekeeping::merge_names");
+			$routes->get("create_header_data_entry_dimensions", "Housekeeping::create_header_data_entry_dimensions");
+		}
+	);
+	
+// syndicate routes group
+$routes->group
+	("syndicate", ['filter' => 'sessionexists'], function($routes)
+		{
+			$routes->get('refresh_syndicates', 'Syndicate::refresh_syndicates');
+			$routes->get('manage_syndicates/(:segment)', 'Syndicate::manage_syndicates/$1');
+			$routes->post('next_action', 'Syndicate::next_action');
+		}
+	);
+
+// surname routes group
+$routes->group
+	("surname", ['filter' => 'sessionexists'], function($routes)
+		{
+			$routes->get('manage_surnames/(:segment)', 'Surname::manage_surnames/$1');
+			$routes->get('search', 'Surname::search');
+			$routes->get('correct_surname_step1/(:segment)', 'Surname::correct_surname_step1/$1');
+			$routes->get('correct_surname_step2', 'Surname::correct_surname_step2');
+		}
+	);
+
+// firstname routes group
+$routes->group
+	("firstname", ['filter' => 'sessionexists'], function($routes)
+		{
+			$routes->get('manage_firstnames/(:segment)', 'Firstname::manage_firstnames/$1');
+			$routes->get('search', 'Firstname::search');
+			$routes->get('correct_firstname_step1/(:segment)', 'Firstname::correct_firstname_step1/$1');
+			$routes->get('correct_Firstname_step2', 'Firstname::correct_firstname_step2');
+		}
+	);
+
+// projects routes group
+$routes->group
+	("projects", ['filter' => 'sessionexists'], function($routes)
+		{
+			$routes->get('load_project/(:segment)', 'Projects::load_project/$1');
+		}
+	);
+	
+// database routes group
+$routes->group
+	("database", ['filter' => 'sessionexists'], function($routes)
+		{
+			$routes->get('database_step1/(:segment)', 'Database::database_step1/$1');
+			$routes->get('def_step1/(:segment)', 'Database::def_step1/$1');
+			$routes->post('def_step2', 'Database::def_step2');
+
+		}
+	);
+
+/*
+ * --------------------------------------------------------------------
+ * Additional Routing
+ * --------------------------------------------------------------------
+ *
+ * There will often be times that you need additional routing and you
+ * need it to be able to override any defaults in this file. Environment
+ * based routes is one such time. require() additional route files here
+ * to make that happen.
+ *
+ * You will have access to the $routes object within that file without
+ * needing to reload it.
+ */
+if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
+    require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
+}
+

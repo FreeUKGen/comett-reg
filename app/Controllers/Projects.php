@@ -24,6 +24,9 @@ class Projects extends BaseController
 		$session->current_project = $projects_model 
 			->where('project_index', $project) 
 			->find();
+
+		log_message('debug', 'current_project: '.print_r($session->current_project, true));
+		
 		
 		// set the project environment - see Identity controller for using the environment parameter
 		$session->environment_project = $session->current_project[0]['environment'];

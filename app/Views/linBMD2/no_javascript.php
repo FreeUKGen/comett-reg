@@ -66,28 +66,24 @@
 	<!-- show logo -->
 		<br>
 		<div class="row mt-4 d-flex justify-content-between">
-				<img src="<?php echo base_url().'/images/freeukgen-icon.png' ?>" alt="freeukreg">
-				<img src="<?php echo base_url().'/images/FreeComETT.png' ?>" alt="FreeComETT" style="width:400px;height:100px">		
-		</div>
-		<div class="text-right">
-				<h1><b>Com</b>munity <b>E</b>ntry <b>T</b>ranscription <b>T</b>ool</h1>	
+				<img src="<?php echo base_url().'/Icons/freeukgen-icon.png' ?>" alt="freeukreg">
 		</div>
 		
-		<br><br><br>
+		<br><br>
 		
 		<!-- show welcome text -->
 		<div class="text-left">
-			<h1>Welcome to FreeComETT, FreeUKGenealogy's transcription application.</h1>
+			<h3>Welcome to FreeComETT, FreeUKGenealogy's transcription application.</h3>
 		</div>
 			
-		<br><br><br>
+		<br><br>
 		
 		<!-- show instruction -->
 		<div class="text-left" style="color: red;" id="update_in_progress">
-			<h1>FreeComETT requires Javascript to be enabled in your browser. Please enable Javascript and try again.</h3>
+			<h3>FreeComETT requires Javascript to be enabled in your browser. Please enable Javascript and try again.</h3>
 		</div>
 		
-		<br><br><br>
+		<br><br><br><br><br>
 		
 		<a class="btn btn-primary mr-0 d-flex" href="<?=(base_url('home/close')) ?>">Exit</a>
 	

@@ -1,24 +1,44 @@
 {
     "name": "codeigniter4/appstarter",
-    "description": "CodeIgniter4 starter app",
+    "description": "FreeComETT - Free Common Electronic Transcription Tool",
     "license": "MIT",
     "type": "project",
-    "homepage": "https://codeigniter.com",
-    "support": {
-        "forum": "https://forum.codeigniter.com/",
-        "source": "https://github.com/codeigniter4/CodeIgniter4",
-        "slack": "https://codeigniterchat.slack.com"
-    },
+    "homepage": "https://freereg.org.uk",
     "require": {
-        "php": "^8.1",
-        "codeigniter4/framework": "^4.0",
+        "php": "^8.4",
+        "codeigniter4/framework": "^4.6",
         "phpmailer/phpmailer": "^v6.10.0",
-        "alvaro-prieto/col-resizable":"v1.6"
+        "ext-session": "*",
+        "ext-bz2": "*",
+        "ext-ctype": "*",
+        "ext-curl": "*",
+        "ext-dom": "*",
+        "ext-exif": "*",
+        "ext-fileinfo": "*",
+        "ext-filter": "*",
+        "ext-ftp": "*",
+        "ext-gd": "*",
+        "ext-iconv": "*",
+        "ext-imagick": "*",
+        "ext-intl": "*",
+        "ext-json": "*",
+        "ext-mysqli": "*",
+        "ext-mbstring": "*",
+        "ext-mcrypt": "*",
+        "ext-mongodb": "*",
+        "ext-pdo": "*",
+        "ext-phar": "*",
+        "ext-simplexml": "*",
+        "ext-ssh2": "*",
+        "ext-tokenizer": "*",
+        "ext-xml": "*",
+        "ext-zlib": "*",
+        "ext-memcached": "*",
+        "ext-zip": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9",
-        "mikey179/vfsstream": "^1.6",
-        "phpunit/phpunit": "^12"
+        "mikey179/vfsstream": "^1.6"
     },
     "autoload": {
         "psr-4": {
