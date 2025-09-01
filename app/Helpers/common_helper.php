@@ -145,7 +145,8 @@ function load_variables()
 			->findAll();
 		
 		// load fonts from fonts folder
-		$dir = new DirectoryIterator(dirname(getcwd().'/Fonts/*.*'));
+		$fontDir = getenv('app.fontDir') ?? getcwd().'/Fonts';
+		$dir = new DirectoryIterator(dirname($fontDir . '/*.*'));
 		$data_entry_fonts = array();
 		foreach ($dir as $fileinfo) 
 			{

@@ -345,6 +345,11 @@ class Identity extends BaseController
 	    return false;
 	}
 
+	private function imageServer() :string
+	{
+		return getenv('app.imageServer') ?? $session->freeukgen_source_values['image_server'];
+	}
+
 	public function signin_step3()
 	{
 		// initialise method
@@ -444,22 +449,15 @@ class Identity extends BaseController
 			{
 				// if found verify directories exist
 				// create user folder and subfolders if they don't exist
-				if ( ! is_dir(getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid) )
-					{ 
-						mkdir(getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid);
-					}
-				if ( ! is_dir(getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid.'/Backups') )
-					{ 
-						mkdir(getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid.'/Backups');
-					}
-				if ( ! is_dir(getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid.'/CSV_Files') )
-					{ 
-						mkdir(getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid.'/CSV_Files');
-					}
-				if ( ! is_dir(getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid.'/Scans') )
-					{ 
-						mkdir(getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid.'/Scans');
-					}
+				$userDir = getenv('app.userDir') ?? getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid;
+				if (!is_dir($userDir))
+					mkdir($userDir);
+				if (!is_dir($userDir . '/Backups'))
+					mkdir($userDir . '/Backups');
+				if (!is_dir($userDir . '/CSV_Files'))
+					mkdir($userDir . '/CSV_Files');
+				if (!is_dir($userDir . '/Scans'))
+					mkdir($userDir . '/Scans');
 			}
 		
 		// signon is validated - WOW! At last!
@@ -777,15 +775,15 @@ class Identity extends BaseController
 										
 		// Can I reach the image server and get an image?			
 		
-		// do I have an image server from Freeukgen sources
-		$imageServer = getenv('app.imageServer') ?? $session->freeukgen_source_values['image_server'];
-		if (!imageServer || ($imageServer  == 'error'))
-			{
-				// this should never happen but, if it does, send error
-				$session->set('message_2', 'A technical problem occurred. Cannot determine image server. Send an email to '.$session->linbmd2_email.' describing what you were doing when the error occurred => Failed to retrieve image server URL in Identity::signin_step3');
-				$session->set('message_class_2', 'alert alert-danger');
-				return redirect()->to( base_url('identity/signin_step1/1') );
-			}
+		// do I have an image server access from Freeukgen sources
+		$server = $this->imageServer();
+		if (!$server || ($server == 'error'))
+		{
+			// this should never happen but, if it does, send error
+			$session->set('message_2', 'A technical problem occurred. Cannot determine image server. Send an email to '.$session->linbmd2_email.' describing what you were doing when the error occurred => Failed to retrieve image server URL in Identity::signin_step3');
+			$session->set('message_class_2', 'alert alert-danger');
+			return redirect()->to( base_url('identity/signin_step1/1') );
+		}
 				
 		// setup curl by trying to DL an image - any image will do
 		switch ($session->current_project[0]['project_name']) 
@@ -829,14 +827,14 @@ class Identity extends BaseController
 					break;
 					
 				case 'FreeREG':			
-					// do I have an image server access from Freeukgen sources
-					if ( $session->freeukgen_source_values['image_server_access'] == 'error' )
-						{
-							// this should never happen but, if it does, send error
-							$session->set('message_2', 'A technical problem occurred. Cannot determine image server access. Send an email to '.$session->linbmd2_email.' describing what you were doing when the error occurred => Failed to retrieve image server access in Identity::signin_step3');
-							$session->set('message_class_2', 'alert alert-danger');
-							return redirect()->to( base_url('identity/signin_step1/1') );
-						}
+					$server = $this->imageServer();
+					if (!$server || $server == 'error')
+					{
+						// this should never happen but, if it does, send error
+						$session->set('message_2', 'A technical problem occurred. Cannot determine image server access. Send an email to '.$session->linbmd2_email.' describing what you were doing when the error occurred => Failed to retrieve image server access in Identity::signin_step3');
+						$session->set('message_class_2', 'alert alert-danger');
+						return redirect()->to( base_url('identity/signin_step1/1') );
+					}
 					
 					// set up the cURL
 					$curl_params = array
