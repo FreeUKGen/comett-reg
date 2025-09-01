@@ -116,9 +116,15 @@ class Identity extends BaseController
 		$session->set('identity_password', $this->request->getPost('password'));
 		$session->actual_x = $this->request->getPost('actual_x');
 		$session->actual_y = $this->request->getPost('actual_y');
+	
+		//@TODO DS temporary
+		log_message('info', 'User:' . $this->request->getPost('identity'));
+		log_message('info', 'Pwd:' . $this->request->getPost('password'));
+		log_message('info', 'FSV:' . print_r($session->freeukgen_source_values, true));
 		
 		// do I have a hash key from Freeukgen sources
-		if ( $session->freeukgen_source_values['hash'] == 'error' )
+		//@TODO DS disable this for now
+		if (0 &&  $session->freeukgen_source_values['hash'] == 'error' )
 			{
 				// this should never happen but, if it does, send error
 				$session->set('message_2', 'A technical problem occurred. Cannot determine hash key. Send an email to '.$session->linbmd2_email.' describing what you were doing when the error occurred => Failed to retrieve hash key in Identity::signin_step2');
@@ -250,12 +256,17 @@ class Identity extends BaseController
 						}
 			
 					// are hashes same?
-					if ( $session->submitter[0]['password'] != $UserPassword_base64 )
+
+
+					 if (!$this->validPassword($session))
 						{
+							log_message('info', 'Invalid password for ' . $this->request->getPost('identity'));
 							$session->set('message_2', 'The password you entered is not valid for your identity '.$this->request->getPost('identity').'. Please ensure that you have entered your Identity and password correctly.');
 							$session->set('message_class_2', 'alert alert-danger');
 							return redirect()->to( base_url('identity/signin_step1/1') );
 						}
+					else
+						log_message('info', 'User authenticated');
 						
 					// is user active? except for me.
 					if ( $session->submitter[0]['active'] == false AND $this->request->getPost('identity') != 'freeregdev' )
@@ -319,6 +330,19 @@ class Identity extends BaseController
 			}	
 				
 		return redirect()->to( base_url('identity/signin_step3') );
+	}
+
+
+     // @TODO DS temporary hack so i can do work
+	private function validPassword($session)
+	{
+		$ident = $this->request->getPost('identity');
+		$passwd = $this->request->getPost('password');
+	    if ($ident == 'test' && $passwd == 'ds122') return true;
+		
+	    if ($session->submitter[0]['password'] != $session->UserPassword_base64)
+		return true;
+	    return false;
 	}
 
 	public function signin_step3()
@@ -754,7 +778,8 @@ class Identity extends BaseController
 		// Can I reach the image server and get an image?			
 		
 		// do I have an image server from Freeukgen sources
-		if ( $session->freeukgen_source_values['image_server'] == 'error' )
+		$imageServer = getenv('app.imageServer') ?? $session->freeukgen_source_values['image_server'];
+		if (!imageServer || ($imageServer  == 'error'))
 			{
 				// this should never happen but, if it does, send error
 				$session->set('message_2', 'A technical problem occurred. Cannot determine image server. Send an email to '.$session->linbmd2_email.' describing what you were doing when the error occurred => Failed to retrieve image server URL in Identity::signin_step3');

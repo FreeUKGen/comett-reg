@@ -54,6 +54,7 @@ $routes->group
 	("identity", ['filter' => 'sessionexists'], function($routes)
 		{
 			$routes->get('signin_step1/(:segment)', 'Identity::signin_step1/$1');
+			$routes->get('signin_step3', 'Identity::signin_step3');
 			$routes->post('signin_step2', 'Identity::signin_step2');
 			$routes->get('admin_user_step1/(:segment)', 'Identity::admin_user_step1/$1');
 			$routes->get('delete_user_data_step1/(:segment)', 'Identity::delete_user_data_step1/$1');
@@ -63,7 +64,7 @@ $routes->group
 		}
 	);
 
-// transcriibe routes group
+// transcribe routes group
 $routes->group
 	("transcribe", ['filter' => 'sessionexists'], function($routes)
 		{
