@@ -24,7 +24,7 @@
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
 		
 		<script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
-		<script src="<?php echo base_url().'/js/resizeableInputs/dynamic-width-resize/jquery.dynamicWidth.js'; ?>"></script>
+		<script src="<?php echo base_url().'../assets/js/resizeableInputs/dynamic-width-resize/jquery.dynamicWidth.js'; ?>"></script>
 
 		<style>
 			.ui-autocomplete 
@@ -64,9 +64,9 @@
 		<script src="https://kit.fontawesome.com/9470003581.js" crossorigin="anonymous"></script>
 	
 		<!-- this for the virtual keyboard function -->
-		<link rel="stylesheet" href="<?php echo base_url().'/Keyboard-master/css/keyboard.css'; ?>">
-		<script src="<?php echo base_url().'/Keyboard-master/js/jquery.keyboard.js'; ?>"></script>
-		<script src="<?php echo base_url().'/Keyboard-master/js/jquery.keyboard.extension-autocomplete.js'; ?>"></script>
+		<link rel="stylesheet" href="<?php echo base_url().'../assets/Keyboard-master/css/keyboard.css'; ?>">
+		<script src="<?php echo base_url().'../assets/Keyboard-master/js/jquery.keyboard.js'; ?>"></script>
+		<script src="<?php echo base_url().'../assets/Keyboard-master/js/jquery.keyboard.extension-autocomplete.js'; ?>"></script>
 		<style>
 			.keyboardicon {
 				position: absolute;
@@ -243,18 +243,18 @@
 		</style>
 		
 		<!-- this is for the speed test -->
-		<script type="text/javascript" src="<?=base_url('js/speedtest/speedtest.js')?>"></script>
+		<script type="text/javascript" src="<?=base_url('../assets/js/speedtest/speedtest.js')?>"></script>
 		
 		<!-- this is for the resizeable table columns -->
 		<!-- http://www.bacubacu.com/colresizable/ -->
-		<script type="text/javascript" src="<?=base_url('js/colresizable/colResizable-1.6.min.js')?>"></script>
+		<script type="text/javascript" src="<?=base_url('../assets/js/colresizable/colResizable-1.6.min.js')?>"></script>
 		<style>
 			.grip
 				{
 					width:20px;
 					height:15px;
 					margin-top:-3px;
-					background-image:url("<?=base_url('js/colresizable/grip.png')?>");
+					background-image:url("<?=base_url('../assets/js/colresizable/grip.png')?>");
 					margin-left:-5px;
 					position:relative;
 					z-index:88;
