@@ -116,15 +116,9 @@ class Identity extends BaseController
 		$session->set('identity_password', $this->request->getPost('password'));
 		$session->actual_x = $this->request->getPost('actual_x');
 		$session->actual_y = $this->request->getPost('actual_y');
-	
-		//@TODO DS temporary
-		log_message('info', 'User:' . $this->request->getPost('identity'));
-		log_message('info', 'Pwd:' . $this->request->getPost('password'));
-		log_message('info', 'FSV:' . print_r($session->freeukgen_source_values, true));
 		
 		// do I have a hash key from Freeukgen sources
-		//@TODO DS disable this for now
-		if (0 && $session->freeukgen_source_values['hash'] == 'error' )
+		if ( $session->freeukgen_source_values['hash'] == 'error' )
 			{
 				// this should never happen but, if it does, send error
 				$session->set('message_2', 'A technical problem occurred. Cannot determine hash key. Send an email to '.$session->linbmd2_email.' describing what you were doing when the error occurred => Failed to retrieve hash key in Identity::signin_step2');
@@ -247,9 +241,6 @@ class Identity extends BaseController
 							]
 						)->toArray();
 
-log_message('info', 'DSa: submitter:' . print_r($collection_userid, true));
-log_message('info', 'DSb: submitter:' . print_r($session->submitter, true));
-
 					// was it found?
 					if ( ! $session->submitter )
 						{
@@ -259,17 +250,12 @@ log_message('info', 'DSb: submitter:' . print_r($session->submitter, true));
 						}
 			
 					// are hashes same?
-
-
-					 if (!$this->validPassword($session))
+					if ( $session->submitter[0]['password'] != $UserPassword_base64 )
 						{
-							log_message('info', 'Invalid password for ' . $this->request->getPost('identity'));
 							$session->set('message_2', 'The password you entered is not valid for your identity '.$this->request->getPost('identity').'. Please ensure that you have entered your Identity and password correctly.');
 							$session->set('message_class_2', 'alert alert-danger');
 							return redirect()->to( base_url('identity/signin_step1/1') );
 						}
-					else
-						log_message('info', 'User authenticated');
 						
 					// is user active? except for me.
 					if ( $session->submitter[0]['active'] == false AND $this->request->getPost('identity') != 'freeregdev' )
@@ -333,24 +319,6 @@ log_message('info', 'DSb: submitter:' . print_r($session->submitter, true));
 			}	
 				
 		return redirect()->to( base_url('identity/signin_step3') );
-	}
-
-
-     // @TODO DS temporary hack so i can do work
-	private function validPassword($session)
-	{
-		$ident = $this->request->getPost('identity');
-		$passwd = $this->request->getPost('password');
-	    if ($ident == 'test' && $passwd == 'ds122') return true;
-		
-	    if ($session->submitter[0]['password'] != $session->UserPassword_base64)
-		return true;
-	    return false;
-	}
-
-	private function imageServer() :string
-	{
-		return getenv('app.imageServer') ?? $session->freeukgen_source_values['image_server'];
 	}
 
 	public function signin_step3()
@@ -452,15 +420,22 @@ log_message('info', 'DSb: submitter:' . print_r($session->submitter, true));
 			{
 				// if found verify directories exist
 				// create user folder and subfolders if they don't exist
-				$userDir = getenv('app.userDir') ?? getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid;
-				if (!is_dir($userDir))
-					mkdir($userDir);
-				if (!is_dir($userDir . '/Backups'))
-					mkdir($userDir . '/Backups');
-				if (!is_dir($userDir . '/CSV_Files'))
-					mkdir($userDir . '/CSV_Files');
-				if (!is_dir($userDir . '/Scans'))
-					mkdir($userDir . '/Scans');
+				if ( ! is_dir(getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid) )
+					{ 
+						mkdir(getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid);
+					}
+				if ( ! is_dir(getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid.'/Backups') )
+					{ 
+						mkdir(getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid.'/Backups');
+					}
+				if ( ! is_dir(getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid.'/CSV_Files') )
+					{ 
+						mkdir(getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid.'/CSV_Files');
+					}
+				if ( ! is_dir(getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid.'/Scans') )
+					{ 
+						mkdir(getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid.'/Scans');
+					}
 			}
 		
 		// signon is validated - WOW! At last!
@@ -778,15 +753,14 @@ log_message('info', 'DSb: submitter:' . print_r($session->submitter, true));
 										
 		// Can I reach the image server and get an image?			
 		
-		// do I have an image server access from Freeukgen sources
-		$server = $this->imageServer();
-		if (!$server || ($server == 'error'))
-		{
-			// this should never happen but, if it does, send error
-			$session->set('message_2', 'A technical problem occurred. Cannot determine image server. Send an email to '.$session->linbmd2_email.' describing what you were doing when the error occurred => Failed to retrieve image server URL in Identity::signin_step3');
-			$session->set('message_class_2', 'alert alert-danger');
-			return redirect()->to( base_url('identity/signin_step1/1') );
-		}
+		// do I have an image server from Freeukgen sources
+		if ( $session->freeukgen_source_values['image_server'] == 'error' )
+			{
+				// this should never happen but, if it does, send error
+				$session->set('message_2', 'A technical problem occurred. Cannot determine image server. Send an email to '.$session->linbmd2_email.' describing what you were doing when the error occurred => Failed to retrieve image server URL in Identity::signin_step3');
+				$session->set('message_class_2', 'alert alert-danger');
+				return redirect()->to( base_url('identity/signin_step1/1') );
+			}
 				
 		// setup curl by trying to DL an image - any image will do
 		switch ($session->current_project[0]['project_name']) 
@@ -830,14 +804,14 @@ log_message('info', 'DSb: submitter:' . print_r($session->submitter, true));
 					break;
 					
 				case 'FreeREG':			
-					$server = $this->imageServer();
-					if (!$server || $server == 'error')
-					{
-						// this should never happen but, if it does, send error
-						$session->set('message_2', 'A technical problem occurred. Cannot determine image server access. Send an email to '.$session->linbmd2_email.' describing what you were doing when the error occurred => Failed to retrieve image server access in Identity::signin_step3');
-						$session->set('message_class_2', 'alert alert-danger');
-						return redirect()->to( base_url('identity/signin_step1/1') );
-					}
+					// do I have an image server access from Freeukgen sources
+					if ( $session->freeukgen_source_values['image_server_access'] == 'error' )
+						{
+							// this should never happen but, if it does, send error
+							$session->set('message_2', 'A technical problem occurred. Cannot determine image server access. Send an email to '.$session->linbmd2_email.' describing what you were doing when the error occurred => Failed to retrieve image server access in Identity::signin_step3');
+							$session->set('message_class_2', 'alert alert-danger');
+							return redirect()->to( base_url('identity/signin_step1/1') );
+						}
 					
 					// set up the cURL
 					$curl_params = array

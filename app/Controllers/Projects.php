@@ -44,6 +44,7 @@ class Projects extends BaseController
 		// note that the source_section can also contain $#none#$ = no source section 
 		
 		// get the source records for this project
+log_message('info','Project:'.$project);
 		$source_records = $sources_model
 			->where('project_index', $project)
 			->findALL();

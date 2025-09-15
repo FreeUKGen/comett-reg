@@ -33,6 +33,9 @@ $routes->group
 			$routes->get('no_javascript', 'Home::no_javascript');
 			$routes->get('signout', 'Home::signout');
 			$routes->get('close', 'Home::close');
+
+			// DS
+			$routes->get('index', 'Home::index');
 		}
 	);
 	
@@ -100,6 +103,10 @@ $routes->group
 			$routes->get('message_to_coord_step1/(:segment)', 'Transcribe::message_to_coord_step1/$1');
 			$routes->post('message_to_coord_step2', 'Transcribe::message_to_coord_step2');
 			$routes->post('verify_onthefly_confirm', 'Transcribe::verify_onthefly_confirm');
+
+			// DS
+			$routes->get('transcribe_next_action', 'Transcribe::transcribe_next_action');
+			$routes->post('change_layout', 'Transcribe::change_layout');
 		}
 	);
 
@@ -114,6 +121,10 @@ $routes->group
 			$routes->get('download_transcription_step1/(:segment)', 'Transcription::download_transcription_step1/$1');
 			$routes->post('download_transcription_step2', 'Transcription::download_transcription_step2');
 			$routes->get('delete/(:segment)', 'Transcription::delete/$1');
+
+			// DS
+			$routes->get('FreeREG_get_data_entry_format', 'Transcription::FreeREG_get_data_entry_format');
+			$routes->post('update_data_entry_format', 'Transcription::update_data_entry_format');
 		}
 	);
 	
@@ -126,6 +137,12 @@ $routes->group
 			$routes->get('manage_allocations/(:segment)', 'Allocation::manage_allocations/$1');
 			$routes->post('next_action', 'Allocation::next_action');
 			$routes->post('sort/(:segment)', 'Allocation::sort/$1');
+			
+			// DS added routes
+			$routes->get('list_images', 'Allocation::list_images');
+			$routes->get('close_freereg_assignment_step1', 'Allocation::close_freereg_assignment_step1/$1/$2');
+			$routes->post('create_assignment_step1/(:segment)', 'Allocation::create_assignment_step1/$1');
+			$routes->post('load_csv_file_step1/(:segment)', 'Allocation::load_csv_file_step1/$1');
 		}
 	);
 

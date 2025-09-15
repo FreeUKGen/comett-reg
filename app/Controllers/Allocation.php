@@ -724,6 +724,8 @@ class Allocation extends BaseController
 		$allocation_model = new Allocation_Model();
 		
 		// set messages
+		$session->alloc_sort_by = 'allocation.Change_date';
+		$session->alloc_sort_order = '';
 		switch ($start_message) 
 			{
 				case 0:
@@ -748,7 +750,8 @@ class Allocation extends BaseController
 			}
 		
 		// get all allocations
-		$session->allocations = $allocation_model
+		if (0 == $start_message) {
+			$session->allocations = $allocation_model
 			->where('allocation.BMD_identity_index', $session->BMD_identity_index)
 			->where('allocation.project_index', $session->current_project[0]['project_index'])
 			->where('allocation.BMD_syndicate_index', $session->syndicate_id)
@@ -758,7 +761,19 @@ class Allocation extends BaseController
 			->join('allocation_image_sources', 'allocation.source_code = allocation_image_sources.source_code')
 			->orderBy($session->alloc_sort_by, $session->alloc_sort_order)
 			->findAll();
-			
+		} 
+		else {
+			$session->allocations = $allocation_model
+			->where('allocation.BMD_identity_index', $session->BMD_identity_index)
+			->where('allocation.project_index', $session->current_project[0]['project_index'])
+			->where('allocation.BMD_syndicate_index', $session->syndicate_id)
+			->where('allocation.BMD_status', $session->allocation_status)
+			->join('syndicate', 'allocation.BMD_syndicate_index = syndicate.BMD_syndicate_index')
+			->join('register_type', 'allocation.REG_register_type = register_type.register_code')
+			->join('allocation_image_sources', 'allocation.source_code = allocation_image_sources.source_code')
+			->findAll();
+		}
+
 		// show allocations
 		echo view('templates/header');
 		echo view('linBMD2/manage_allocations');
@@ -927,10 +942,11 @@ class Allocation extends BaseController
 				case 'DELEA': // delete allocation
 					// only if no transcriptions exist against this allocation
 					// get transcriptions for this allocation
-					$transcriptions = $transcription_model	->where('BMD_allocation_index',  $BMD_allocation_index)
-															->where('BMD_identity_index', $session->BMD_identity_index)
-															->where('project_index', $session->current_project[0]['project_index'])
-															->find();
+
+					$transcriptions = $transcription_model->where('BMD_allocation_index',  $BMD_allocation_index)
+														->where('BMD_identity_index', $session->BMD_identity_index)
+														->where('project_index', $session->current_project[0]['project_index'])
+														->find();
 					// if any found cannot delete
 					if ( $transcriptions )
 						{
