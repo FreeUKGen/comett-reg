@@ -212,15 +212,16 @@
 		<style>
 			body 
 				{
+					margin:0 0.3em;
 					a, button
 					{
 						font-size: 1vw !important;
 					}
-					font-size: 0.8vw;
+					//font-size: 0.8vw;
 				}
 			header
 				{
-					font-size: 0.8vw;
+					//font-size: 0.8vw;
 				}
 		</style>
 		
@@ -301,7 +302,7 @@
 
 		<title><?= esc($session->title); ?></title>
 		
-		<div class="container-fluid px-5">
+		<div class="container-fluid px-1">
 			<?php
 				switch ($session->environment)
 					{
@@ -317,7 +318,7 @@
 							break;
 						default:
 						?>
-							<div class="row d-flex justify-content-between alert alert-warning align-items-center">
+							<div class="row d-flex justify-content-between alert align-items-center">
 						<?php
 					} ?>
 					
@@ -340,7 +341,7 @@
 					} ?>
 				
 				<?php if ( $session->signon_success == 1 ): ?>
-					<span class="small font-weight-bold"><?= esc('Environment = '.$session->environment); ?></span>
+					<span class="small font-weight-bold"><?= esc('Env:'.$session->environment); ?></span>
 					<span class="small font-weight-bold"><?= esc($session->realname.' in '.$session->syndicate_name); ?></span>
 					<span class="small font-weight-bold"><?= esc($session->total_records.' records transcribed and uploaded to this project'); ?></span>
 					<?php
@@ -352,10 +353,8 @@
 					<span class="small font-weight-bold"><?= esc($session->zoom_status); ?></span>
 					
 				<?php endif ?>
-				<span class="small font-weight-bold"><?= esc(date("jS F Y")); ?></span>
 				<span class="small font-weight-bold">
 					<img src="<?php echo base_url().'/Icons/FreeComETT.png' ?>" alt="FreeComETT" style="width:10vw;height:auto">
-					<?= esc('Version '.$session->version); ?>
 				</span>
 			</div>
 		</div>
@@ -363,7 +362,7 @@
 	
 	<body>
 
-		<div class="container-fluid px-5">
+		<div class="container-fluid">
 			
 			<!-- show info message but only if message 2 is empty -->
 			<?php 
