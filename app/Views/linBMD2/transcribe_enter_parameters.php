@@ -1,7 +1,7 @@
 	<?php $session = session();	?>
 	
-	<div class="row mt-4 d-flex justify-content-between bg-success" style="font-size:2vw;">
-		<button id="return" class="btn btn-primary mr-0 fa-solid fa-backward"></button>
+	<div class="row mt-4 d-flex justify-content-between" style="font-size:2vw;">
+		<button id="return" class="btn btn-primary mr-0 fa-solid fa-backward">Back</button>
 		<span class="font-weight-bold"><?='Data Entry Fields - Manage'?></span>
 		<span>
 			<?php

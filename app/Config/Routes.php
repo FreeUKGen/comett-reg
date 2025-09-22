@@ -107,6 +107,7 @@ $routes->group
 			// DS
 			$routes->get('transcribe_next_action', 'Transcribe::transcribe_next_action');
 			$routes->post('change_layout', 'Transcribe::change_layout');
+			$routes->post('transcribe_step1/(:segment)', 'Transcribe::transcribe_step1/$1');
 		}
 	);
 
@@ -140,9 +141,17 @@ $routes->group
 			
 			// DS added routes
 			$routes->get('list_images', 'Allocation::list_images');
-			$routes->get('close_freereg_assignment_step1', 'Allocation::close_freereg_assignment_step1/$1/$2');
 			$routes->post('create_assignment_step1/(:segment)', 'Allocation::create_assignment_step1/$1');
+			$routes->post('create_assignment_step2/(:segment)', 'Allocation::create_assignment_step2/$1');
 			$routes->post('load_csv_file_step1/(:segment)', 'Allocation::load_csv_file_step1/$1');
+			$routes->get('toogle_allocations', 'Allocation::toogle_allocations');
+			$routes->post('get_places', 'Allocation::get_places');
+			$routes->post('get_churches', 'Allocation::get_churches');
+			$routes->get('manage_allocations/(:segment)', 'Allocation::manage_allocations/$0');
+			$routes->post('manage_allocations/(:segment)', 'Allocation::manage_allocations/$0');
+			$routes->get('close_freereg_assignment_step1/(:segment)/(:segment)', 'Allocation::close_freereg_assignment_step1/$1/$2');
+			$routes->post('close_freereg_assignment_step2', 'Allocation::close_freereg_assignment_step2');
+			$routes->get('change_assignment_step1/(:segment)', 'Allocation::change_assignment_step1/$1');
 		}
 	);
 

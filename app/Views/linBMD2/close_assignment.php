@@ -40,8 +40,8 @@
 				
 		<div class="form-group row d-flex justify-content-between align-items-center" id="records_group">
 			<button id="return" class="btn btn-primary mr-0" title="Previous Page">Oups! Get me out of here fast!</button>
-			<span style="font-size:200%; color:red;"> Do you really want to close this assignment? You will loose ALL FreeComETT data for it!</span>
-			<button id="confirm" class="btn btn-primary mr-0" title="Confirm action">Confirm Close Assignment</button>
+			<h2 class="text-danger"> Do you really want to close this assignment? You will lose ALL FreeComETT data for it!</h2>
+			<button id="confirm" class="btn btn-primary btn-danger mt-5 mr-0" title="Confirm action">Confirm Close Assignment</button>
 		</div>	
 		
 	</div>

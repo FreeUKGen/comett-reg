@@ -1,6 +1,6 @@
 	<?php $session = session();	?>
 	
-	<div class="row mt-4 d-flex justify-content-between bg-success" style="font-size:2vw;">
+	<div class="row mt-4 d-flex justify-content-between" style="font-size:2vw;">
 		<span id="return" class="btn btn-primary mr-0 fa-solid fa-backward"></span>
 		<span class="font-weight-bold"><?php echo 'Delete FreeComETT transcriber data for a transcriber in project => '.$session->current_project[0]['project_name'].'.'?></span>
 		<span class="font-weight-bold"></span>

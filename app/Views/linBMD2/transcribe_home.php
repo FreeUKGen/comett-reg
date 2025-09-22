@@ -2,7 +2,7 @@
 	<?php $session = session();
 	use App\Models\Transcription_Comments_Model; ?>
 	
-	<div class="row mt-4 d-flex justify-content-between bg-success font-weight-bold" style="font-size:1.5vw;">			
+	<div class="row mt-3 d-flex justify-content-between font-weight-bold">			
 		<span>Transcription Home</span>
 			<?php					
 				if ( $session->status == '0' ) 

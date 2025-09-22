@@ -55,6 +55,7 @@ log_message('info','Project:'.$project);
 			{
 				// get source value
 				$source_data = get_source_data($source_info);
+
 				if ( $source_data != 'error' ) $source_value = get_source_value($source_data, $source_info);			
 				// load source value to array
 				$freeukgen_source_values[$source_info['source_key']] = $source_value;

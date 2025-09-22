@@ -1112,6 +1112,7 @@ class Allocation extends BaseController
 								}
 						}
 					$session->county_groups = $county_groups;
+log_message('info', 'groups:' . print_r($session->county_groups, true));
 				
 					// get register types
 					$session->register_types = $register_type_model

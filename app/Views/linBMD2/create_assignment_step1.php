@@ -12,14 +12,14 @@
 		<form action="<?=(base_url('allocation/create_assignment_step1/0'))?>" method="POST" name="form_reset"></form>	
 	</div>
 	
-	<div class="row mt-4 d-flex justify-content-between bg-success font-weight-bold" style="font-size:2vw;">
-		<button id="return" class="btn btn-primary mr-0 fa-solid fa-backward" title="Previous Page"></button>
+	<div class="row mt-4 d-flex justify-content-between font-weight-bold" style="font-size:larger;">
+		<button id="return" class="btn btn-primary mr-0 fa-solid fa-backward" title="Previous Page">Back</button>
 		
 		<span class="font-weight-bold"><?='Create an Assignment for '.$session->identity_userid.' in syndicate '.$session->syndicate_name ?></span>
 		
-		<button id="reset" class="btn btn-primary mr-0 fa-solid fa-rotate-left" title="Reset this page"></button>
+		<button id="reset" class="btn btn-primary mr-0 fa-solid fa-rotate-left" title="Reset this page">Reset</button>
 		
-		<button id="confirm" class="btn btn-primary mr-0 fa-solid fa-check" title="Create assignment"></button>
+		<button id="confirm" class="btn btn-primary mr-0 fa-solid fa-check" title="Create assignment">Confirm</button>
 	</div>
 	
 	<!-- data entry fields -->

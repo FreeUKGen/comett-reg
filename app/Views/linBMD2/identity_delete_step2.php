@@ -5,7 +5,7 @@
 		<span class="font-weight-bold"><?php echo 'With power comes great responsibility!'?></span>
 		<span></span>
 	</div>
-	<div class="row mt-4 d-flex justify-content-between bg-success" style="font-size:1vw;">
+	<div class="row mt-4 d-flex justify-content-between" style="font-size:1vw;">
 		<span></span>
 		<span><?php echo 'Please confirm delete all FreeComETT transcription data for, '.$session->identity_user.', by entering your password.'?></span>
 		<span></span>

@@ -16,13 +16,13 @@
 		<form action="<?=(base_url('allocation/create_assignment_step1/0'))?>" method="POST" name="create_form_reset"></form>
 	</div>
 	
-	<div class="row mt-4 d-flex justify-content-between bg-success font-weight-bold" style="font-size:2vw;">
-		<button id="return" class="btn btn-primary mr-0 fa-solid fa-backward" title="Previous Page"></button>
+	<div class="row mt-3 d-flex justify-content-between font-weight-bold">
+		<button id="return" class="btn btn-primary mr-0 fa-solid fa-backward" title="Previous Page">Back</button>
 		
 		<?php
 		if ( $session->assignment_mode === 'change' )
 			{ ?>
-				<span class="font-weight-bold"><?='Change Assignment => '.$session->current_allocation[0]['BMD_allocation_name'] ?></span>
+				<h3><?='Change Assignment => '.$session->current_allocation[0]['BMD_allocation_name'] ?></h2>
 			<?php
 			}
 		else
@@ -31,8 +31,8 @@
 			<?php
 			} ?>
 		
-		<button id="reset" class="btn btn-primary mr-0 fa-solid fa-rotate-left" title="Reset this page"></button>
-		<button id="confirm" class="btn btn-primary mr-0 fa-solid fa-check" title="Confirm action"></button>
+		<button id="reset" class="btn btn-primary mr-0 fa-solid fa-rotate-left" title="Reset this page">Reset</button>
+		<button id="confirm" class="btn btn-primary mr-0 fa-solid fa-check" title="Confirm action">Confirm</button>
 	</div>
 	
 	<!-- data entry fields -->

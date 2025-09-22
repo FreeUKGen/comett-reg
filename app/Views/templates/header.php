@@ -24,7 +24,7 @@
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
 		
 		<script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
-		<script src="<?php echo base_url().'../assets/js/resizeableInputs/dynamic-width-resize/jquery.dynamicWidth.js'; ?>"></script>
+		<script src="<?php echo base_url().'assets3/js/resizeableInputs/dynamic-width-resize/jquery.dynamicWidth.js'; ?>"></script>
 
 		<style>
 			.ui-autocomplete 
@@ -64,9 +64,9 @@
 		<script src="https://kit.fontawesome.com/9470003581.js" crossorigin="anonymous"></script>
 	
 		<!-- this for the virtual keyboard function -->
-		<link rel="stylesheet" href="<?php echo base_url().'../assets/Keyboard-master/css/keyboard.css'; ?>">
-		<script src="<?php echo base_url().'../assets/Keyboard-master/js/jquery.keyboard.js'; ?>"></script>
-		<script src="<?php echo base_url().'../assets/Keyboard-master/js/jquery.keyboard.extension-autocomplete.js'; ?>"></script>
+		<link rel="stylesheet" href="<?php echo base_url().'assets3/js/Keyboard-master/css/keyboard.css'; ?>">
+		<script src="<?php echo base_url().'assets3/js/Keyboard-master/js/jquery.keyboard.js'; ?>"></script>
+		<script src="<?php echo base_url().'assets3/js/Keyboard-master/js/jquery.keyboard.extension-autocomplete.js'; ?>"></script>
 		<style>
 			.keyboardicon {
 				position: absolute;
@@ -213,16 +213,15 @@
 			body 
 				{
 					margin:0 0.3em;
-					a, button
-					{
-						font-size: 1vw !important;
-					}
-					//font-size: 0.8vw;
+					font-size: smaller;
 				}
 			header
 				{
-					//font-size: 0.8vw;
+					font-size: smaller;
 				}
+			button.btn, a span, a.btn {
+				font-size: smaller !important;
+			}
 		</style>
 		
 		<!-- this is for the resize of the transcribe input -->
@@ -244,18 +243,18 @@
 		</style>
 		
 		<!-- this is for the speed test -->
-		<script type="text/javascript" src="<?=base_url('../assets/js/speedtest/speedtest.js')?>"></script>
+		<script type="text/javascript" src="<?=base_url('assets3/js/speedtest/speedtest.js')?>"></script>
 		
 		<!-- this is for the resizeable table columns -->
 		<!-- http://www.bacubacu.com/colresizable/ -->
-		<script type="text/javascript" src="<?=base_url('../assets/js/colresizable/colResizable-1.6.min.js')?>"></script>
+		<script type="text/javascript" src="<?=base_url('assets3/js/colresizable/colResizable-1.6.min.js')?>"></script>
 		<style>
 			.grip
 				{
 					width:20px;
 					height:15px;
 					margin-top:-3px;
-					background-image:url("<?=base_url('../assets/js/colresizable/grip.png')?>");
+					background-image:url("<?=base_url('assets3/js/colresizable/grip.png')?>");
 					margin-left:-5px;
 					position:relative;
 					z-index:88;
@@ -308,17 +307,17 @@
 					{
 						case 'LIVE':
 						?>
-							<div class="row d-flex justify-content-between alert alert-info align-items-center">
+							<div class="row d-flex px-2 justify-content-between align-items-center">
 						<?php
 							break;
 						case 'TEST':
 						?>
-							<div class="row d-flex justify-content-between alert alert-danger align-items-center">
+							<div class="row d-flex px-2 justify-content-between align-items-center">
 						<?php
 							break;
 						default:
 						?>
-							<div class="row d-flex justify-content-between alert align-items-center">
+							<div class="row d-flex px-2 justify-content-between align-items-center">
 						<?php
 					} ?>
 					
@@ -354,7 +353,9 @@
 					
 				<?php endif ?>
 				<span class="small font-weight-bold">
+					<a href="<?= base_url() ?>" alt="home">
 					<img src="<?php echo base_url().'/Icons/FreeComETT.png' ?>" alt="FreeComETT" style="width:10vw;height:auto">
+					</a>
 				</span>
 			</div>
 		</div>
@@ -368,8 +369,8 @@
 			<?php 
 			if ( $session->message_2 == '' )
 				{ ?>
-					<div class="<?=esc($session->message_class_1)?> alert-dismissible mt-1 row pl-0" role="alert">
-						<span class="col-12 small font-weight-bold"><?=esc($session->message_1)?></span>
+					<div class="<?=esc($session->message_class_1)?> alert-dismissible mt-2 mb-0 row py-1 pl-0 pl-0 mx-2 mb-2" role="alert">
+						<span class="col-12"><?=esc($session->message_1)?></span>
 					</div>
 				<?php
 				} ?>
@@ -378,8 +379,8 @@
 			<?php 
 			if ( $session->message_2 != '' )
 				{ ?>
-					<div class="<?=esc($session->message_class_2)?> alert-dismissible row pl-0">
-						<span class="col-12 small font-weight-bold"><?=esc($session->message_2)?></span>
+					<div class="<?=esc($session->message_class_2)?> alert-dismissible row mt-2 mb-0 py-1 pl-0 mx-2">
+						<span class="col-12"><?=esc($session->message_2)?></span>
 					</div>
 				<?php
 				} ?>

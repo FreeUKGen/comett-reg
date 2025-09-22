@@ -1,7 +1,7 @@
 	<?php $session = session();	?>
 	
-	<div class="row mt-4 d-flex justify-content-between bg-success align-items-center" style="font-size:2vw;">
-		<button id="return" class="btn btn-primary mr-0 fa-solid fa-backward"></button>
+	<div class="row mt-4 d-flex justify-content-between align-items-center" style="font-size:2vw;">
+		<button id="return" class="btn btn-primary mr-0 fa-solid fa-backward">Back</button>
 		<span class="font-weight-bold">Manage Data Dictionary</span>
 		<span style="font-size:1vw;">
 			<span class="font-weight-bold">For</span>

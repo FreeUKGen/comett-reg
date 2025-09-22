@@ -1,7 +1,7 @@
 	<?php $session = session(); ?>
 	
-	<div class="row mt-4 d-flex justify-content-between bg-success font-weight-bold" style="font-size:2vw;">
-		<button id="return" class="btn btn-primary mr-0 fa-solid fa-backward" title="Previous Page"></button>
+	<div class="row mt-4 d-flex justify-content-between font-weight-bold" style="font-size:2vw;">
+		<button id="return" class="btn btn-primary mr-0 fa-solid fa-backward" title="Previous Page">Back</button>
 		
 		<span class="font-weight-bold"><?='Load CSV File => Choose the CSV file you wish to load.'?></span>
 		

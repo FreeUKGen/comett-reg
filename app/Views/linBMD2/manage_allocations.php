@@ -1,19 +1,21 @@
 	<?php $session = session(); ?>
 	
-	<div class="row mt-4 d-flex justify-content-between bg-success font-weight-bold" style="font-size:2vw;">
-		<button id="return" class="btn btn-primary mr-0 fa-solid fa-backward"></button>
+	<div class="row mt-3 d-flex justify-content-between font-weight-bold">
+		<button id="return" class="btn btn-primary mr-0 fa-solid fa-backward">Back</button>
 		<span> 
 			<?php
 				if ( $session->allocation_status == 'Open' ) 
 					{ 
 						?>
-						<a style="font-size:2vw !important;" href="<?=(base_url('allocation/toogle_allocations'))?>"><?php echo 'ACTIVE '.$session->current_project[0]['allocation_text'].'s for => '.$session->identity_userid.', transcribing for => '.$session->syndicate_name;?></a>
+					<h3>
+						<a href="<?=(base_url('allocation/toogle_allocations'))?>"><?php echo 'ACTIVE '.$session->current_project[0]['allocation_text'].'s for => '.$session->identity_userid.', transcribing for => '.$session->syndicate_name;?></a>
+					</h3>
 					<?php
 					}
 				else
 					{
 						?>
-						<a style="font-size:2vw !important;" href="<?=(base_url('allocation/toogle_allocations'))?>"><?php echo 'CLOSED '.$session->current_project[0]['allocation_text'].'s for => '.$session->identity_userid.', transcribing for => '.$session->syndicate_name; ?></a>
+						<a href="<?=(base_url('allocation/toogle_allocations'))?>"><?php echo 'CLOSED '.$session->current_project[0]['allocation_text'].'s for => '.$session->identity_userid.', transcribing for => '.$session->syndicate_name; ?></a>
 					<?php
 					}
 			?>

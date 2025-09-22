@@ -145,6 +145,8 @@ function load_variables()
 			->findAll();
 		
 		// load fonts from fonts folder
+		// DS @TODO NOT USED - comment out for now
+		/**
 		$fontDir = getenv('app.fontDir') ?? getcwd().'/Fonts';
 		$dir = new DirectoryIterator(dirname($fontDir . '/*.*'));
 		$data_entry_fonts = array();
@@ -157,6 +159,8 @@ function load_variables()
 					}
 			}
 		asort($data_entry_fonts);
+		**/
+
 		// load font_styles
 		$data_entry_styles = array('normal', 'bold', 'bolder', 'lighter');
 		asort($data_entry_styles);
@@ -252,7 +256,8 @@ function load_variables()
 		$session->set('reference_extension_control', $reference_extension_control);
 		$session->set('comment_types', $comment_types);
 		$session->set('transcription_cycles', $transcription_cycles);
-		$session->set('data_entry_fonts', $data_entry_fonts);
+		// DS @TODO not used
+		// $session->set('data_entry_fonts', $data_entry_fonts);
 		$session->set('data_entry_styles', $data_entry_styles);
 	}
 	
@@ -571,6 +576,8 @@ function get_source_data($source_info)
 	
 		// set cURL
 		$curl_url = $source_info['source_protocol'].$source_info['source_URL'].$source_info['source_port'].$source_info['source_folder'].$source_info['source_path'].$source_info['source_name'];
+log_message('info','GSD: ' . $curl_url);
+log_message('info','GSDp:' . $source_info['source_user'].':'.$source_info['source_password']);
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $curl_url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

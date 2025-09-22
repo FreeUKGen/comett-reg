@@ -124,7 +124,7 @@ class Identity extends BaseController
 		
 		// do I have a hash key from Freeukgen sources
 		//@TODO DS disable this for now
-		if (0 && $session->freeukgen_source_values['hash'] == 'error' )
+		if ($session->freeukgen_source_values['hash'] == 'error' )
 			{
 				// this should never happen but, if it does, send error
 				$session->set('message_2', 'A technical problem occurred. Cannot determine hash key. Send an email to '.$session->linbmd2_email.' describing what you were doing when the error occurred => Failed to retrieve hash key in Identity::signin_step2');
@@ -247,8 +247,8 @@ class Identity extends BaseController
 							]
 						)->toArray();
 
-log_message('info', 'DSa: submitter:' . print_r($collection_userid, true));
-log_message('info', 'DSb: submitter:' . print_r($session->submitter, true));
+// log_message('info', 'DSa: submitter:' . print_r($collection_userid, true));
+// log_message('info', 'DSb: submitter:' . print_r($session->submitter, true));
 
 					// was it found?
 					if ( ! $session->submitter )
@@ -341,10 +341,10 @@ log_message('info', 'DSb: submitter:' . print_r($session->submitter, true));
 	{
 		$ident = $this->request->getPost('identity');
 		$passwd = $this->request->getPost('password');
-	    if ($ident == 'test' && $passwd == 'ds122') return true;
+	    // if ($ident == 'test' && $passwd == 'ds122') return true;
 		
-	    if ($session->submitter[0]['password'] != $session->UserPassword_base64)
-		return true;
+	    if ($session->submitter[0]['password'] == $session->UserPassword_base64)
+			return true;
 	    return false;
 	}
 
