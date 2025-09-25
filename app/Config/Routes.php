@@ -36,6 +36,7 @@ $routes->group
 
 			// DS
 			$routes->get('index', 'Home::index');
+			$routes->get('home', 'Home::index');
 		}
 	);
 	
@@ -63,7 +64,9 @@ $routes->group
 			$routes->get('delete_user_data_step1/(:segment)', 'Identity::delete_user_data_step1/$1');
 			$routes->post('delete_user_data_step2/(:segment)', 'Identity::delete_user_data_step2/s1');
 			$routes->post('delete_user_data_step3', 'Identity::delete_user_data_step3');
+			// DS new routes
 			$routes->post('change_details_step2/(:segment)', 'Identity::change_details_step2/$1');
+			$routes->get('change_details_step2/(:segment)', 'Identity::change_details_step2/$1');
 		}
 	);
 
@@ -108,6 +111,9 @@ $routes->group
 			$routes->get('transcribe_next_action', 'Transcribe::transcribe_next_action');
 			$routes->post('change_layout', 'Transcribe::change_layout');
 			$routes->post('transcribe_step1/(:segment)', 'Transcribe::transcribe_step1/$1');
+			$routes->get('show_raw_BMD_file/(:segment)', 'Transcribe::show_raw_BMD_file/$1');
+			$routes->get('store_BMD_file/(:segment)', 'Transcribe::store_BMD_file/$1');
+			$routes->get('submit_details', 'Transcribe::submit_details');
 		}
 	);
 
@@ -126,6 +132,8 @@ $routes->group
 			// DS
 			$routes->get('FreeREG_get_data_entry_format', 'Transcription::FreeREG_get_data_entry_format');
 			$routes->post('update_data_entry_format', 'Transcription::update_data_entry_format');
+			$routes->get('comments_step1/(:segment)',  'Transcription::comments_step1/$1');
+			$routes->post('comments_step2', 'Transcription::comments_step2');
 		}
 	);
 	

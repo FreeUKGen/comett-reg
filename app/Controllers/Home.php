@@ -5,6 +5,7 @@ use App\Models\Parameter_Model;
 use App\Models\Projects_Model;
 use App\Models\Help_Model;
 use App\Models\Speedtest_Results_Model;
+use App\Config\Session;
 
 class Home extends BaseController
 {
@@ -62,8 +63,8 @@ class Home extends BaseController
 		
 		// clean session files
 		// get the session save path
-		$config = config('App');
-		$sessionSavePath = $config->sessionSavePath;
+		$sessionSavePath = $session->sessionSavePath;
+
 		// find session files
 		foreach( glob($sessionSavePath.'/ci_session*') as $file )
 			{
@@ -76,7 +77,7 @@ class Home extends BaseController
 			}
 		
 		// return
-		return redirect()->to( base_url('home') );
+		return redirect()->to( base_url('/') );
 	}
 	
 	public function close()
