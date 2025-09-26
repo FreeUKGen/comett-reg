@@ -114,6 +114,7 @@ $routes->group
 			$routes->get('show_raw_BMD_file/(:segment)', 'Transcribe::show_raw_BMD_file/$1');
 			$routes->get('store_BMD_file/(:segment)', 'Transcribe::store_BMD_file/$1');
 			$routes->get('submit_details', 'Transcribe::submit_details');
+			$routes->get('send_BMD_file_to_syndicate_leader', 'Transcribe::send_BMD_file_to_syndicate_leader');
 		}
 	);
 

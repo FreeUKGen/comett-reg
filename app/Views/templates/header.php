@@ -19,8 +19,8 @@
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
 
+
 		<!-- this for the autocomplete function -->
-		<link rel="stylesheet" href="//code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
 		
 		<script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
@@ -60,9 +60,6 @@
 		
 		</style>
 		
-		<!-- FreeComETT Awesome Icons from font awesome -->
-		<script src="https://kit.fontawesome.com/9470003581.js" crossorigin="anonymous"></script>
-	
 		<!-- this for the virtual keyboard function -->
 		<link rel="stylesheet" href="<?php echo base_url().'assets3/js/Keyboard-master/css/keyboard.css'; ?>">
 		<script src="<?php echo base_url().'assets3/js/Keyboard-master/js/jquery.keyboard.js'; ?>"></script>
@@ -241,9 +238,6 @@
 					  user-select: none;
 				}
 		</style>
-		
-		<!-- this is for the speed test -->
-		<script type="text/javascript" src="<?=base_url('assets3/js/speedtest/speedtest.js')?>"></script>
 		
 		<!-- this is for the resizeable table columns -->
 		<!-- http://www.bacubacu.com/colresizable/ -->
