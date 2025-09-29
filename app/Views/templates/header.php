@@ -60,7 +60,8 @@
 		
 		</style>
 		
-		<!-- this for the virtual keyboard function -->
+		<!-- this for the keyboard extension AKA virtual keyboard? -->
+		<!-- DS Keyboard-master -->
 		<link rel="stylesheet" href="<?php echo base_url().'assets3/js/Keyboard-master/css/keyboard.css'; ?>">
 		<script src="<?php echo base_url().'assets3/js/Keyboard-master/js/jquery.keyboard.js'; ?>"></script>
 		<script src="<?php echo base_url().'assets3/js/Keyboard-master/js/jquery.keyboard.extension-autocomplete.js'; ?>"></script>

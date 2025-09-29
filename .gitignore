@@ -2,7 +2,6 @@
 # FreeComETT
 #-----------------------------
 public/Users/
-assets3/
 app/Controllers/backup
 *.latest
 *.orig
