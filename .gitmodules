@@ -1,0 +1,3 @@
+[submodule "public/assets3"]
+	path = public/assets3
+	url = https://github.com/FreeUKGen/comett-reg-assets3.git
