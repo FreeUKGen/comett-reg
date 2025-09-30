@@ -4298,17 +4298,19 @@ class Transcribe extends BaseController
 		// get search
 		$search_array = json_decode($this->request->getPost('searchArray'));
 		// create an array of non-empty search values
-		$search_values = array();
-		foreach ( $search_array as $key => $value )
-			{
-				if ( $value != '' ) $search_values[$key] = $value;
-			}
-		// get search needle
-		$needle = reset($search_values);
-		// set session values	
-		$session->needle = $needle;
-		$session->search_values = $search_values;
-	
+		if ($search_array) {
+			$search_values = array();
+			foreach ( $search_array as $key => $value )
+				{
+					if ( $value != '' ) $search_values[$key] = $value;
+				}
+			// get search needle
+			$needle = reset($search_values);
+			// set session values	
+			$session->needle = $needle;
+			$session->search_values = $search_values;
+		
+		}
 		transcribe_initialise_step1(0, $session->controller, $session->table_title);
 		transcribe_show_step1($session->controller);
 	}

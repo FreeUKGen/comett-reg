@@ -57,26 +57,9 @@ class Home extends BaseController
 	{
 		// declare session
 		$session = session();
-		
 		// destroy the session
 		$session->destroy();
-		
-		// clean session files
-		// get the session save path
-		$sessionSavePath = $session->sessionSavePath;
 
-		// find session files
-		foreach( glob($sessionSavePath.'/ci_session*') as $file )
-			{
-				// check if it is a file
-				if( is_file($file) )
-					{
-						// delete file - not sure I want to do this since the app is no multi user.
-						// unlink($file);
-					}
-			}
-		
-		// return
 		return redirect()->to( base_url('/') );
 	}
 	

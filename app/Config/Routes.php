@@ -34,9 +34,14 @@ $routes->group
 			$routes->get('signout', 'Home::signout');
 			$routes->get('close', 'Home::close');
 
-			// DS
+			// DS CI v4.6
 			$routes->get('index', 'Home::index');
 			$routes->get('home', 'Home::index');
+            $routes->get('issue_step1/(:segment)', 'Home::issue_step1/$1');
+            $routes->post('issue_step2', 'Home::issue_step2');
+            $routes->get('issue_see/(:segment)', 'Home::issue_see/$1');
+            $routes->post('session_exists', 'Home::session_exists');
+
 		}
 	);
 	
@@ -107,7 +112,7 @@ $routes->group
 			$routes->post('message_to_coord_step2', 'Transcribe::message_to_coord_step2');
 			$routes->post('verify_onthefly_confirm', 'Transcribe::verify_onthefly_confirm');
 
-			// DS
+			// DS CI 4.6
 			$routes->get('transcribe_next_action', 'Transcribe::transcribe_next_action');
 			$routes->post('change_layout', 'Transcribe::change_layout');
 			$routes->post('transcribe_step1/(:segment)', 'Transcribe::transcribe_step1/$1');
@@ -115,6 +120,24 @@ $routes->group
 			$routes->get('store_BMD_file/(:segment)', 'Transcribe::store_BMD_file/$1');
 			$routes->get('submit_details', 'Transcribe::submit_details');
 			$routes->get('send_BMD_file_to_syndicate_leader', 'Transcribe::send_BMD_file_to_syndicate_leader');
+            $routes->get('set_last_n', 'Transcribe::set_last_n');
+            $routes->get('set_search', 'Transcribe::set_search');
+
+            // HBW new routes for CI4.6
+            $routes->get('calibrate_reference_step0/(:segment)', 'Transcribe::calibrate_reference_step0/$1');
+            $routes->get('calibrate_reference_step1/(:segment)', 'Transcribe::calibrate_reference_step1/$1');
+            $routes->post('calibrate_reference_step1/(:segment)', 'Transcribe::calibrate_reference_step1/$1');
+            $routes->get('calibrate_reference_step2', 'Transcribe::calibrate_reference_step2');
+            $routes->get('verify_onthefly', 'Transcribe::verify_onthefly');
+            $routes->get('verify_onthefly_confirm', 'Transcribe::verify_onthefly_confirm');
+            $routes->get('inherit_parameters', 'Transcribe::inherit_parameters');
+            $routes->get('verify_step1/(:segment)', 'Transcribe::verify_step1/$1');
+            $routes->get('toogle_line_step1/(:segment)', 'Transcribe::toogle_line_step1/$1');
+            $routes->get('insert_line_step1/(:segment)', 'Transcribe::insert_line_step1/$1');
+            $routes->post('enter_parameters_step1/(:segment)', 'Transcribe::enter_parameters_step1/$1');
+            $routes->post('image_parameters_step1/(:segment)', 'Transcribe::image_parameters_step1/$1');
+            $routes->get('enter_parameters_step', 'Transcribe::enter_parameters_step');
+
 		}
 	);
 
@@ -161,6 +184,8 @@ $routes->group
 			$routes->get('close_freereg_assignment_step1/(:segment)/(:segment)', 'Allocation::close_freereg_assignment_step1/$1/$2');
 			$routes->post('close_freereg_assignment_step2', 'Allocation::close_freereg_assignment_step2');
 			$routes->get('change_assignment_step1/(:segment)', 'Allocation::change_assignment_step1/$1');
+			$routes->post('change_assignment_step2/(:segment)', 'Allocation::change_assignment_step2/$1');
+			$routes->post('load_csv_file_step2', 'Allocation::load_csv_file_step2');
 		}
 	);
 
@@ -209,6 +234,8 @@ $routes->group
 			$routes->post('comment_step2', 'Deaths::comment_step2');
 			$routes->get('select_comment/(:segment)', 'Deaths::select_comment/$1');
 			$routes->get('remove_comments/(:segment)/(:segment)', 'Deaths::remove_comments/$1/$2');
+            // DS CI 4.6
+            $routes->post('transcribe_deaths_step1/(:segment)', 'Deaths::transcribe_deaths_step1/$1');
 		}
 	);
 
@@ -234,6 +261,12 @@ $routes->group
 			$routes->get('refresh_syndicates', 'Syndicate::refresh_syndicates');
 			$routes->get('manage_syndicates/(:segment)', 'Syndicate::manage_syndicates/$1');
 			$routes->post('next_action', 'Syndicate::next_action');
+
+
+            // HBW new routes for CI4.6
+            $routes->get('manage_users_step1/(:segment)', 'Syndicate::manage_users_step1/$1');
+            $routes->get('show_all_allocations_step1/(:segment)', 'Syndicate::show_all_allocations_step1/$1');
+            $routes->get('show_all_transcriptions_step1/(:segment)', 'Syndicate::show_all_transcriptions_step1/$1');
 		}
 	);
 
@@ -264,6 +297,12 @@ $routes->group
 	("projects", ['filter' => 'sessionexists'], function($routes)
 		{
 			$routes->get('load_project/(:segment)', 'Projects::load_project/$1');
+
+            // HBW new routes for CI4.6
+            $routes->get('manage_projects_step1/(:segment)', 'Projects::manage_projects_step1/$1');
+            $routes->get('manage_projects_step2/(:segment)', 'Projects::manage_projects_step2/$1');
+            $routes->post('manage_projects_step3', 'Projects::manage_projects_step3');
+
 		}
 	);
 	
@@ -274,6 +313,18 @@ $routes->group
 			$routes->get('database_step1/(:segment)', 'Database::database_step1/$1');
 			$routes->get('def_step1/(:segment)', 'Database::def_step1/$1');
 			$routes->post('def_step2', 'Database::def_step2');
+
+            // HBW new routes for CI4.6
+            $routes->get('coord_step1/(:segment)', 'Database::coord_step1/$1');
+            $routes->get('tester_step1/(:segment)', 'Database::tester_step1/$1');
+            $routes->get('add_syndicate_to_def_image_table', 'Database::add_syndicate_to_def_image_table');
+            $routes->get('add_syndicate_to_def_fields_table', 'Database::add_syndicate_to_def_fields_table');
+            $routes->get('set_coord_role', 'Database::set_coord_role');
+            $routes->get('delete_user_data_step1/(:segment)', 'Database::delete_user_data_step1/$1');
+            $routes->get('delete_user_data_step2/(:segment)', 'Database::delete_user_data_step2/$1');
+            $routes->post('delete_user_data_step3', 'Database::delete_user_data_step3');
+            $routes->post('database_step1/(:segment)', 'Database::database_step1/$1');
+            $routes->get('update_def_fields', 'Database::update_def_fields');
 
 		}
 	);
