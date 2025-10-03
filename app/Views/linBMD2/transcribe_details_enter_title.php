@@ -137,12 +137,12 @@
 		<?php 	if ( $session->image_source[0]['source_images'] == 'yes' )			
 					{ ?>
 						<span id="image_parameters" class="" title="Change Image Parameters" style="cursor: pointer">
-							<i class="fa-solid fa-dice-d6"></i>
+							<i class="fa-solid fa-dice-d6">IP</i>
 						</span>
 		<?php		} ?>
 		
 		<span hidden id="field_parameters" class="" title="Change Field Parameters" style="cursor: pointer">
-			<i class="fa-solid fa-dice-d20"></i>
+			<i class="fa-solid fa-dice-d20">FP</i>
 		</span>
 		
 		<!-- show sharpen slider -->

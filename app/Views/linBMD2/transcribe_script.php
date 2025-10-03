@@ -811,6 +811,7 @@ if ( cycleCode == 'VERIT' )
 						}
 					searchArray = JSON.stringify(searchArray);
 					$('#searchArray').val(searchArray);
+
 					// submit
 					$('form[name="set_search"]').submit();
 				}

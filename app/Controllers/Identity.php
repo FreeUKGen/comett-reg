@@ -120,7 +120,7 @@ class Identity extends BaseController
 		//@TODO DS temporary
 		log_message('info', 'User:' . $this->request->getPost('identity'));
 		log_message('info', 'Pwd:' . $this->request->getPost('password'));
-		log_message('info', 'FSV:' . print_r($session->freeukgen_source_values, true));
+		// log_message('info', 'FSV:' . print_r($session->freeukgen_source_values, true));
 		
 		// do I have a hash key from Freeukgen sources
 		//@TODO DS disable this for now

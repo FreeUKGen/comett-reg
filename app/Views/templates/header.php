@@ -1,5 +1,4 @@
-<!doctype html>
-
+<!DOCTYPE html>
 <html>
 	<head>	
 		<!-- initialse session -->
@@ -108,6 +107,7 @@
 		</style>
 		
 		<!-- this for the hotkeys function -->
+		<!-- BMD comments this out -->
 		<!-- <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script> -->
 		
 		<!-- this for the spinner function -->
@@ -242,6 +242,7 @@
 		
 		<!-- this is for the resizeable table columns -->
 		<!-- http://www.bacubacu.com/colresizable/ -->
+		<!-- BMD does not have this -->
 		<script type="text/javascript" src="<?=base_url('assets3/js/colresizable/colResizable-1.6.min.js')?>"></script>
 		<style>
 			.grip
@@ -263,6 +264,7 @@
 		</style>
 	
 		<!-- this is for drag and drop table rows -->
+		<!-- BMD does not have this -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/TableDnD/0.9.1/jquery.tablednd.js"></script>
 		
 		<style>
@@ -287,9 +289,11 @@
 		</style>
 		
 		<!-- this is for the loading-overlay.jquery.js https://gasparesganga.com/labs/jquery-loading-overlay/ -->
+		<!-- BMD not have this -->
 		<script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
 		
 		<!-- this is highlighting search text -->
+		<!-- BMD not have this -->
 		<script src="https://cdn.jsdelivr.net/npm/mark.js/dist/jquery.mark.min.js"></script>
 
 <!-- start -->

@@ -2373,10 +2373,12 @@ class Transcribe extends BaseController
 		$transcription_current_layout_model = new Transcription_Current_Layout_Model();
 				
 		// get data array
-		$data_array = json_decode($this->request->getPost('data_object'), true);
+		$data_array = json_decode($this->request->getPost('data_params'), true);
+
 		// get layout parms
 		$layout_index = $this->request->getPost('layoutIndexparm');
 		$layout_name = $this->request->getPost('layoutNameparm');
+
 		// layout_index has meaning
 		// -1 = user did not select a layout to update
 		// 0 = new layout to save. The name is in layout_name
@@ -4294,12 +4296,13 @@ class Transcribe extends BaseController
 	{
 		// initialise method
 		$session = session();
+
 		//$session->last_n = 8;
 		// get search
 		$search_array = json_decode($this->request->getPost('searchArray'));
 		// create an array of non-empty search values
-		if ($search_array) {
-			$search_values = array();
+		$search_values = array();
+		if (!empty($search_array)) {
 			foreach ( $search_array as $key => $value )
 				{
 					if ( $value != '' ) $search_values[$key] = $value;
@@ -4309,7 +4312,6 @@ class Transcribe extends BaseController
 			// set session values	
 			$session->needle = $needle;
 			$session->search_values = $search_values;
-		
 		}
 		transcribe_initialise_step1(0, $session->controller, $session->table_title);
 		transcribe_show_step1($session->controller);

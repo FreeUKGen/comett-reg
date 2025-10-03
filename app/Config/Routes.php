@@ -121,7 +121,9 @@ $routes->group
 			$routes->get('submit_details', 'Transcribe::submit_details');
 			$routes->get('send_BMD_file_to_syndicate_leader', 'Transcribe::send_BMD_file_to_syndicate_leader');
             $routes->get('set_last_n', 'Transcribe::set_last_n');
+            $routes->post('set_search', 'Transcribe::set_search');
             $routes->get('set_search', 'Transcribe::set_search');
+			$routes->post('enter_parameters_step', 'Transcribe::enter_parameters_step');
 
             // HBW new routes for CI4.6
             $routes->get('calibrate_reference_step0/(:segment)', 'Transcribe::calibrate_reference_step0/$1');
@@ -136,7 +138,6 @@ $routes->group
             $routes->get('insert_line_step1/(:segment)', 'Transcribe::insert_line_step1/$1');
             $routes->post('enter_parameters_step1/(:segment)', 'Transcribe::enter_parameters_step1/$1');
             $routes->post('image_parameters_step1/(:segment)', 'Transcribe::image_parameters_step1/$1');
-            $routes->get('enter_parameters_step', 'Transcribe::enter_parameters_step');
 
 		}
 	);
