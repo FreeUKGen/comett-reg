@@ -1,16 +1,14 @@
 <?php $session = session(); ?>    
     
-    <br>
-    
 	<?php
 	if ( $session->masquerade == 1 )
 		{ ?>
-			<div class="row mt-2 justify-content-between align-items-center alert alert-danger">
+			<footer class="row mt-2">
 		<?php
 		}
 	else
 		{ ?>
-			<div class="row mt-2 justify-content-between align-items-center alert alert-primary">
+			<footer class="row mt-2">
 		<?php
 		} ?>
 				<a class="" title="Signout" href="/home/signout/"><i class="fa-solid fa-door-open"></i>SignOut</a>
@@ -66,6 +64,6 @@
 				<a class="" target="_blank" title="Perform Speed Test" href="/home/speedtest/0"><i class="fa-solid fa-gauge"></i></a>
 					
 				<a class="" target="_blank" title="Copyright" href="https://www.freeukgenealogy.org.uk"><i class="fa-solid fa-copyright"></i> FreeUKGen 2020 - <?php echo date("Y"); ?></a>
-			</div>
+	</footer>
   </body>
 </html>

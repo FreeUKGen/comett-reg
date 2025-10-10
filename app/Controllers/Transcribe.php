@@ -396,7 +396,7 @@ class Transcribe extends BaseController
 			{
 				case 'NONE': // nothing was selected
 					// if here = no last action code found
-					$session->set('message_2', 'Please select an action to perform from the dropdown.');
+					$session->set('message_2', 'Select an action');
 					$session->set('message_class_2', 'alert alert-danger');
 					return redirect()->to( base_url('transcribe/transcribe_step1/0') );
 					break;
