@@ -38,6 +38,7 @@ class Allocation extends BaseController
 		$session = session();
 	}
 
+
 	public function create_allocation_step1($start_message)
 	{		
 		// initialise method
@@ -1064,6 +1065,94 @@ class Allocation extends BaseController
 		echo view('linBMD2/allocations_list_images');
 		echo view('linBMD2/sortTableNew');
 		echo view('linBMD2/searchTableNew');
+		echo view('templates/footer');
+	}
+
+	public function new_create_assignment($start_message)
+	{
+		// initialise method
+		$session = session();
+		$allocation_image_sources_model = new Allocation_Image_Sources_Model();
+		$project_types_model = new Project_Types_Model();
+		$register_type_model = new Register_Type_Model();
+		$document_sources_model = new Document_Sources_Model();
+
+		switch ($start_message)
+		{
+			case 0:
+				// load variables from common_helper.php
+				load_variables();
+
+				// load MongoDB
+				// define mongodb - see common helper
+				define_environment(3);
+				$mongodb = define_mongodb();
+
+				// Images Sources - comes from FreeComETT DB
+				$session->allocation_image_sources = $allocation_image_sources_model
+					->where('project_index', $session->current_project[0]['project_index'])
+					->where('source_manual', 'Y')
+					->orderby('source_order')
+					->findAll();
+				// all found?
+				if ( !$session->allocation_image_sources )
+				{
+					$session->set('message_2', 'Cannot create assignment. Image sources cannot be loaded. Report to '.$session->linbmd2_email);
+					$session->set('message_class_2', 'alert alert-error');
+					return redirect()->to( base_url('allocation/manage_allocations/2') );
+				}
+
+				// create county groups
+				$county_groups = array();
+				foreach ( $session->freeukgen_source_values as $key => $source_value )
+				{
+					if ( str_contains($key, 'counties') )
+					{
+						$group = explode('_', $key);
+						$county_groups[] = $group[1];
+					}
+				}
+				$session->county_groups = $county_groups;
+				log_message('info', 'groups:' . print_r($session->county_groups, true));
+
+				// get register types
+				$session->register_types = $register_type_model
+					->where('project_index', $session->current_project[0]['project_index'])
+					->where('register_active', 'yes')
+					->orderby('register_order')
+					->findAll();
+
+				// get document sources
+				$session->document_sources = $document_sources_model
+					->orderby('document_source')
+					->findAll();
+
+				// set assignment mode
+				$session->assignment_mode = 'create';
+
+				// initialise current allocation array in order to keep javascript happy!
+				$current_allocation = array();
+				$current_allocation[0] = array();
+				$session->current_allocation = $current_allocation;
+
+				// message defaults
+				$session->set('message_1', '');
+				$session->set('message_class_1', '');
+				$session->set('message_2', '');
+				$session->set('message_class_2', '');
+				break;
+			case 1:
+				break;
+			case 2:
+				$session->set('message_1', 'Please enter the data required to create your assignment.');
+				$session->set('message_class_1', 'alert alert-primary');
+				break;
+			default:
+		}
+
+		// show views
+		echo view('templates/header');
+		echo view('linBMD2/new_create_assignment'); // same view used for both create and change
 		echo view('templates/footer');
 	}
 	
