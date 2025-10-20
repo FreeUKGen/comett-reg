@@ -3,8 +3,10 @@
 #-----------------------------
 public/Users/
 app/Controllers/backup
+css/
 *.latest
 *.orig
+*.log
 
 
 #---------------------

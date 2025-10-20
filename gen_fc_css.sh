@@ -1,3 +1,3 @@
-cd /var/www/freecomett-reg/public/css
+cd /var/www/freecomett-reg/css
 git pull
-sass core.scss > fc-reg.css
+sass core.scss > ../public/css/fc-reg.css

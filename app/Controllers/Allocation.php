@@ -1068,20 +1068,16 @@ class Allocation extends BaseController
 		echo view('templates/footer');
 	}
 
-	public function new_create_assignment($start_message)
+	public function new_create_assignment()
 	{
+load_variables();
+
 		// initialise method
 		$session = session();
 		$allocation_image_sources_model = new Allocation_Image_Sources_Model();
 		$project_types_model = new Project_Types_Model();
 		$register_type_model = new Register_Type_Model();
 		$document_sources_model = new Document_Sources_Model();
-
-		switch ($start_message)
-		{
-			case 0:
-				// load variables from common_helper.php
-				load_variables();
 
 				// load MongoDB
 				// define mongodb - see common helper
@@ -1135,20 +1131,8 @@ class Allocation extends BaseController
 				$current_allocation[0] = array();
 				$session->current_allocation = $current_allocation;
 
-				// message defaults
-				$session->set('message_1', '');
-				$session->set('message_class_1', '');
-				$session->set('message_2', '');
-				$session->set('message_class_2', '');
-				break;
-			case 1:
-				break;
-			case 2:
-				$session->set('message_1', 'Please enter the data required to create your assignment.');
-				$session->set('message_class_1', 'alert alert-primary');
-				break;
-			default:
-		}
+		$session->set('message_1', 'Please enter the data required to create your assignment.');
+		$session->set('message_class_1', 'alert alert-primary');
 
 		// show views
 		echo view('templates/header');

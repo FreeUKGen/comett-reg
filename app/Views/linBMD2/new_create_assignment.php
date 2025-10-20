@@ -12,27 +12,34 @@
 		<form action="<?=(base_url('allocation/create_assignment_step1/0'))?>" method="POST" name="form_reset"></form>	
 	</div>
 	
-	<div class="row mt-4 d-flex justify-content-between font-weight-bold" style="font-size:larger;">
-		<button id="return" class="btn btn-primary mr-0 fa-solid fa-backward" title="Previous Page">Back</button>
-		
-		<span class="font-weight-bold"><?='Create an Assignment for '.$session->identity_userid.' in syndicate '.$session->syndicate_name ?></span>
-		
-		<button id="reset" class="btn btn-primary mr-0 fa-solid fa-rotate-left" title="Reset this page">Reset</button>
-		
-		<button id="confirm" class="btn btn-primary mr-0 fa-solid fa-check" title="Create assignment">Confirm</button>
+	<div class="row d-flex mt-2 justify-content-between">
+		<a id="return" title="Previous Page">Back</a>
+		<a id="reset" title="Reset this page">Reset</a>
 	</div>
 	
 	<!-- data entry fields -->
+	<div class="flex mt-1 mb-4">
+		<h2 class="heading inline">Create File</h2><span><?=' for '.$session->identity_userid.' in syndicate '.$session->syndicate_name ?></span>
+		<a id="confirm" class="btn ml-4" title="Create assignment">Confirm</a>
+	</div>
+	<form>
     <section>
         <!-- country -->
-        <label id="county_group_label" for="county_group" class="col-2">Country Group</label>
-        <select id="county_group"></select>
-    </section>
+        <label id="county_group_label" for="county_group">County Group</label>
+        <select id="county_group">
+			<option selected="selected" disabled="disabled">Select here</option>
+			<option>England</option>
+			<option>Scotland</option>
+			<option>Wales</option>
+			<option>Islands</option>
+			<option>Specials</option>
+		</select>
 
-    <section>
         <!-- county -->
-        <label for="county">County</label>
-        <select id="county"></select>
+		<span class="ml-2">
+       		<label for="county" class="right">County</label>
+        	<select id="county"></select>
+    	</span>
     </section>
 
     <section>
@@ -43,7 +50,7 @@
 
     <section>
         <!-- place -->
-        <label id="place_label" for="place">Place/Church/Church Code =></label>
+        <label id="place_label" for="place">Place/Church/Church Code</label>
         <select id="place"></select>
     </section>
 
@@ -74,191 +81,169 @@
         <label for="comments">Document Comments</label>
         <textarea id='comments'></textarea>
     </section>
+	</form>
 
 
     <script>
 		$(document).ready(function() 
-			{
-				// declare variables
-				var error_email = "<?=$session->linbmd2_email?>";
-				var sources = [];
-				var counties = [];
-				var chapman_codes = [];
-				var places = [];
-				var churches = [];
-				var church_codes = [];
-				var doublons = [];
-				var error_messages = [];
-				var elements = [];
+		{
+			// declare variables
+			var error_email = "<?=$session->linbmd2_email?>";
+			var sources = [];
+			var counties = [];
+			var chapman_codes = [];
+			var places = [];
+			var churches = [];
+			var church_codes = [];
+			var doublons = [];
+			var error_messages = [];
+			var elements = [];
 				
-				// load error messages
-				error_messages[0] = 'Please select a Description for this assignment.';
-				error_messages[1] = 'Please select a Country for this assignment.';
-				error_messages[2] = 'Please select a County for this assignment.';
-				error_messages[3] = 'Please select a Place for this assignment.';
-				error_messages[4] = 'Please select a Church for this assignment.';
-				error_messages[5] = 'Church Code must be three characters long.';
-				error_messages[6] = 'Church Code must be characters only, A-Z.';
-				error_messages[7] = 'Please select a Register for this assignment.';
-				error_messages[8] = 'Please select a Source for this assignment.';
-				error_messages[9] = 'Please select a Document Source for this assignment.';
-				error_messages[10] = 'Please select at least one image.';
-				error_messages[11] = 'Total of all files selected cannot exceed 500M.';
-				error_messages[12] = 'Only jpeg, jpg, png or pdf files can be selected.';
-				error_messages[13] = 'Please select files with content.';
-				error_messages[14] = 'Please select files no greater than 20M each.';
+			// load error messages
+			error_messages[0] = 'Please select a Description for this assignment.';
+			error_messages[1] = 'Please select a Country for this assignment.';
+			error_messages[2] = 'Please select a County for this assignment.';
+			error_messages[3] = 'Please select a Place for this assignment.';
+			error_messages[4] = 'Please select a Church for this assignment.';
+			error_messages[5] = 'Church Code must be three characters long.';
+			error_messages[6] = 'Church Code must be characters only, A-Z.';
+			error_messages[7] = 'Please select a Register for this assignment.';
+			error_messages[8] = 'Please select a Source for this assignment.';
+			error_messages[9] = 'Please select a Document Source for this assignment.';
+			error_messages[10] = 'Please select at least one image.';
+			error_messages[11] = 'Total of all files selected cannot exceed 500M.';
+			error_messages[12] = 'Only jpeg, jpg, png or pdf files can be selected.';
+			error_messages[13] = 'Please select files with content.';
+			error_messages[14] = 'Please select files no greater than 20M each.';
 				
-				// focus first input field
-				document.getElementById('ass_name').focus();
+			// focus first input field
+			document.getElementById('county_group').focus();
 
-				// process events
-				$("#county_group").on("keydown", function(e)
-					{									
-						// tab or enter
-						if ( e.key === 'Tab' || e.key === 'Enter' )
-							{
-								// initialise
-								e.preventDefault();
-								elements = ["county", "chapman_code", "place", "church", "church_code"];
-								elements.forEach(blankFields);
-								var ctys = [];
-								counties = [];
-								chapman_codes = [];
-								// validate, element, element_value, type_of_test, test_value
-								if ( verify_element('county_group', $.trim(document.getElementById("county_group").value), 'value', 'SL', 'county_group_group', error_messages[1]) === 1 ) { return; }
-								// set this_element, next_element, focus?
-								next_element('county_group', 'county', 'yes');
-								// load counties to select depending on county group
-								switch ( $.trim(document.getElementById("county_group").value) )
-									{
-										case 'England':
-											ctys = <?=json_encode($session->freeukgen_source_values['counties_England'])?>;
-											break;
-										case 'Wales':
-											ctys = <?=json_encode($session->freeukgen_source_values['counties_Wales'])?>;
-											break;
-										case 'Scotland':
-											ctys = <?=json_encode($session->freeukgen_source_values['counties_Scotland'])?>;
-											break;
-										case 'Islands':
-											ctys = <?=json_encode($session->freeukgen_source_values['counties_Islands'])?>;
-											break;
-										case 'Special':
-											ctys = <?=json_encode($session->freeukgen_source_values['counties_Special'])?>;
-											break;
-									}
-								// create county and chapman code arrays
-								for ( let i = 0; i < ctys.length; i++ ) 
-									{
-										counties[i] = ctys[i].split(' => ')[0];
-										chapman_codes[i] = ctys[i].split(' => ')[1];
-									}
-								// sources, element_id, field for code, field for name							
-								if ( counties ) { load_sources(counties, 'county', null, null); }
-								else { alert('Cannot create assignment. Counties cannot be loaded for this Country. Report to '+error_email); }
-							}
-					});
+			// process events
+			$("#county_group").on("change", function(e) {									
+					// initialise
+					e.preventDefault();
+					elements = ["county", "chapman_code", "place", "church", "church_code"];
+					elements.forEach(blankFields);
+					var ctys = [];
+					counties = [];
+					chapman_codes = [];
+					// validate, element, element_value, type_of_test, test_value
+					if ( verify_element('county_group', $.trim(document.getElementById("county_group").value), 'value', 'SL', 'county_group_group', error_messages[1]) === 1 ) { return; }
+					// set this_element, next_element, focus?
+					next_element('county_group', 'county', 'yes');
+					// load counties to select depending on county group
+					switch ( $.trim(document.getElementById("county_group").value) )
+					{
+						case 'England':
+							ctys = <?=json_encode($session->freeukgen_source_values['counties_England'])?>;
+						break;
+						case 'Wales':
+							ctys = <?=json_encode($session->freeukgen_source_values['counties_Wales'])?>;
+						break;
+						case 'Scotland':
+							ctys = <?=json_encode($session->freeukgen_source_values['counties_Scotland'])?>;
+						break;
+						case 'Islands':
+							ctys = <?=json_encode($session->freeukgen_source_values['counties_Islands'])?>;
+						break;
+						case 'Special':
+							ctys = <?=json_encode($session->freeukgen_source_values['counties_Special'])?>;
+						break;
+					}
+					// create county and chapman code arrays
+					for ( let i = 0; i < ctys.length; i++ ) {
+						counties[i] = ctys[i].split(' => ')[0];
+						chapman_codes[i] = ctys[i].split(' => ')[1];
+					}
+					// sources, element_id, field for code, field for name							
+					if ( counties ) { load_sources(counties, 'county', null, null); }
+					else { alert('Cannot create assignment. Counties cannot be loaded for this Country. Report to '+error_email); }
+			});
 				
-				$("#county").on("keydown", function(e) 
-					{							
-						// tab or enter
-						if ( e.key === 'Tab' || e.key === 'Enter' )
-							{
-								// initialise
-								e.preventDefault();
-								elements = ["chapman_code", "place", "church", "church_code"];
-								elements.forEach(blankFields);
-								
-								// validate, element, element_value, type_of_test, test_value
-								if ( verify_element('county', $.trim(document.getElementById("county").value), 'value', 'SL', 'county_group_group', error_messages[2]) === 1 ){ return; }
-								// set this_element, next_element, focus?
-								next_element('county', 'place', 'yes');
-								// load chapman code
-								var index = $.inArray( $.trim(document.getElementById("county").value), counties );
-								document.getElementById("chapman_code").value = chapman_codes[index];		
-								// call the php method to get the places for the entered county	
-								var formData = new FormData(); 
-									formData.append('search_term', $.trim(document.getElementById("county").value));
-								var url = "<?=base_url('allocation/get_places')?>";
-								places = getData(url, formData, 'Places');
-								// load to select
-								if ( places.length > 0 ) { load_sources(places, 'place', null, null); }
-								else { alert('Cannot create assignment. Places cannot be loaded for this County. Report to '+error_email); }
-							}
-					});	
+			$("#county").on("change", function(e) {							
+				e.preventDefault();
+				elements = ["chapman_code", "place", "church", "church_code"];
+				elements.forEach(blankFields);
+							
+				// validate, element, element_value, type_of_test, test_value
+				if ( verify_element('county', $.trim(document.getElementById("county").value), 'value', 'SL', 'county_group_group', error_messages[2]) === 1 ){ return; }
+				// set this_element, next_element, focus?
+				next_element('county', 'place', 'yes');
+				// load chapman code
+				var index = $.inArray( $.trim(document.getElementById("county").value), counties );
+				document.getElementById("chapman_code").value = chapman_codes[index];		
+				// call the php method to get the places for the entered county	
+				var formData = new FormData(); 
+				formData.append('search_term', $.trim(document.getElementById("county").value));
+				var url = "<?=base_url('allocation/get_places')?>";
+				places = getData(url, formData, 'Places');
+				// load to select
+				if ( places.length > 0 ) { load_sources(places, 'place', null, null); }
+				else { alert('Cannot create assignment. Places cannot be loaded for this County. Report to '+error_email); }
+			});	
 					
-				$("#place").on("keydown", function(e) 
-					{						
-						// tab or enter
-						if ( e.key === 'Tab' || e.key === 'Enter' )
-							{
-								// initialise
-								e.preventDefault();
-								elements = ["church", "church_code"];
-								elements.forEach(blankFields);
-								let chrs = [];
-								churches = [];
-								church_codes = [];
-								
-								// validate, element, element_value, type_of_test, test_value
-								if ( verify_element('place', $.trim(document.getElementById("place").value), 'value', 'SL', 'place_group', error_messages[3]) === 1 ){ return; }
-								// set this_element, next_element, focus?
-								next_element('place', 'church', 'yes');
-								// call the php method to get the churches for the entered place
-								var formData = new FormData(); 
-									formData.append('country', document.getElementById("county_group").value);
-									formData.append('county', document.getElementById("county").value);
-									formData.append('place', document.getElementById("place").value);
-								var url = "<?=base_url('allocation/get_churches')?>";
-								chrs = getData(url, formData, 'Churches');
-								// create church and church code arrays
-								for ( let i = 0; i < chrs.length; i++ ) 
-									{
-										churches[i] = chrs[i].split(' => ')[0];
-										church_codes[i] = chrs[i].split(' => ')[1];
-									}
-								// blank church_codes = 198 = default which should not be used
-								if ( church_codes.length > 0 )
-									{
-										for ( let i = 0; i < church_codes.length; i++ ) 
-											{
-												if ( church_codes[i] == '198' ) // default church code
-													{
-														church_codes[i] = '';
-													}
-											}
-									}
-								// load to select
-								if ( churches.length > 0 ) { load_sources(churches, 'church', null, null); }
-								else { alert('Cannot create assignment. Churches cannot be loaded for this Place. Report to '+error_email); }
-							}
-					});						
+			$("#place").on("change", function(e) {						
+				// initialise
+				e.preventDefault();
+				elements = ["church", "church_code"];
+				elements.forEach(blankFields);
+				let chrs = [];
+				churches = [];
+				church_codes = [];
+						
+				// validate, element, element_value, type_of_test, test_value
+				if ( verify_element('place', $.trim(document.getElementById("place").value), 'value', 'SL', 'place_group', error_messages[3]) === 1 ){ return; }
+				// set this_element, next_element, focus?
+				next_element('place', 'church', 'yes');
+				// call the php method to get the churches for the entered place
+				var formData = new FormData(); 
+				formData.append('country', document.getElementById("county_group").value);
+				formData.append('county', document.getElementById("county").value);
+				formData.append('place', document.getElementById("place").value);
+				var url = "<?=base_url('allocation/get_churches')?>";
+				chrs = getData(url, formData, 'Churches');
+				// create church and church code arrays
+				for ( let i = 0; i < chrs.length; i++ ) {
+					churches[i] = chrs[i].split(' => ')[0];
+					church_codes[i] = chrs[i].split(' => ')[1];
+				}
+				// blank church_codes = 198 = default which should not be used
+				if ( church_codes.length > 0 )
+				{
+					for ( let i = 0; i < church_codes.length; i++ ) 
+					{
+						if ( church_codes[i] == '198' ) // default church code
+						{
+							church_codes[i] = '';
+						}
+					}
+				}
+				// load to select
+				if ( churches.length > 0 ) { load_sources(churches, 'church', null, null); }
+				else { alert('Cannot create assignment. Churches cannot be loaded for this Place. Report to '+error_email); }
+		});						
 					
-				$("#church").on("keydown", function(e) 
-					{						
-						// tab or enter
-						if ( e.key === 'Tab' || e.key === 'Enter' )
-							{
-								// initialise
-								e.preventDefault();
-								elements = ["church_code"];
-								elements.forEach(blankFields);
-								
-								// validate, element, element_value, type_of_test, test_value
-								if ( verify_element('church', $.trim(document.getElementById("church").value), 'value', 'SL', 'place_group', error_messages[4]) === 1 ){ return; }
-								// set this_element, next_element, focus?
-								next_element('church', 'register', 'yes');
-								// load church code
-								var index = $.inArray( $.trim(document.getElementById("church").value), churches );
-								document.getElementById("church_code").value = church_codes[index];
-								// load registers
-								sources = <?php echo json_encode($session->register_types); ?>;							
-								if ( sources ) { load_sources(sources, 'register', 'register_code', 'register_description'); }
-								else { alert('Cannot create assignment. Register Types cannot be loaded. Report to '+error_email); }
-							}
-					});
+		$("#church").on("change", function(e) {
+			// initialise
+			e.preventDefault();
+			elements = ["church_code"];
+			elements.forEach(blankFields);
+				
+			// validate, element, element_value, type_of_test, test_value
+			if ( verify_element('church', $.trim(document.getElementById("church").value), 'value', 'SL', 'place_group', error_messages[4]) === 1 ){ return; }
+			// set this_element, next_element, focus?
+			next_element('church', 'register', 'yes');
+			// load church code
+			var index = $.inArray( $.trim(document.getElementById("church").value), churches );
+			document.getElementById("church_code").value = church_codes[index];
+			// load registers
+			sources = <?php echo json_encode($session->register_types); ?>;							
+			if ( sources ) { load_sources(sources, 'register', 'register_code', 'register_description'); }
+			else { alert('Cannot create assignment. Register Types cannot be loaded. Report to '+error_email); }
+		});
 					
-				//$("#church_code").on("keydown", function(e) 
+		//$("#church_code").on("keydown", function(e) 
 					//{													
 						//if ( e.key == 'Tab' || e.key == 'Enter' )
 							//{		
@@ -281,26 +266,20 @@
 							//}
 					//});
 				
-				$("#register").on("keydown", function(e) 
-					{				
-						if ( e.key === 'Tab' || e.key === 'Enter' )
-							{		
-								// initialise
-								e.preventDefault();
-						
-								// validate, element, element_value, type_of_test, test_value
-								if ( verify_element('register', $.trim(document.getElementById("register").value), 'value', 'SL', 'register_group', error_messages[7]) === 1 ){ return; }
-								// set this_element, next_element, focus?
-								next_element('register', 'source', 'yes');
-								// load sources
-								sources = <?php echo json_encode($session->allocation_image_sources); ?>;
-								if ( sources ) { load_sources(sources, 'source', 'source_code', 'source_name'); }
-								else { alert('Cannot create assignment. Sources Types cannot be loaded. Report to '+error_email); }
-							}
-					});
+		$("#register").on("change", function(e) {				
+			e.preventDefault();
+			
+			// validate, element, element_value, type_of_test, test_value
+			if ( verify_element('register', $.trim(document.getElementById("register").value), 'value', 'SL', 'register_group', error_messages[7]) === 1 ){ return; }
+			// set this_element, next_element, focus?
+			next_element('register', 'source', 'yes');
+			// load sources
+			sources = <?php echo json_encode($session->allocation_image_sources); ?>;
+			if ( sources ) { load_sources(sources, 'source', 'source_code', 'source_name'); }
+			else { alert('Cannot create assignment. Sources Types cannot be loaded. Report to '+error_email); }
+		});
 					
-				$("#source").on("keydown", function(e) 
-					{
+			$("#source").on("keydown", function(e) {
 						if ( e.key === 'Tab' || e.key === 'Enter' )
 							{		
 								// initialise
@@ -379,7 +358,12 @@
 							{
 								case 'LP': // local PC images
 									// get images
-									var images = document.getElementById('images_local').files;
+									const ielem = document.getElementById('images_local');
+	
+									if (!ielem) 
+										break;
+
+									var images = ielem.files;
                                     // test that images selected have not already been attached to an assignment
 									// do this first because images are removed from selection if doublon detected. 
 									// set url

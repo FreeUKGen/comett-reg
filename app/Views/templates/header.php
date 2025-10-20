@@ -28,7 +28,7 @@
         <ul>
           <li>File
             <ul>
-				<li><a href="<?php echo base_url('allocation/create_allocation_step1/0')?>">New</a></li>
+				<li><a href="<?php echo base_url('allocation/new_create_assignment')?>">New</a></li>
 				<li><a href="<?php echo base_url('allocation/manage_allocations/2')?>">Edit</a></li>
 				<li><a href="<?php echo base_url('home/signout')?>">Quit</a></li>
             </ul>

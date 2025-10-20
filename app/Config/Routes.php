@@ -187,6 +187,9 @@ $routes->group
 			$routes->get('change_assignment_step1/(:segment)', 'Allocation::change_assignment_step1/$1');
 			$routes->post('change_assignment_step2/(:segment)', 'Allocation::change_assignment_step2/$1');
 			$routes->post('load_csv_file_step2', 'Allocation::load_csv_file_step2');
+
+			// DS NEW
+			$routes->get('new_create_assignment', 'Allocation::new_create_assignment');
 		}
 	);
 
