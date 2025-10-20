@@ -2373,6 +2373,7 @@ class Transcribe extends BaseController
 		$transcription_current_layout_model = new Transcription_Current_Layout_Model();
 				
 		// get data array
+		$request = service('request');
 		$data_array = json_decode($this->request->getPost('data_object'), true);
 		// get layout parms
 		$layout_index = $this->request->getPost('layoutIndexparm');

@@ -46,7 +46,7 @@ class Allocation extends BaseController
 		switch ($start_message) 
 			{
 				case 0:
-					// load variables from common_helper.php
+					// load variables from common_helper.
 					load_variables();
 					// input values defaults for first time
 					$session->set('name', '');
@@ -2622,4 +2622,3 @@ if ( $session->identity_userid == 'freeregdev' )
 	
 	
 }
-

@@ -7,7 +7,7 @@
     "require": {
         "php": "^8.4",
         "codeigniter4/framework": "^4.6",
-		"mongodb/mongodb": "^1.21",
+		"mongodb/mongodb": "^2.1.1",
         "phpmailer/phpmailer": "^v6.10.0",
         "ext-session": "*",
         "ext-bz2": "*",
@@ -30,11 +30,9 @@
         "ext-pdo": "*",
         "ext-phar": "*",
         "ext-simplexml": "*",
-        "ext-ssh2": "*",
         "ext-tokenizer": "*",
         "ext-xml": "*",
         "ext-zlib": "*",
-        "ext-memcached": "*",
         "ext-zip": "*"
     },
     "require-dev": {
