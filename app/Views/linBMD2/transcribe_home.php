@@ -2,79 +2,33 @@
 	<?php $session = session();
 	use App\Models\Transcription_Comments_Model; ?>
 	
-	<div class="row mt-3 d-flex justify-content-between font-weight-bold">			
-		<span>Transcription Home</span>
+	<div class="row mt-2 mb-2">		
+		<header>	
+		<aside>
 			<?php					
 				if ( $session->status == '0' ) 
 					{ 
 						?>
-						<a style="font-size:1.5vw !important;" href="<?=(base_url('transcribe/toogle_transcriptions'))?>"><?php echo 'Your ACTIVE transcriptions' ?></a>
+						<a href="<?=(base_url('transcribe/toogle_transcriptions'))?>"><?php echo 'Your ACTIVE transcriptions' ?></a>
 					<?php
 					}
 				else
 					{
 						?>
-						<a style="font-size:1.5vw !important;" href="<?=(base_url('transcribe/toogle_transcriptions'))?>"><?php echo 'Your CLOSED transcriptions' ?></a>
+						<a href="<?=(base_url('transcribe/toogle_transcriptions'))?>"><?php echo 'Your CLOSED transcriptions' ?></a>
 					<?php
 					}
 					?>
-			<?php
-			if ( $session->masquerade == 0 )
-				{ ?>	
-				
-					<a class="btn btn-primary mr-0 d-flex" href="<?=(base_url('allocation/manage_allocations/0')) ?>">Manage your <?php echo $session->current_project[0]['allocation_text'].'s'?></a>
-				
-					<?php
-						switch ($session->current_project[0]['project_index'])
-							{
-								case 1: ?>
-									<a class="btn btn-primary mr-0 d-flex" href="<?=(base_url('transcription/reopen_BMD_step1/0')) ?>">Reopen <?php echo $session->current_project[0]['project_name'] ?> Transcription</a>
-									<?php
-									break;
-								case 2: ?>
-									<button id="alloc" class="btn btn-primary mr-0"><?='Create '.$session->current_project[0]['allocation_text']?></button>
-									
-								<?php
-									break;
-								case 2: ?>
-									<?php
-									break;
-							} ?>
-				
-					<?php
-						switch ($session->current_project[0]['project_index'])
-						{
-							case 1: ?>
-								<a class="btn btn-primary mr-0 d-flex" href="<?=(base_url('transcription/create_BMD_step1/0')) ?>">Create a new <?php echo $session->current_project[0]['project_name'] ?> Transcription</a>
-								<?php
-								break;
-							case 2: ?>
-								<button id="csv_file" class="btn btn-primary mr-0">Load CSV File</button>
-								<?php
-								break;
-							case 3:
-								break;
-						}?>
-						
-					<button id="refresh" class="btn btn-primary mr-0">Refresh Page</button>	
-				<?php
-				}
-			else
-				{ ?>
-					<div class="row mt-4 d-flex justify-content-between">
-						<a class="btn btn-primary mr-0 d-flex" href="<?=(base_url('syndicate/manage_users_step1/'.$session->saved_syndicate_index)) ?>">Go back to Manage Users in your syndicate</a>
-						<a class="btn btn-primary mr-0 d-flex" href="<?=(base_url('syndicate/stop_masquerading/')) ?>"><?php echo 'Stop masquerading as Transcriber => '.$session->identity_userid; ?> </a>
-					</div>
-				<?php
-				} ?>
+		</aside>
+		</header>
 	</div>
 	
-	<div class="row text-center table-responsive w-auto" style="max-height: 450px;">
+	<div class="row text-center table-responsive w-auto">
 		<table class="table table-borderless" style="border-collapse: separate; border-spacing: 0;" id="show_table">
 			<thead class="sticky-top bg-white">
 				<tr class="text-primary">
 					<th><?php echo $session->current_project[0]['allocation_text'].' Name'?></th>
-					<th>Transcription</th>
+					<th>File</th>
 					<?php
 					if ( $session->current_project[0]['project_index'] == 2 ) 
 						{ ?>

@@ -1,11 +1,11 @@
 <?php $session = session(); ?>	
 	
-	<div class="form-group row ml-2 mt-4">
+	<div class="form-group ml-2 mt-4">
 		<label for="identity" class="col-1">Identity</label>
 		<input type="text" class="form-control col-2" id="id" aria-describedby="userHelp">
 		<span id="userHelp" class="form-text text-muted pl-2">Your <?php echo $session->current_project[0]['project_name']; ?> user name.</span>
 	</div>
-	<div class="form-group row ml-2 mt-4">
+	<div class="form-group ml-2 mt-4">
 		<label for="password" class="col-1">Password</label>
 		<input type="password" class="form-control col-2" id="pw">
 		<span id="userHelp" class="form-text text-muted pl-2">Your <?php echo $session->current_project[0]['project_name']; ?> password.</span>
@@ -33,7 +33,7 @@
 	
 	<br><br>
 	
-	<div class="row mt-2">
+	<div class="mt-2">
 		<?php
 		switch ($session->current_project[0]['project_index'])
 			{

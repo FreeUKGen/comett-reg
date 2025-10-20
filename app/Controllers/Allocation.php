@@ -834,7 +834,7 @@ class Allocation extends BaseController
 		switch ($session->BMD_cycle_code) 
 			{
 				case 'NONEA': // nothing was selected
-					$session->set('message_2', 'Please select an action to perform from the dropdown.');
+					$session->set('message_2', 'Select an action');
 					$session->set('message_class_2', 'alert alert-danger');
 					return redirect()->to( base_url('allocation/manage_allocations/2') );
 					break;

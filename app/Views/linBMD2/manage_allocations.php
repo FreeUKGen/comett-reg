@@ -1,32 +1,24 @@
 	<?php $session = session(); ?>
 	
-	<div class="row mt-3 d-flex justify-content-between font-weight-bold">
-		<button id="return" class="btn btn-primary mr-0 fa-solid fa-backward">Back</button>
-		<span> 
+	<div class="row mt-2">
 			<?php
 				if ( $session->allocation_status == 'Open' ) 
 					{ 
 						?>
 					<h3>
-						<a href="<?=(base_url('allocation/toogle_allocations'))?>"><?php echo 'ACTIVE '.$session->current_project[0]['allocation_text'].'s for => '.$session->identity_userid.', transcribing for => '.$session->syndicate_name;?></a>
+						<a href="<?=(base_url('allocation/toogle_allocations'))?>"><?php echo 'ACTIVE '.$session->current_project[0]['allocation_text'].'s for '.$session->identity_userid.', transcribing for '.$session->syndicate_name;?></a>
 					</h3>
 					<?php
 					}
 				else
 					{
 						?>
-						<a href="<?=(base_url('allocation/toogle_allocations'))?>"><?php echo 'CLOSED '.$session->current_project[0]['allocation_text'].'s for => '.$session->identity_userid.', transcribing for => '.$session->syndicate_name; ?></a>
+						<h3>
+						<a href="<?=(base_url('allocation/toogle_allocations'))?>"><?php echo 'CLOSED '.$session->current_project[0]['allocation_text'].'s for '.$session->identity_userid.', transcribing for '.$session->syndicate_name; ?></a>
+						</h3>
 					<?php
 					}
 			?>
-		</span>
-		<?php
-		if ( $session->current_project[0]['project_index'] == '2' )
-			{ ?>
-				<button id="csv_file" class="btn btn-primary mr-0">Load CSV File</button>
-			<?php
-			} ?>
-		<button id="alloc" class="btn btn-primary mr-0"><?='Create '.$session->current_project[0]['allocation_text']?></button>
 	</div>
 	
 	<div class="row text-center table-responsive w-auto" style="max-height: 450px;">
@@ -89,7 +81,6 @@
 											<td class="align-middle"><?= esc($allocation['Change_date'])?></td>
 											<td class="align-middle"><?= esc($allocation['BMD_last_action'])?></td>
 											<td class="align-middle">
-												<label for="next_action" class="sr-only">Next action</label>
 													<select class="box" name="next_action" id="next_action">
 														<?php foreach ($session->transcription_cycles as $key => $transcription_cycle): ?>
 															<?php if ( $transcription_cycle['BMD_cycle_type'] == 'ALLOC' ): ?>
@@ -103,7 +94,7 @@
 											<td class="align-middle">
 												<button  
 													data-id="<?= esc($allocation['BMD_allocation_index']); ?>" 
-													class="go_button btn btn-success">Go
+													class="go-btn btn btn-success">Go
 												</button>
 											</td>
 										</tr>
@@ -132,7 +123,7 @@
 	
 $(document).ready(function()
 	{	
-		$('.go_button').on("click", function()
+		$('.go-btn').on("click", function()
 			{
 				// define the variables
 				var id = $(this).data('id');

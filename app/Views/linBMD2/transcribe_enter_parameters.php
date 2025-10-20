@@ -343,8 +343,8 @@
 	</div>
 	
 	<div>
-		<form action="<?php echo(base_url('transcribe/enter_parameters_step/')) ?>" method="post" name="post_data_object">
-			<input name="data_object" id="data_object" type="hidden">
+		<form action="<?php echo(base_url('transcribe/enter_parameters_step')) ?>" method="post" name="post_data_object">
+			<input name="data_params" id="data_object" type="hidden">
 			<input name="layoutIndexparm" id="layoutIndexparm" type="hidden">
 			<input name="layoutNameparm" id="layoutNameparm" type="hidden">
 		</form>
@@ -356,7 +356,7 @@
 	</div>
 	
 	<div>
-		<form action="<?php echo(base_url('transcribe/set_param_image/')); ?>" method="POST" name="form_param_image">
+		<form action="<?php echo(base_url('transcribe/set_param_image')); ?>" method="POST" name="form_param_image">
 			<input name="direction" id="direction" type="hidden">
 		</form>	
 	</div>
