@@ -81,6 +81,15 @@
         <label for="comments">Document Comments</label>
         <textarea id='comments'></textarea>
     </section>
+
+     <!-- progress -->
+     <div id="progress_wrapper" class="row none">
+            <label id="progress_label" for="progress_bar">Upload file:
+            <progress class="" id="progress_bar" value="0" max="100"></progress>
+			</label>
+	 </div>
+     </section>
+
 	</form>
 
 
@@ -117,7 +126,7 @@
 			error_messages[14] = 'Please select files no greater than 20M each.';
 				
 			// focus first input field
-			document.getElementById('county_group').focus();
+			$('county_group').focus();
 
 			// process events
 			$("#county_group").on("change", function(e) {									
@@ -130,7 +139,7 @@
 					chapman_codes = [];
 					// validate, element, element_value, type_of_test, test_value
 					if ( verify_element('county_group', $.trim(document.getElementById("county_group").value), 'value', 'SL', 'county_group_group', error_messages[1]) === 1 ) { return; }
-					// set this_element, next_element, focus?
+					// set this_element, next_element, focus
 					next_element('county_group', 'county', 'yes');
 					// load counties to select depending on county group
 					switch ( $.trim(document.getElementById("county_group").value) )
@@ -168,7 +177,7 @@
 							
 				// validate, element, element_value, type_of_test, test_value
 				if ( verify_element('county', $.trim(document.getElementById("county").value), 'value', 'SL', 'county_group_group', error_messages[2]) === 1 ){ return; }
-				// set this_element, next_element, focus?
+				// set this_element, next_element, focus
 				next_element('county', 'place', 'yes');
 				// load chapman code
 				var index = $.inArray( $.trim(document.getElementById("county").value), counties );
@@ -194,7 +203,7 @@
 						
 				// validate, element, element_value, type_of_test, test_value
 				if ( verify_element('place', $.trim(document.getElementById("place").value), 'value', 'SL', 'place_group', error_messages[3]) === 1 ){ return; }
-				// set this_element, next_element, focus?
+				// set this_element, next_element, focus
 				next_element('place', 'church', 'yes');
 				// call the php method to get the churches for the entered place
 				var formData = new FormData(); 
@@ -232,7 +241,7 @@
 				
 			// validate, element, element_value, type_of_test, test_value
 			if ( verify_element('church', $.trim(document.getElementById("church").value), 'value', 'SL', 'place_group', error_messages[4]) === 1 ){ return; }
-			// set this_element, next_element, focus?
+			// set this_element, next_element, focus
 			next_element('church', 'register', 'yes');
 			// load church code
 			var index = $.inArray( $.trim(document.getElementById("church").value), churches );
@@ -256,7 +265,7 @@
 								
 								//// church code already in use for another church?
 								
-								//// set this_element, next_element, focus?
+								//// set this_element, next_element, focus
 								//next_element('church_code', 'register', 'yes');
 
 								//// load registers
@@ -271,7 +280,7 @@
 			
 			// validate, element, element_value, type_of_test, test_value
 			if ( verify_element('register', $.trim(document.getElementById("register").value), 'value', 'SL', 'register_group', error_messages[7]) === 1 ){ return; }
-			// set this_element, next_element, focus?
+			// set this_element, next_element, focus
 			next_element('register', 'source', 'yes');
 			// load sources
 			sources = <?php echo json_encode($session->allocation_image_sources); ?>;
@@ -302,12 +311,12 @@
 										document.getElementById('source_inputs').appendChild(label);
 										document.getElementById('source_inputs').appendChild(input);
 
-										// set this_element, next_element, focus?
+										// set this_element, next_element, focus
 										next_element('source', 'images_local', 'yes');
 									}
 								else
 									{
-										// set this_element, next_element, focus?
+										// set this_element, next_element, focus
 										next_element('source', 'doc_source', 'yes');
 									}
 								// load doc sources	
@@ -323,7 +332,7 @@
 							{		
 								e.preventDefault();
 								if ( verify_element('doc_source', $.trim(document.getElementById("doc_source").value), 'value', 'SL', 'doc_source_group', error_messages[9]) === 1 ){ return; }
-								// set this_element, next_element, focus?
+								// set this_element, next_element, focus
 								next_element('doc_source', 'doc_comment', 'yes');
 							}
 					});
@@ -342,7 +351,6 @@
 				$('#confirm').on("click", function()
 					{			
 						// validate
-						if ( verify_element('ass_name', $.trim(document.getElementById("ass_name").value), 'empty', null, 'ass_name_group', error_messages[0]) === 1 ){ return; }
 						if ( verify_element('county_group', $.trim(document.getElementById("county_group").value), 'value', 'SL', 'county_group_group', error_messages[1]) === 1 ) { return; }
 						if ( verify_element('county', $.trim(document.getElementById("county").value), 'value', 'SL', 'county_group_group', error_messages[2]) === 1 ) { return; }
 						if ( verify_element('place', $.trim(document.getElementById("place").value), 'value', 'SL', 'place_group', error_messages[3]) === 1 ) { return; }
@@ -350,11 +358,12 @@
 						if ( verify_element('church_code', $.trim(document.getElementById("church_code").value), 'length', 3, 'place_group', error_messages[5]) === 1 ){ return; }
 						if ( verify_element('church_code', $.trim(document.getElementById("church_code").value), 'alpha', null, 'place_group', error_messages[6]) === 1 ){ return; }
 						if ( verify_element('register', $.trim(document.getElementById("register").value), 'value', 'SL', 'register_group', error_messages[7]) === 1 ){ return; }
-						if ( verify_element('source', $.trim(document.getElementById("source").value), 'value', 'SL', 'source_inputs', error_messages[8]) === 1 ){ return; }
-						if ( verify_element('doc_source', $.trim(document.getElementById("doc_source").value), 'value', 'SL', 'doc_source_group', error_messages[9]) === 1 ){ return; }
+						//if ( verify_element('source', $.trim(document.getElementById("source").value), 'value', 'SL', 'source_inputs', error_messages[8]) === 1 ){ return; }
+						//if ( verify_element('doc_source', $.trim(document.getElementById("doc_source").value), 'value', 'SL', 'doc_source_group', error_messages[9]) === 1 ){ return; }
 
 						// tests by source
-						switch (document.getElementById("source").value)
+						if (document.getElementById('source')) {
+							switch (document.getElementById("source").value)
 							{
 								case 'LP': // local PC images
 									// get images
@@ -419,10 +428,11 @@
 										}
 									// check total size
 									if ( verify_element('images_local', totalSize, 'gt', 500000000, 'source_inputs', error_messages[11]) === 1 ){ return; }
-									// set this_element, next_element, focus?
+									// set this_element, next_element, focus
 									next_element('images_local', 'doc_source', 'yes');
 									break;		
 							}
+						}
 						
 						// create assignment
 						// set url
@@ -442,7 +452,8 @@
 							formData.append('doc_comment', $('#doc_comment').val());
 
 						// load source specific variables to formData
-						switch (document.getElementById("source").value)
+						if (document.getElementById("source")) {
+							switch (document.getElementById("source").value)
 							{
 								case 'LP': // local PC
 									for ( let i = 0; i < images.length; i++ ) 
@@ -451,12 +462,14 @@
 										}
 									break;	
 							}
+						}
 					
 						// submit the form - cannot use fetch as it doesn't give any feedback about upload progress
 						// see here - https://javascript.info/xmlhttprequest
 						// create the progress bar
-						document.getElementById('progress_label').removeAttribute("hidden");
-						document.getElementById('progress_bar').removeAttribute("hidden");
+						const e = document.getElementById('progress_wrapper');
+						if (e) e.className = '';
+
 						// initialise the request
 						let xhr = new XMLHttpRequest();
 						xhr.open("POST", url);
@@ -537,21 +550,26 @@
 			
 		function blankFields(element) 
 			{
-				document.getElementById(element).value = '';
+				//document.getElementById(element).value = '';
 				document.getElementById(element).setAttribute('readonly', true);
 				document.getElementById(element).style.backgroundColor = "";
 			}
 			
 		function next_element(this_element, next_element, focus) 
 			{
-				// this_element
-				document.getElementById(this_element).style.backgroundColor = "azure";
+				if (this_element) {
+					document.getElementById(this_element).style.backgroundColor = "azure";
+				}
+				else 
+					log_message('info', 'No element! ' . print_r(this_element, true));
+
+				if (next_element) {
 				// next element
-				document.getElementById(next_element).removeAttribute("readonly");
-				if ( focus === 'yes' )
-					{
-						document.getElementById(next_element).focus();
+					$(next_element).removeAttr("readonly");
+					if ( focus === 'yes' ) {
+						$(next_element).focus();
 					}
+				}
 			}
 			
 		function verify_element(element, element_value, test_type, test_value, display_group, error_message) 
