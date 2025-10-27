@@ -190,6 +190,8 @@ $routes->group
 
 			// DS NEW
 			$routes->get('new_create_assignment', 'Allocation::new_create_assignment');
+			// DS TODO - should be GET not POST
+			$routes->post('doublons', 'Allocation::doublons');
 		}
 	);
 

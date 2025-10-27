@@ -433,28 +433,35 @@ class Identity extends BaseController
 					->insert();
 		
 				// create user folder and subfolders if they don't exist
-				if ( ! is_dir(getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid) )
-					{ 
-						if ( ! is_dir(getcwd().'/Users/'.$session->current_project[0]['project_name']) )
-							{
-								mkdir(getcwd().'/Users/'.$session->current_project[0]['project_name']);
-							}
-						mkdir(getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid);
-						mkdir(getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid.'/Backups');
-						mkdir(getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid.'/CSV_Files');
-						mkdir(getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid.'/Scans');
-					}				
-				
-				// set_new user_flag
-				$new_user = 1;
+				$userPath = getenv('app.userDir');
+				$userPath .= '/' . $session->identity_userid; 
+				if (!is_dir($userPath)) { 
+					if (mkdir($userPath)) {
+						mkdir($userPath . '/Backups');
+						mkdir($userPath . '/Scans');
+						mkdir($userPath . '/CSV_Files');
+					}
+					else {
+						log_message('error', "Could not setup user directories");
+						exit(2);
+					}
+					// set_new user_flag
+					$new_user = 1;
+				}				
 			}
 		else
 			{
 				// if found verify directories exist
 				// create user folder and subfolders if they don't exist
-				$userDir = getenv('app.userDir') ?? getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid;
+				$userDir = getenv('app.userDir');
+				if (!$userDir) {
+					log_message('error', '.env does not have app.userDir setting');
+					exit(1);
+				}
+
+				$userDir = $userDir . '/' . $session->identity_userid;
 				if (!is_dir($userDir))
-					mkdir($userDir);
+					mkdir($userDir, 0777, true);
 				if (!is_dir($userDir . '/Backups'))
 					mkdir($userDir . '/Backups');
 				if (!is_dir($userDir . '/CSV_Files'))

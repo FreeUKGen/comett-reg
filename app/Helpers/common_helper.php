@@ -38,6 +38,8 @@ function load_variables()
 		$keep_from = strtotime('-15 days');
 
 		// do log clean up
+		// DS NOT NEEDED
+/**
 		$dir = new DirectoryIterator(dirname(WRITEPATH.'logs/*.log'));
 		foreach ($dir as $fileinfo) 
 			{
@@ -50,6 +52,7 @@ function load_variables()
 							}
 					}
 			}
+**/
 			
 		// test time out
 		if ( ! $session->has('realname') )
@@ -378,7 +381,10 @@ function manage_syndicate_DB()
 					$mongodb = define_mongodb();
 					
 					$collection_syndicates = $mongodb['database']->{'syndicates'};
+
+					//log_message('info', 'SYND:' . print_r($collection_syndicates));
 					$collection_userid = $mongodb['database']->{'userid_details'};
+					//log_message('info', 'USER:' . print_r($collection_userid));
 					
 					// get all syndicate details
 					$active_project_syndicates = $collection_syndicates->find()->toArray();
@@ -474,6 +480,8 @@ function define_mongodb()
 			->where('project_index', $session->current_project[0]['project_index'])
 			->where('environment', $session->environment)
 			->find();
+		//log_message('info', 'DBP! ' . print_r($db_parms, true));
+
 		if ( !$db_parms ) die('Sorry a fatal error has occurred and I cannot continue. The error is: cannot get DB_parms in common_helper[define_mongodb()]. Please send an email to '.$session->linbmd2_email.' reporting this problem. Thank you for your help.');
 //dd($db_parms);		
 		// define mongodb client
@@ -576,8 +584,6 @@ function get_source_data($source_info)
 	
 		// set cURL
 		$curl_url = $source_info['source_protocol'].$source_info['source_URL'].$source_info['source_port'].$source_info['source_folder'].$source_info['source_path'].$source_info['source_name'];
-log_message('info','GSD: ' . $curl_url);
-log_message('info','GSDp:' . $source_info['source_user'].':'.$source_info['source_password']);
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $curl_url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

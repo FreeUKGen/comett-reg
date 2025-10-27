@@ -1084,6 +1084,15 @@ load_variables();
 				define_environment(3);
 				$mongodb = define_mongodb();
 
+//		foreach ($mongodb['database']->listCollections() as $collectionInfo) {
+//			log_message('info', 'COL::' . print_r($collectionInfo, true));
+//		}
+		// log_message('info', 'COL1:' . $mongodb['database']->getCollection('userid_details'));
+		$users = $mongodb['database']->getCollection('userid_details');
+		$allUsers = $users->find();
+		log_message('info', 'Users:' . print_r($allUsers, true));
+
+
 				// Images Sources - comes from FreeComETT DB
 				$session->allocation_image_sources = $allocation_image_sources_model
 					->where('project_index', $session->current_project[0]['project_index'])
@@ -1347,7 +1356,9 @@ log_message('info', 'groups:' . print_r($session->county_groups, true));
 											// create file name
 											$image_name = $allocation_index.'_'.$image_no_err.'_'.$_FILES['images']['name'][$key];
 											$image_name_noext = pathinfo($image_name, PATHINFO_FILENAME);
-											$image_path = getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid.'/Scans/';
+											//$image_path = getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid.'/Scans/';
+											$user_path = getenv('app.userDir');
+											$image_path = $user_path .'/' . $session->identity_userid.'/Scans/';
 											$image_url = $image_path.$image_name;
 											// Upload file
 											if ( move_uploaded_file($_FILES['images']['tmp_name'][$key],$image_url) )

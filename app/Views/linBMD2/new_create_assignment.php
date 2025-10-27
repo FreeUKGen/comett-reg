@@ -50,7 +50,7 @@
 
     <section>
         <!-- place -->
-        <label id="place_label" for="place">Place/Church/Church Code</label>
+        <label id="place_label" for="place">Place</label>
         <select id="place"></select>
     </section>
 
@@ -72,6 +72,18 @@
         <select id="register"></select>
     </section>
 
+    <section id="source_inputs">
+        <!-- source of images -->
+        <label id="source_label" for="source">Source of images</label>
+        <select id="source"></select>
+    </section>
+
+	<!-- document source -->
+	<section id="doc_source_group">
+		<label id="doc_source_label" for="doc_source">Document Source</label>
+		<select id="doc_source"></select>
+	</section>
+
     <section>
         <label for="credit">Credit To</label>
         <input type='text' id='credit' />
@@ -83,6 +95,7 @@
     </section>
 
      <!-- progress -->
+	<section>
      <div id="progress_wrapper" class="row none">
             <label id="progress_label" for="progress_bar">Upload file:
             <progress class="" id="progress_bar" value="0" max="100"></progress>
@@ -288,56 +301,53 @@
 			else { alert('Cannot create assignment. Sources Types cannot be loaded. Report to '+error_email); }
 		});
 					
-			$("#source").on("keydown", function(e) {
-						if ( e.key === 'Tab' || e.key === 'Enter' )
-							{		
-								// initialise
-								e.preventDefault();
+			$("#source").on("change", function(e) {
+				// initialise
+				e.preventDefault();
 
-								// validate, element, element_value, type_of_test, test_value
-								if ( verify_element('source', $.trim(document.getElementById("source").value), 'value', 'SL', 'source_inputs', error_messages[8]) === 1 ){ return; }
-								// load source data input fields depending on input source
-								document.querySelectorAll(".remove").forEach(el => el.remove());
-								if (document.getElementById("source").value === 'LP' )
-									{
-										var input = document.createElement("input");
-										input.setAttribute('type', 'file');
-										input.setAttribute('class', 'form-control col-3 remove');
-										input.setAttribute('id', 'images_local');
-										input.setAttribute('accept', '.jpg, .jpeg, .png, .pdf');
-										input.setAttribute('multiple', '');
-										var label = document.createElement("I");
-										label.setAttribute('class', 'fa-solid fa-right-long remove');								
-										document.getElementById('source_inputs').appendChild(label);
-										document.getElementById('source_inputs').appendChild(input);
+				// validate, element, element_value, type_of_test, test_value
+				if ( verify_element('source', $.trim(document.getElementById("source").value), 'value', 'SL', 'source_inputs', error_messages[8]) === 1 ){ return; }
+				// load source data input fields depending on input source
+				document.querySelectorAll(".remove").forEach(el => el.remove());
+				if (document.getElementById("source").value === 'LP' )
+				{
+					var input = document.createElement("input");
+					input.setAttribute('type', 'file');
+					input.setAttribute('class', 'remove');
+					input.setAttribute('id', 'images_local');
+					input.setAttribute('accept', '.jpg, .jpeg, .png, .pdf');
+					input.setAttribute('multiple', '');
+					var label = document.createElement("label");
+					label.setAttribute('class', 'remove');								
+					let si = document.getElementById('source_inputs');
+					if (si) {
+						si.appendChild(label);
+						si.appendChild(input);
+					}
+					else 
+						console.warn('DS: SI NOT FOUND!!!');
 
-										// set this_element, next_element, focus
-										next_element('source', 'images_local', 'yes');
-									}
-								else
-									{
-										// set this_element, next_element, focus
-										next_element('source', 'doc_source', 'yes');
-									}
-								// load doc sources	
-								sources = <?php echo json_encode($session->document_sources); ?>;
-								if ( sources ) { load_sources(sources, 'doc_source', 'document_source', 'document_source'); }
-								else { alert('Cannot create assignment. Document Sources cannot be loaded. Report to '+error_email); }
-							}						
-					});
+					// set this_element, next_element, focus
+					next_element('source', 'images_local', 'yes');
+				}
+				else
+				{
+					// set this_element, next_element, focus
+					next_element('source', 'doc_source', 'yes');
+				}
+				// load doc sources	
+				sources = <?php echo json_encode($session->document_sources); ?>;
+				if ( sources ) { load_sources(sources, 'doc_source', 'document_source', 'document_source'); }
+				else { alert('Cannot create assignment. Document Sources cannot be loaded. Report to '+error_email); }
+			});						
 					
-				$("#doc_source").on("keydown", function(e) 
-					{
-						if ( e.key === 'Tab' || e.key === 'Enter' )
-							{		
-								e.preventDefault();
-								if ( verify_element('doc_source', $.trim(document.getElementById("doc_source").value), 'value', 'SL', 'doc_source_group', error_messages[9]) === 1 ){ return; }
-								// set this_element, next_element, focus
-								next_element('doc_source', 'doc_comment', 'yes');
-							}
-					});
+			$("#doc_source").on("keydown", function(e) {
+				 e.preventDefault();
+				if ( verify_element('doc_source', $.trim(document.getElementById("doc_source").value), 'value', 'SL', 'doc_source_group', error_messages[9]) === 1 ){ return; }
+				// set this_element, next_element, focus
+				next_element('doc_source', 'doc_comment', 'yes');
+			});
 									
-						
 				$('#return').on("click", function()
 					{			
 						$('form[name="form_return"]').submit();
@@ -561,7 +571,7 @@
 					document.getElementById(this_element).style.backgroundColor = "azure";
 				}
 				else 
-					log_message('info', 'No element! ' . print_r(this_element, true));
+					console.warn('No element: ' + JSON.stringify(this_element));
 
 				if (next_element) {
 				// next element
@@ -642,13 +652,21 @@
 		function error_field(display_group, error_message) 
 			{
 				var label = document.createElement("I");
-				label.setAttribute('class', 'fa-solid fa-right-long error_field');
+				label.setAttribute('class', 'error_field');
 				var span = document.createElement("span");
 				span.setAttribute('class', 'error_field');
+				span.setAttribute('ml-2', 'error_field');
 				span.innerHTML = error_message;
 				span.style.color = "red";
-				document.getElementById(display_group).appendChild(label);
-				document.getElementById(display_group).appendChild(span);
+				if (display_group) {
+					let displayGroupElem = document.getElementById(display_group);
+					if (displayGroupElem) {
+						document.getElementById(display_group).appendChild(label);
+						document.getElementById(display_group).appendChild(span);
+					}
+				}	
+				else
+					console.warn('No display_group found');
 			}
 					
 	</script>
