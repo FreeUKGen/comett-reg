@@ -6,7 +6,7 @@
 		<span id="userHelp" class="form-text text-muted pl-2">Your <?php echo $session->current_project[0]['project_name']; ?> user name.</span>
 	</div>
 	<div class="form-group ml-2 mt-4">
-		<label for="password" class="col-1">Password</label>
+		<label for="password" class="col-1">Password++</label>
 		<input type="password" class="form-control col-2" id="pw">
 		<span id="userHelp" class="form-text text-muted pl-2">Your <?php echo $session->current_project[0]['project_name']; ?> password.</span>
 	</div>
