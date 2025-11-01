@@ -209,7 +209,7 @@ class Transcribe extends BaseController
 		switch ($session->show_view_type) 
 			{
 				case 'transcribe':
-					echo view('linBMD2/transcribe_home');
+					echo view('linBMD2/new_transcribe_home');
 					echo view('linBMD2/sortTableNew');
 					echo view('linBMD2/searchTableNew');
 					break;
@@ -826,9 +826,8 @@ class Transcribe extends BaseController
 											// set the curl
 											// set up the curl - $session->curl_url is set in Identity
 											$ch = curl_init($session->curl_url);
-			$iden = 'test';
-			$pwd = 'test';
-									
+											$iden = 'test';
+
 											//curl_setopt($ch, CURLOPT_USERAGENT, $session->programname.':'.$session->version);
 											//curl_setopt($ch, CURLOPT_POST, true);
 											//curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
@@ -837,7 +836,8 @@ class Transcribe extends BaseController
 											curl_setopt($ch, CURLOPT_USERPWD, "$iden:$pwd");
 											// debug
 											curl_setopt($ch, CURLOPT_VERBOSE, true);
-											curl_setopt($ch, CURLOPT_STDERR, fopen(getcwd()."/curl.log", 'a+'));
+											$fhl = fopen(getcwd()."/curl.log", 'a+');
+											curl_setopt($ch, CURLOPT_STDERR, $fhl);
 			
 											// run the curl
 											$curl_result = curl_exec($ch);
@@ -853,7 +853,7 @@ class Transcribe extends BaseController
 												}
 		
 											// close the curl handle and file handle
-											fclose($fhup);
+											fclose($fhl);
 		
 											// load returned data to array
 											$lines = preg_split("/\r\n|\n|\r/", $curl_result);

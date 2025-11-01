@@ -120,7 +120,10 @@
 												<tr>
 													<td>
 														<a id="select_line" href="<?=(base_url().'/projects/load_project/'.esc($project['project_index'])) ?>">
-														<span><img src="<?php echo base_url().'/'.$project['project_pathtoicon'].'/'.$project['project_iconname'] ?>" alt="freeukreg" style="width:10vw;height:auto"</span>
+														<span>
+                                                            <img src="<?php echo base_url().'/'.$project['project_pathtoicon'].'/'.$project['project_iconname'] ?>"
+                                                                  alt="<?php echo $project['project_name']?>" style="width:10vw;height:auto" />
+                                                        </span>
 													</td>
 												</tr>
 											<?php
@@ -158,5 +161,3 @@
 
 </body>
 </html>
-
-

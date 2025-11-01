@@ -37,10 +37,7 @@
 			<ul>
 				<li>Upload CSV</li>
 				<li>View Upload Status</li>
-				<!---
-				<li><a href="<?php echo base_url('allocation/list_images')?>">List Images</a></li>
-				-->
-				<li>List Images</li>
+				<li><a href="<?php echo base_url('allocation/new_list_images')?>">List Images</a></li>
 				<li>Refresh Page</li>
 				<li>Log into FreeREG</li>
 				<li>Administration</li>
