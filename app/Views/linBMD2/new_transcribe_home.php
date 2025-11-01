@@ -1,4 +1,8 @@
- <main>
+<?php $session = session();
+use App\Models\Transcription_Comments_Model;
+?>
+
+<main>
       <div class="nav-container">
         <div class="sub-nav">
           <div class="sub-nav-left">
@@ -104,313 +108,125 @@
         <div class="container">
           <div class="table-scroll">
             <table>
-              <th>Entry</th>
-              <th>Reg Number</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <tr>
-                <td>1</td>
-                <td>xxxxxxxxxx</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>xxxxxxxxxx</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>xxxxxxxxxx</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>xxxxxxxxxx</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td>xxxxxxxxxx</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-              </tr>
-              <tr>
-                <td>6</td>
-                <td>xxxxxxxxxx</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-              </tr>
-              <tr>
-                <td>7</td>
-                <td>xxxxxxxxxx</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-              </tr>
-              <tr>
-                <td>8</td>
-                <td>xxxxxxxxxx</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-              </tr>
-              <tr>
-                <td>9</td>
-                <td>xxxxxxxxxx</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-              </tr>
-              <tr>
-                <td>10</td>
-                <td>xxxxxxxxxx</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-                <td>Text Cell</td>
-              </tr>
-            </table>
+                <thead>
+                <tr>
+                    <th>Entry</th>
+                    <th>Reg Number</th>
+                    <th><?php echo $session->current_project[0]['allocation_text'].' Name' ?></th>
+                    <th>Document Source</th>
+                    <th>Image Source</th>
+                    <th>Image Count</th>
+                    <th>Current Scan</th>
+                    <th>N° lines trans</th>
+                    <th>Start Date</th>
+                    <th>Last change date/time</th>
+                    <th>Upload Date</th>
+                    <th>Status</th>
+                    <th>Comments</th>
+                    <th>Last Action Performed</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tbody id="user_table">
+                <?php $n=0; foreach ($session->transcriptions as $transcription)
+                {
+                    if ( $transcription['BMD_header_index'] == $session->current_header_index )
+                    { ?>
+                        <tr class="alert alert-success">
+                        <?php
+                    }
+                    else
+                    { ?>
+                        <tr class="alert alert-light">
+                        <?php
+                    } ?>
+                    <td><?php echo $n+=1; ?></td>
+                    <td
+                            class="edit_assignment"
+                            title="ClickMe to edit assignment if in FreeREG"
+                            data-id="<?=esc($transcription['BMD_allocation_index'])?>"
+                            data-action='CHGEA'>
+                        <?= esc($transcription['BMD_allocation_name'])?>
+                    </td>
+                    <td><?= esc($transcription['BMD_file_name'])?></td>
+
+                        <td class="next_action"
+                            title="<?=esc($transcription['source_text'])?>"
+                            data-id="<?=esc($transcription['BMD_header_index'])?>"
+                            data-action='UPCOM'>
+                            <?php
+                            if ( !is_null($transcription['source_text']) )
+                            {
+                                echo esc(ellipsize($transcription['source_text'], 100, .5, '...'));
+                            }
+                            else
+                            {
+                                echo esc($transcription['source_text']);
+                            }
+                            ?>
+                        </td>
+                        <td><?= esc($transcription['image_source'])?></td>
+                        <td><?= esc($transcription['image_count'])?></td>
+                        <?php
+                    } ?>
+
+                    <td><?= esc($transcription['BMD_scan_name'])?></td>
+                    <td class="next_action"
+                        title="ClickMe to Transcribe from Scan"
+                        data-id='<?=esc($transcription['BMD_header_index'])?>'
+                        data-action='INPRO'>
+                        <?= esc($transcription['BMD_records'])?>
+                    </td>
+                    <td><?= esc($transcription['BMD_start_date'])?></td>
+                    <td><?= esc($transcription['Change_date'])?></td>
+                    <td><?= esc($transcription['BMD_submit_date'])?></td>
+                    <td class="next_action"
+                        title="ClickMe for Upload detail"
+                        data-id='<?=esc($transcription['BMD_header_index'])?>'
+                        data-action='UPDET'>
+                        <?= esc($transcription['BMD_submit_status'])?>
+                    </td>
+
+                    <td class="next_action"
+                        title="<?=esc($transcription['comment_text'])?>"
+                        data-id='<?=esc($transcription['BMD_header_index'])?>'
+                        data-action='UPCOM'>
+                        <?php
+                        if ( !is_null($transcription['comment_text']) )
+                        {
+                            echo esc(ellipsize($transcription['comment_text'], 100, .5, '...'));
+                        }
+                        else
+                        {
+                            echo esc($transcription['comment_text']);
+                        }
+                        ?>
+                    </td>
+
+                    <td><?= esc($transcription['BMD_last_action'])?></td>
+
+                    <?php
+                    if ( $session->status == '0' )
+                    {
+                        ?>
+                        <td>
+                            <select class="box" name="next_action" id="next_action">
+                                <?php foreach ($session->transcription_cycles as $key => $transcription_cycle): ?>
+                                    <?php if ( $transcription_cycle['BMD_cycle_type'] == 'TRANS' ): ?>
+                                        <option value="<?= esc($transcription_cycle['BMD_cycle_code'])?>">
+                                            <?= esc($transcription_cycle['BMD_cycle_name'])?>
+                                        </option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </select>
+                        </td>
+                        <?php
+                    }
+                    ?>
+
+                    </tr>
+                </tbody>
           </div>
         </div>
       </div>
