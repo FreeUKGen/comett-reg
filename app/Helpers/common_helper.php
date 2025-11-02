@@ -15,6 +15,7 @@ use App\Models\Licence_Model;
 use App\Models\Relationship_Model;
 use App\Models\Person_Status_Model;
 use App\Models\Project_DB_Model;
+use CodeIgniter\HTTP\RedirectResponse;
 
 function load_variables()
 	{
@@ -33,27 +34,7 @@ function load_variables()
 		$licence_model = new Licence_Model();
 		$relationship_model = new Relationship_Model();
 		$person_status_model = new Person_Status_Model();
-		
-		// clean up logs - keep logs for 15 days	
-		$keep_from = strtotime('-15 days');
 
-		// do log clean up
-		// DS NOT NEEDED
-/**
-		$dir = new DirectoryIterator(dirname(WRITEPATH.'logs/*.log'));
-		foreach ($dir as $fileinfo) 
-			{
-				if (!$fileinfo->isDot() AND $fileinfo->getExtension() == 'log' ) 
-					{
-						$ctime = $fileinfo->getCTime();
-						if ( $ctime < $keep_from )
-							{
-								unlink($fileinfo->getPathname());
-							}
-					}
-			}
-**/
-			
 		// test time out
 		if ( ! $session->has('realname') )
 			{
@@ -147,23 +128,6 @@ function load_variables()
 			->orderby('BMD_cycle_sort', 'ASC')
 			->findAll();
 		
-		// load fonts from fonts folder
-		// DS @TODO NOT USED - comment out for now
-		/**
-		$fontDir = getenv('app.fontDir') ?? getcwd().'/Fonts';
-		$dir = new DirectoryIterator(dirname($fontDir . '/*.*'));
-		$data_entry_fonts = array();
-		foreach ($dir as $fileinfo) 
-			{
-				if (!$fileinfo->isDot()) 
-					{
-						$font_name_array = explode('.', $fileinfo->getFilename());
-						$data_entry_fonts[] = $font_name_array[0];
-					}
-			}
-		asort($data_entry_fonts);
-		**/
-
 		// load font_styles
 		$data_entry_styles = array('normal', 'bold', 'bolder', 'lighter');
 		asort($data_entry_styles);
@@ -262,6 +226,13 @@ function load_variables()
 		// DS @TODO not used
 		// $session->set('data_entry_fonts', $data_entry_fonts);
 		$session->set('data_entry_styles', $data_entry_styles);
+	}
+
+	function check_valid_routing(): ?RedirectResponse
+	{
+		if (!isset($session->current_project[0]['project_name']))
+			return redirect()->to( base_url('/'));
+		return null;
 	}
 	
 function get_string_between($string, $start, $end)

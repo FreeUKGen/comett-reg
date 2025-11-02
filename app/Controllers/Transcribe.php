@@ -3,7 +3,6 @@
 use App\Models\Transcription_Model;
 use App\Models\Transcription_Detail_Def_Model;
 use App\Models\Transcription_Comments_Model;
-use App\Models\Header_Table_Details_Model;
 use App\Models\Detail_Data_Model;
 use App\Models\Detail_Comments_Model;
 use App\Models\Syndicate_Model;
@@ -13,7 +12,6 @@ use App\Models\Allocation_Image_Sources_Model;
 use App\Models\Identity_Model;
 use App\Models\Identity_Last_Indexes_Model;
 use App\Models\Transcription_Cycle_Model;
-use App\Models\Parameter_Model;
 use App\Models\Districts_Model;
 use App\Models\Volumes_Model;
 use App\Models\Firstname_Model;
@@ -48,14 +46,13 @@ class Transcribe extends BaseController
         helper('report');
     }
 	
-	public function transcribe_step1($start_message)
+	public function transcribe_step1($start_message): void
 	{ 		
 		// initialise method
 		$session = session();
+		check_valid_routing();
+
 		$transcription_model = new Transcription_Model();
-		$allocation_model = new Allocation_Model();
-		$syndicate_model = new Syndicate_Model();
-		$transcription_cycle = new Transcription_Cycle_Model();
 		$detail_data_model = new Detail_Data_Model();
 		$allocation_images_model = new Allocation_Images_Model();
 		$allocation_image_sources_model = new Allocation_Image_Sources_Model();
@@ -826,7 +823,9 @@ class Transcribe extends BaseController
 											// set the curl
 											// set up the curl - $session->curl_url is set in Identity
 											$ch = curl_init($session->curl_url);
+											//@TODO fix this - use .env settings
 											$iden = 'test';
+											$pwd = 'test';
 
 											//curl_setopt($ch, CURLOPT_USERAGENT, $session->programname.':'.$session->version);
 											//curl_setopt($ch, CURLOPT_POST, true);
