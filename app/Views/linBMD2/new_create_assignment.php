@@ -18,14 +18,14 @@
 	</div>
 	
 	<!-- data entry fields -->
-	<div class="flex mt-1 mb-4">
+	<div class="flex mt-1">
 		<h2 class="heading inline">Create File</h2><span><?=' for '.$session->identity_userid.' in syndicate '.$session->syndicate_name ?></span>
-		<a id="confirm" class="btn ml-4" title="Create assignment">Confirm</a>
 	</div>
 	<form>
-    <section>
-        <!-- country -->
-        <label id="county_group_label" for="county_group">County Group</label>
+
+    <section class="mb-3">
+        <label id="county_group_label" for="county_group" class="w5 right">Country
+		</label>
         <select id="county_group">
 			<option selected="selected" disabled="disabled">Select here</option>
 			<option>England</option>
@@ -34,64 +34,50 @@
 			<option>Islands</option>
 			<option>Specials</option>
 		</select>
-
-        <!-- county -->
-		<span class="ml-2">
+		<span id="county_container" class="ml-2 hidden">
        		<label for="county" class="right">County</label>
         	<select id="county"></select>
     	</span>
+        <label for="chapman_code" id="chapman_container" class="ml-2 hidden">Chapman
+      	  <input type="text" size="3" id="chapman_code">
+		</label>
     </section>
 
-    <section>
-        <!-- chapman code -->
-        <label for="chapman_code">Chapman</label>
-        <input type="text" id="chapman_code">
-    </section>
-
-    <section>
-        <!-- place -->
-        <label id="place_label" for="place">Place</label>
+    <section id="place_container" class="hidden mb-3">
+        <label id="place_label" for="place" class="w5 right">Place</label>
         <select id="place"></select>
-    </section>
-
-    <section>
-        <!-- church -->
-        <label id="church_label" for="church">Church</label>
+        <label id="church_label" class="ml-2 hidden" for="church">Church
         <select id="church"></select>
+		</label>
+        <label id="church_code_label" class="ml-2 hidden" for="church_code">Church Code
+       	 <input type="text" size="3" id="church_code">
+		</label>
     </section>
 
-    <section>
-        <!-- church code -->
-        <label for="church_code">Church Code</label>
-        <input type="text" id="church_code">
+	<section id="register_container" class="hidden mb-3">
+        <label id="register_label" class="w5 right" for="register">Register</label>
+		<select id="register"></select>
     </section>
 
-    <section>
-        <!-- register -->
-        <label id="register_label" for="register">Register</label>
-        <select id="register"></select>
+    <section class="hidden mb-3" id="source_inputs">
+        <label id="source_label" class="w5 right" for="source">Images source
+		</label>
+			<select id="source"></select>
     </section>
 
-    <section id="source_inputs">
-        <!-- source of images -->
-        <label id="source_label" for="source">Source of images</label>
-        <select id="source"></select>
-    </section>
-
-	<!-- document source -->
-	<section id="doc_source_group">
-		<label id="doc_source_label" for="doc_source">Document Source</label>
-		<select id="doc_source"></select>
+	<section id="doc_source_container" class="hidden mb-3">
+		<label class="w5 right" for="doc_source">Doc Source</label>
+			<select id="doc_source"></select>
 	</section>
 
-    <section>
-        <label for="credit">Credit To</label>
+    <section id="credit_container" class="hidden mb-3">
+        <label for="credit" class="w5 right">Credit To</label>
         <input type='text' id='credit' />
     </section>
 
-    <section>
-        <label for="comments">Document Comments</label>
-        <textarea id='comments'></textarea>
+    <section id="doc_comment" class="hidden mb-3">
+        <label class="w5 right" for="comments">Doc Comments</label>
+        <textarea class="w20" id='comments'></textarea>
     </section>
 
      <!-- progress -->
@@ -103,6 +89,7 @@
 	 </div>
      </section>
 
+		<a id="confirm" class="btn inline-block ml-10 mb-2 hidden" title="Create assignment">Confirm</a>
 	</form>
 
 
@@ -152,8 +139,6 @@
 					chapman_codes = [];
 					// validate, element, element_value, type_of_test, test_value
 					if ( verify_element('county_group', $.trim(document.getElementById("county_group").value), 'value', 'SL', 'county_group_group', error_messages[1]) === 1 ) { return; }
-					// set this_element, next_element, focus
-					next_element('county_group', 'county', 'yes');
 					// load counties to select depending on county group
 					switch ( $.trim(document.getElementById("county_group").value) )
 					{
@@ -179,7 +164,12 @@
 						chapman_codes[i] = ctys[i].split(' => ')[1];
 					}
 					// sources, element_id, field for code, field for name							
-					if ( counties ) { load_sources(counties, 'county', null, null); }
+					if ( counties ) { 
+						load_sources(counties, 'county', null, null); 
+						const cc = document.getElementById('county_container');
+						cc.classList.remove('hidden');	
+						next_element('county_group', 'county', 'yes');
+					}
 					else { alert('Cannot create assignment. Counties cannot be loaded for this Country. Report to '+error_email); }
 			});
 				
@@ -190,18 +180,23 @@
 							
 				// validate, element, element_value, type_of_test, test_value
 				if ( verify_element('county', $.trim(document.getElementById("county").value), 'value', 'SL', 'county_group_group', error_messages[2]) === 1 ){ return; }
-				// set this_element, next_element, focus
-				next_element('county', 'place', 'yes');
 				// load chapman code
 				var index = $.inArray( $.trim(document.getElementById("county").value), counties );
 				document.getElementById("chapman_code").value = chapman_codes[index];		
+				document.getElementById('chapman_container').classList.remove('hidden');	
+				document.getElementById('place_container').classList.remove('hidden');	
+
 				// call the php method to get the places for the entered county	
 				var formData = new FormData(); 
 				formData.append('search_term', $.trim(document.getElementById("county").value));
 				var url = "<?=base_url('allocation/get_places')?>";
 				places = getData(url, formData, 'Places');
 				// load to select
-				if ( places.length > 0 ) { load_sources(places, 'place', null, null); }
+				if ( places.length > 0 ) { 
+					load_sources(places, 'place', null, null); 
+					// set this_element, next_element, focus
+					next_element('county', 'place', 'yes');
+				}
 				else { alert('Cannot create assignment. Places cannot be loaded for this County. Report to '+error_email); }
 			});	
 					
@@ -242,7 +237,13 @@
 					}
 				}
 				// load to select
-				if ( churches.length > 0 ) { load_sources(churches, 'church', null, null); }
+				if ( churches.length > 0 ) { 
+					load_sources(churches, 'church', null, null); 
+					const cl = document.getElementById('church_label');
+					const ccl = document.getElementById('church_code_label');
+					cl.classList.remove('hidden');
+					ccl.classList.remove('hidden');
+				}
 				else { alert('Cannot create assignment. Churches cannot be loaded for this Place. Report to '+error_email); }
 		});						
 					
@@ -261,33 +262,15 @@
 			document.getElementById("church_code").value = church_codes[index];
 			// load registers
 			sources = <?php echo json_encode($session->register_types); ?>;							
-			if ( sources ) { load_sources(sources, 'register', 'register_code', 'register_description'); }
+			if ( sources ) { 
+				load_sources(sources, 'register', 'register_code', 'register_description'); 
+				const rc = document.getElementById("register_container");
+				rc.classList.remove('hidden');
+				
+			}
 			else { alert('Cannot create assignment. Register Types cannot be loaded. Report to '+error_email); }
 		});
 					
-		//$("#church_code").on("keydown", function(e) 
-					//{													
-						//if ( e.key == 'Tab' || e.key == 'Enter' )
-							//{		
-								//// initialise
-								//e.preventDefault();
-								
-								//// validate, element, element_value, type_of_test, test_value
-								//if ( verify_element('church_code', $.trim(document.getElementById("church_code").value), 'length', 3, 'place_group', error_messages[5]) === 1 ){ return; }
-								//if ( verify_element('church_code', $.trim(document.getElementById("church_code").value), 'alpha', null, 'place_group', error_messages[6]) === 1 ){ return; }
-								
-								//// church code already in use for another church?
-								
-								//// set this_element, next_element, focus
-								//next_element('church_code', 'register', 'yes');
-
-								//// load registers
-								//sources = <?php echo json_encode($session->register_types); ?>;							
-								//if ( sources ) { load_sources(sources, 'register', 'register_code', 'register_description'); }
-								//else { alert('Cannot create assignment. Register Types cannot be loaded. Report to '+error_email); }
-							//}
-					//});
-				
 		$("#register").on("change", function(e) {				
 			e.preventDefault();
 			
@@ -297,7 +280,11 @@
 			next_element('register', 'source', 'yes');
 			// load sources
 			sources = <?php echo json_encode($session->allocation_image_sources); ?>;
-			if ( sources ) { load_sources(sources, 'source', 'source_code', 'source_name'); }
+			if ( sources ) { 
+				load_sources(sources, 'source', 'source_code', 'source_name'); 
+				const sc = document.getElementById("source_inputs");
+				sc.classList.remove('hidden');
+			}
 			else { alert('Cannot create assignment. Sources Types cannot be loaded. Report to '+error_email); }
 		});
 					
@@ -307,6 +294,7 @@
 
 				// validate, element, element_value, type_of_test, test_value
 				if ( verify_element('source', $.trim(document.getElementById("source").value), 'value', 'SL', 'source_inputs', error_messages[8]) === 1 ){ return; }
+
 				// load source data input fields depending on input source
 				document.querySelectorAll(".remove").forEach(el => el.remove());
 				if (document.getElementById("source").value === 'LP' )
@@ -328,25 +316,48 @@
 						console.warn('DS: SI NOT FOUND!!!');
 
 					// set this_element, next_element, focus
+					const ds = document.getElementById("doc_source_container");
+					ds.classList.remove('hidden');
 					next_element('source', 'images_local', 'yes');
 				}
 				else
 				{
+					const ds = document.getElementById("doc_source_container");
+					ds.classList.remove('hidden');
+
 					// set this_element, next_element, focus
 					next_element('source', 'doc_source', 'yes');
 				}
 				// load doc sources	
 				sources = <?php echo json_encode($session->document_sources); ?>;
-				if ( sources ) { load_sources(sources, 'doc_source', 'document_source', 'document_source'); }
+				if ( sources ) { 
+					load_sources(sources, 'doc_source', 'document_source', 'document_source'); 
+				}
 				else { alert('Cannot create assignment. Document Sources cannot be loaded. Report to '+error_email); }
 			});						
 					
-			$("#doc_source").on("keydown", function(e) {
+			$("#doc_source").on("change", function(e) {
 				 e.preventDefault();
 				if ( verify_element('doc_source', $.trim(document.getElementById("doc_source").value), 'value', 'SL', 'doc_source_group', error_messages[9]) === 1 ){ return; }
+
 				// set this_element, next_element, focus
-				next_element('doc_source', 'doc_comment', 'yes');
+				const cc = document.getElementById("credit_container");
+				cc.classList.remove('hidden');
+				const dc = document.getElementById("doc_comment");
+				dc.classList.remove('hidden');
+				const co = document.getElementById("confirm");
+				co.classList.remove('hidden');
+				next_element('doc_source', 'credit', 'yes');
 			});
+
+			$("#credit").on("change", function(e) {
+				 e.preventDefault();
+				// set this_element, next_element, focus
+				const cc = document.getElementById("doc_comment");
+				cc.classList.remove('hidden');
+				next_element('credit', 'comments', 'yes');
+			});
+
 									
 				$('#return').on("click", function()
 					{			
@@ -567,12 +578,6 @@
 			
 		function next_element(this_element, next_element, focus) 
 			{
-				if (this_element) {
-					document.getElementById(this_element).style.backgroundColor = "azure";
-				}
-				else 
-					console.warn('No element: ' + JSON.stringify(this_element));
-
 				if (next_element) {
 				// next element
 					$(next_element).removeAttr("readonly");
