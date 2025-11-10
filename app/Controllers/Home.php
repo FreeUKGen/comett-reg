@@ -21,6 +21,50 @@ class Home extends BaseController
 		new Init()->start();
 		// show view to select project
 	}
+
+	/**
+	 * DS Nov 25
+	 * This method is now REDUNDANT
+ 	 * Use app/Helpers/Init instead.
+	**/
+    public function old_index()
+    {
+        // initialise method
+        $session = session();
+        $projects_model = new Projects_Model();
+        $parameter_model = new Parameter_Model();
+
+        // destroy the session variables no longer required
+        $session->environment = '';
+        $session->realname = '';
+        $session->signon_success = 0;
+
+        // load time stamp to session
+        $session->set('login_time_stamp', time());
+
+        // set heading
+        $session->set('title', 'FreeComETT - A FreeUKGen transcription application.');
+        $session->set('realname', '');
+
+        // load projects
+        $session->set('projects', $projects_model->findAll());
+
+        // were any found? if not, this is first use of the system
+        if ( ! $session->projects )
+            {
+                var_dump('first_use');
+            }
+
+        // I need to detect if javascript is enabled in the browser.
+        // set a php session variable to disabled
+        // add some script to the project select page changing the php session variable to enabled
+        // check the variable in identity - if disabled, send user a message.
+        $session->javascript = 'disabled';
+
+        // show view to select project
+        echo view('linBMD2/project_select');
+    }
+
 	
 	public function signout()
 	{

@@ -84,8 +84,12 @@ class Identity extends BaseController
 				}
 			
 			// show view
+			//DS NEW
 			echo view('templates/header-no-nav');
 			echo view('linBMD2/new_signin');
+
+			//echo view('templates/header');
+			//echo view('linBMD2/signin');
 		}
 	
 	public function signin_step2()
@@ -114,8 +118,11 @@ class Identity extends BaseController
 		// get input and set session fields
 		$session->set('identity_userid', $this->request->getPost('identity'));
 		$session->set('identity_password', $this->request->getPost('password'));
-		$session->actual_x = $this->request->getPost('actual_x');
-		$session->actual_y = $this->request->getPost('actual_y');
+		//DS Nov 25 - actual_x, actual_y not needed, but DB issue if session variables not set
+//		$session->actual_x = $this->request->getPost('actual_x');
+//		$session->actual_y = $this->request->getPost('actual_y');
+		$session->actual_x = rand(1,1000);
+		$session->actual_y = rand(1,1000);
 	
 		//@TODO DS temporary
 		log_message('info', 'User:' . $this->request->getPost('identity'));
