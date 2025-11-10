@@ -20,7 +20,6 @@ class Home extends BaseController
 	{		
 		new Init()->start();
 		// show view to select project
-		//echo view('linBMD2/project_select');
 	}
 	
 	public function signout()

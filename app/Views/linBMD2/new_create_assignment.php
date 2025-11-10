@@ -18,15 +18,15 @@
 	</div>
 	
 	<!-- data entry fields -->
-	<div class="flex mt-1">
-		<h2 class="heading inline">Create File</h2><span><?=' for '.$session->identity_userid.' in syndicate '.$session->syndicate_name ?></span>
+	<div class="flex base mt-1">
+		<h2 class="heading inline">Create File</h2><span class="ml-2"><?=' for '.$session->identity_userid.' in syndicate '.$session->syndicate_name ?></span>
 	</div>
 	<form>
 
     <section class="mb-3">
-        <label id="county_group_label" for="county_group" class="w5 right">Country
+        <label id="county_group_label" for="county_group" class="w8 right">Country
 		</label>
-        <select id="county_group">
+        <select class="w14" id="county_group">
 			<option selected="selected" disabled="disabled">Select here</option>
 			<option>England</option>
 			<option>Scotland</option>
@@ -35,49 +35,47 @@
 			<option>Specials</option>
 		</select>
 		<span id="county_container" class="ml-2 hidden">
-       		<label for="county" class="right">County</label>
-        	<select id="county"></select>
+       		<label for="county" class="w4 right">County</label>
+        	<select class="w14" id="county"></select>
     	</span>
-        <label for="chapman_code" id="chapman_container" class="ml-2 hidden">Chapman
-      	  <input type="text" size="3" id="chapman_code">
-		</label>
+        <label for="chapman_code" id="chapman_label" class="ml-2 w8 hidden">Chapman Code</label>
+    	  <input class="hidden" type="text" size="3" id="chapman_code">
     </section>
 
     <section id="place_container" class="hidden mb-3">
-        <label id="place_label" for="place" class="w5 right">Place</label>
-        <select id="place"></select>
-        <label id="church_label" class="ml-2 hidden" for="church">Church
-        <select id="church"></select>
-		</label>
-        <label id="church_code_label" class="ml-2 hidden" for="church_code">Church Code
-       	 <input type="text" size="3" id="church_code">
-		</label>
+        <label id="place_label" for="place" class="w8 right">Place</label>
+        <select class="w14" id="place"></select>
+        <label id="church_label" class="w4 ml-2 right hidden" for="church">Church</label>
+        <select id="church" class="w14 hidden"></select>
+        <label id="church_code_label" class="w8 ml-2 hidden" for="church_code">Church Code</label>
+       	 <input class="hidden" type="text" size="3" id="church_code">
     </section>
 
 	<section id="register_container" class="hidden mb-3">
-        <label id="register_label" class="w5 right" for="register">Register</label>
-		<select id="register"></select>
+        <label id="register_label" class="w8 right" for="register">Register</label>
+		<select id="register" class="w14"></select>
     </section>
 
     <section class="hidden mb-3" id="source_inputs">
-        <label id="source_label" class="w5 right" for="source">Images source
+        <label id="source_label" class="w8 right" for="source">Images Source
 		</label>
-			<select id="source"></select>
+		<select class="w14" id="source"></select>
     </section>
 
 	<section id="doc_source_container" class="hidden mb-3">
-		<label class="w5 right" for="doc_source">Doc Source</label>
-			<select id="doc_source"></select>
+		<label class="w8 right" for="doc_source">Document Source</label>
+			<select id="doc_source" class="w14"></select>
 	</section>
 
     <section id="credit_container" class="hidden mb-3">
-        <label for="credit" class="w5 right">Credit To</label>
-        <input type='text' id='credit' />
+        <label for="credit" class="w8 right">Credit To</label>
+        <input type='text' class="w14" id='credit' />
     </section>
 
     <section id="doc_comment" class="hidden mb-3">
-        <label class="w5 right" for="comments">Doc Comments</label>
-        <textarea class="w20" id='comments'></textarea>
+        <label class="w8 right" for="comments">Document Comments</label>
+        <textarea class="w30" id='comments'></textarea>
+		<a id="confirm" class="btn inline-block right ml-4 hidden" title="Create Assignment">Confirm</a>
     </section>
 
      <!-- progress -->
@@ -89,7 +87,6 @@
 	 </div>
      </section>
 
-		<a id="confirm" class="btn inline-block ml-10 mb-2 hidden" title="Create assignment">Confirm</a>
 	</form>
 
 
@@ -183,8 +180,11 @@
 				// load chapman code
 				var index = $.inArray( $.trim(document.getElementById("county").value), counties );
 				document.getElementById("chapman_code").value = chapman_codes[index];		
-				document.getElementById('chapman_container').classList.remove('hidden');	
+				document.getElementById('chapman_code').classList.remove('hidden');	
+				document.getElementById('chapman_label').classList.remove('hidden');	
 				document.getElementById('place_container').classList.remove('hidden');	
+				document.getElementById('place_label').classList.remove('hidden');	
+				document.getElementById('place').classList.remove('hidden');	
 
 				// call the php method to get the places for the entered county	
 				var formData = new FormData(); 
@@ -218,6 +218,12 @@
 				formData.append('country', document.getElementById("county_group").value);
 				formData.append('county', document.getElementById("county").value);
 				formData.append('place', document.getElementById("place").value);
+
+				document.getElementById('church').classList.remove('hidden');	
+				document.getElementById('church_code').classList.remove('hidden');	
+				document.getElementById('church_label').classList.remove('hidden');	
+				document.getElementById('church_code_label').classList.remove('hidden');	
+
 				var url = "<?=base_url('allocation/get_churches')?>";
 				chrs = getData(url, formData, 'Churches');
 				// create church and church code arrays
@@ -301,12 +307,12 @@
 				{
 					var input = document.createElement("input");
 					input.setAttribute('type', 'file');
-					input.setAttribute('class', 'remove');
+					input.setAttribute('class', 'w16 remove');
 					input.setAttribute('id', 'images_local');
 					input.setAttribute('accept', '.jpg, .jpeg, .png, .pdf');
 					input.setAttribute('multiple', '');
 					var label = document.createElement("label");
-					label.setAttribute('class', 'remove');								
+					label.setAttribute('class', 'w5 remove');								
 					let si = document.getElementById('source_inputs');
 					if (si) {
 						si.appendChild(label);

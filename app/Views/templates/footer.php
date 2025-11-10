@@ -3,12 +3,12 @@
 	<?php
 	if ( $session->masquerade == 1 )
 		{ ?>
-			<footer class="row mt-2">
+			<footer class="row mt-3 mb-3">
 		<?php
 		}
 	else
 		{ ?>
-			<footer class="row mt-2">
+			<footer class="row mt-3 mb-3">
 		<?php
 		} ?>
 				<a class="" title="Signout" href="/home/signout/"><i class="fa-solid fa-door-open"></i>SignOut</a>
