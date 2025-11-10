@@ -9,7 +9,7 @@
 	</div>
 	
 	<div>
-		<form action="<?=(base_url('allocation/create_assignment_step1/0'))?>" method="POST" name="form_reset"></form>	
+		<form action="<?=(base_url('allocation/new_create_assignment/0'))?>" method="POST" name="form_reset"></form>
 	</div>
 	
 	<div class="row d-flex mt-2 justify-content-between">

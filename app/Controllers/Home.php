@@ -1,5 +1,6 @@
 <?php namespace App\Controllers;
 
+use App\Helpers\Init;
 use App\Models\Identity_Model;
 use App\Models\Parameter_Model;
 use App\Models\Projects_Model;
@@ -17,40 +18,9 @@ class Home extends BaseController
 	
 	public function index()
 	{		
-		// initialise method
-		$session = session();
-		$projects_model = new Projects_Model();
-		$parameter_model = new Parameter_Model();
-		
-		// destroy the session variables no longer required
-		$session->environment = '';
-		$session->realname = '';
-		$session->signon_success = 0;
-		
-		// load time stamp to session
-		$session->set('login_time_stamp', time());
-			
-		// set heading
-		$session->set('title', 'FreeComETT - A FreeUKGen transcription application.');
-		$session->set('realname', '');
-		
-		// load projects
-		$session->set('projects', $projects_model->findAll());
-		
-		// were any found? if not, this is first use of the system
-		if ( ! $session->projects )
-			{
-				var_dump('first_use');
-			}
-			
-		// I need to detect if javascript is enabled in the browser. 
-		// set a php session variable to disabled
-		// add some script to the project select page changing the php session variable to enabled
-		// check the variable in identity - if disabled, send user a message.
-		$session->javascript = 'disabled';
-			
+		new Init()->start();
 		// show view to select project
-		echo view('linBMD2/project_select');
+		//echo view('linBMD2/project_select');
 	}
 	
 	public function signout()
@@ -573,5 +543,3 @@ class Home extends BaseController
 		return redirect()->to( base_url('home/speedtest/1') );
 	}
 }
-
-
