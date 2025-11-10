@@ -50,7 +50,8 @@ class Home extends BaseController
 		$session->javascript = 'disabled';
 			
 		// show view to select project
-		echo view('linBMD2/project_select');
+		echo view('templates/header-no-nav');
+		echo view('linBMD2/new_signin');
 	}
 	
 	public function signout()

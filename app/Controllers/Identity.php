@@ -85,7 +85,7 @@ class Identity extends BaseController
 			
 			// show view
 			echo view('templates/header');
-			echo view('linBMD2/signin');
+			echo view('linBMD2/new_signin');
 		}
 	
 	public function signin_step2()

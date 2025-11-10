@@ -10,12 +10,6 @@
 	<?php include 'header-assets3.php'; ?>
 
 	<link rel="stylesheet" href="<?php echo base_url().'css/fc-reg.css'; ?>">
-	<style>
-		table {
-			font-size:smaller; 
-		}
-	</style>
-
 </head>
 
 <body>
@@ -23,7 +17,7 @@
     <header>
       <nav role="navigation">
         <a class="logo" href="https://reg.dev2.freecomett.org.uk/">
-          <img src="/css/images/freecomett.svg" alt="FreeComETT logo">
+          <img src="/images/freecomett.svg" alt="FreeComETT logo">
         </a>
         <ul>
           <li>File
@@ -35,7 +29,7 @@
           </li>
           <li>Tools
 			<ul>
-				<li>Upload CSV</li>
+				<li><a href="<?php echo base_url('allocation/load_csv_file_step1/1')?>">Upload CSV</a></li>
 				<li>View Upload Status</li>
 				<li><a href="<?php echo base_url('allocation/new_list_images')?>">List Images</a></li>
 				<li>Refresh Page</li>
@@ -61,7 +55,7 @@
           </li>
         </ul>
         <a class="logo" href="https://reg.dev2.freecomett.org.uk/">
-          <img src="/css/images/freereg.svg" alt="FreeREG logo">
+          <img src="/images/freereg.svg" alt="FreeREG logo">
         </a>
       </nav>
     </header>
