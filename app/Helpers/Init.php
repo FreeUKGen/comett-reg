@@ -8,19 +8,80 @@ use App\Models\Projects_Model;
 class Init
 {
 	/**
+	 * Where everything gets started
 	 * @throws \ReflectionException
 	 */
 	public function start(): void
 	{
-		// $this->load_freereg($project_name);
+		$this->session();
 		$this->setup();
 		echo view('templates/header-no-nav');
 		echo view('linBMD2/new_signin');
 	}
 
 	/**
+	 * Adapted from Projects::load_projects() - with the BMD stuff removed.
+	 * @return void
+	 */
+	public function session(): void
+	{
+		$session = session();
+		$projects_model = new Projects_Model();
+		$sources_model = new Freeukgen_Sources_Model();
+
+		// default FreeREG
+		$session->current_project[0]['project_nane'] = $project = 'FreeREG';
+
+		// get project details
+		$session->current_project = $projects_model->where('project_index', $project)->find();
+
+		log_message('debug', 'current_project: '.print_r($session->current_project, true));
+
+
+		// set the project environment - see Identity controller for using the environment parameter
+		$session->environment_project = $session->current_project[0]['environment'];
+
+		// as of V7, FreeComETT has access to the FreeUKGEN source code for each project using a username:password.
+		// All source parameters are stored in a table called freeukgen_sources in the FreeComETT DB.
+		// access to the source element is by project_index and source_key. This combination must be unique for a source file.
+		// the same source file can be defined multiple times but each time with a unique key.
+		// all information required to access the source file is in each source table row. This allows for future change in server structure and also for user:password changes per source.
+		// common_helper contains 3 methods,
+		// get_source_info($project_index, $source_key) = get the table row for this source key
+		// get_source_data($source_info) = get the source data using cURL
+		// get_source_value($source_data, $source_info[0]['source_section'], $source_info[0]['source_field']) = get the value of the field in the source section in the source data
+		// note that the special source_field = $#none#$ = use the $source_data string as is.
+		// note that the source_section can also contain $#none#$ = no source section
+
+		// get the source records for this project
+		log_message('info','Project:'.$project);
+		$source_records = $sources_model->where('project_index', $project)->findALL();
+
+		// read source records
+		$freeukgen_source_values = [];
+		foreach ( $source_records as $source_info ) {
+			// get source value
+			$source_data = get_source_data($source_info);
+			if ( $source_data != 'error' ) $source_value = get_source_value($source_data, $source_info);
+			// load source value to array
+			$freeukgen_source_values[$source_info['source_key']] = $source_value;
+		}
+
+		// load session array
+		$session->freeukgen_source_values = $freeukgen_source_values;
+
+		// FreeREG uses a MongoDB database
+		// see here for set up details https://www.mongodb.com/compatibility/mongodb-and-codeigniter
+		$session->project_DB = 	[
+			'hostname' => $session->current_project[0]['DB_hostname'],
+			'database' => $session->current_project[0]['DB_database'],
+			'port'     => $session->current_project[0]['DB_hostport'],
+			'DBDriver' => $session->current_project[0]['DB_driver'],
+		];
+	}
+
+	/**
 	 * AKA Identity::signin_step1
-	 *
 	 * @return void
 	 */
 	public function setup()
@@ -45,16 +106,12 @@ class Init
 		$session->set('projects', $projects_model->findAll());
 
 		// were any found? if not, this is first use of the system
-		if ( ! $session->projects )
-		{
+		if ( ! $session->projects ) {
 			var_dump('first_use');
 		}
 
-		// I need to detect if javascript is enabled in the browser.
-		// set a php session variable to disabled
-		// add some script to the project select page changing the php session variable to enabled
-		// check the variable in identity - if disabled, send user a message.
-		$session->javascript = 'disabled';
+		// @TODO assume for now js is enabled
+		$session->javascript = 'enabled';
 	}
 
 
