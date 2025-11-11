@@ -16,7 +16,7 @@ class Home extends BaseController
         helper('backup');
     }
 	
-	public function index()
+	public function new_index()
 	{		
 		new Init()->start();
 		// show view to select project
@@ -27,7 +27,7 @@ class Home extends BaseController
 	 * This method is now REDUNDANT
  	 * Use app/Helpers/Init instead.
 	**/
-    public function old_index()
+    public function index()
     {
         // initialise method
         $session = session();

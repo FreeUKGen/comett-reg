@@ -11,13 +11,61 @@ class Init
 	 * Where everything gets started
 	 * @throws \ReflectionException
 	 */
-	public function start(): void
+	public function start($project_index = 1): void
 	{
+		$this->load_projects($project_index);
 		$this->session();
 		$this->setup();
 		echo view('templates/header-no-nav');
 		echo view('linBMD2/new_signin');
 	}
+
+	/**
+	 * project_index 0 is BMD
+	 * project_index 1 is REG
+	 * project_index 2 is CEN
+	 *
+	 * Based on Home::index()
+	**/
+	public function load_projects($project_index = 1) 
+	{
+        $session = session();
+        $projects_model = new Projects_Model();
+
+		log_message('info', 'PI::' . $project_index);
+
+        // destroy the session variables no longer required
+        $session->environment = '';
+        $session->realname = '';
+        $session->signon_success = 0;
+
+        // load time stamp to session
+        $session->set('login_time_stamp', time());
+
+        // set heading
+        $session->set('title', 'FreeComETT - A FreeUKGen transcription application.');
+        $session->set('realname', '');
+
+        // load projects
+        $projects = $projects_model->findAll();
+		log_message('info', 'PRO:' . print_r($projects, true));
+
+		$session->current_project = $projects[$project_index];
+
+		$session->projects = $projects;
+
+		// set the project environment - see Identity controller for using the environment parameter
+		$session->environment_project = $session->current_project['environment'];
+
+        // were any found? if not, this is first use of the system
+        if (! $session->projects)
+            var_dump('first_use');
+
+		//@TODO handle JS check - for now assume JS is enabled
+        $session->javascript = 'enabled';
+	}
+
+
 
 	/**
 	 * Adapted from Projects::load_projects() - with the BMD stuff removed.
@@ -29,14 +77,13 @@ class Init
 		$projects_model = new Projects_Model();
 		$sources_model = new Freeukgen_Sources_Model();
 
-		// default FreeREG
-		$session->current_project[0]['project_nane'] = $project = 'FreeREG';
-
 		// get project details
+		$project = 'FreeREG';
 		$session->current_project = $projects_model->where('project_index', $project)->find();
-
-		log_message('debug', 'current_project: '.print_r($session->current_project, true));
-
+		if ($session->current_project)
+			log_message('debug', 'current_project: '.print_r($session->current_project, true));
+		// default FreeREG
+		//$session->current_project[0]['project_nane'] = $project;
 
 		// set the project environment - see Identity controller for using the environment parameter
 		$session->environment_project = $session->current_project[0]['environment'];
@@ -86,34 +133,46 @@ class Init
 	 */
 	public function setup()
 	{
-		// initialise method
-		$session = session();
-		$projects_model = new Projects_Model();
+		$messaging_model = new Messaging_Model();
+		$parameter_model = new Parameter_Model();
 
-		// destroy the session variables no longer required
-		$session->environment = '';
-		$session->realname = '';
-		$session->signon_success = 0;
-
-		// load time stamp to session
-		$session->set('login_time_stamp', time());
-
-		// set heading
-		$session->set('title', 'FreeComETT - A FreeUKGen transcription application.');
-		$session->set('realname', '');
-
-		// load projects
-		$session->set('projects', $projects_model->findAll());
-
-		// were any found? if not, this is first use of the system
-		if ( ! $session->projects ) {
-			var_dump('first_use');
+		if ($session->javascript == 'disabled')
+			return redirect()->to( base_url('home/no_javascript') );
+			
+		if ($start_message == 0)  {					
+			if ( $session->session_expired == 1 ) {
+				$session->set('message_2', 'Your session has expired - Time out. Please sign in again to continue.');
+				$session->set('message_class_2', 'alert alert-danger');
+				$session->set('session_expired', 0);
+			}
+			else {
+				$session->set('message_2', '');
+				$session->set('message_class_2', '');
+						
+				// get today date
+				$today = date("Y-m-d");
+				// get message to show
+				$session->current_message =	$messaging_model
+					->where('project_index', $session->current_project[0]['project_index'])
+					->where('from_date <=', $today)
+					->where('to_date >=', $today)
+					->find();
+				// set show message if any found
+				if ($session->current_message)
+					$session->show_message = 'show';
+				else
+					$session->show_message = '';
+					
+				// get version from parameters
+				$parameter = $parameter_model->where('Parameter_key', 'version')->findAll();
+				$session->set('version', $parameter[0]['Parameter_value']);
+				
+				// load linbmd2 email
+				$parameter = $parameter_model->where('Parameter_key', 'linbmd2_email')->findAll();
+				$session->set('linbmd2_email', $parameter[0]['Parameter_value']);
+			}
 		}
-
-		// @TODO assume for now js is enabled
-		$session->javascript = 'enabled';
 	}
-
 
 	/**
 	 * Formerly Projects::load_project())
