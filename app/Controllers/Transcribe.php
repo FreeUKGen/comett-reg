@@ -61,7 +61,7 @@ class Transcribe extends BaseController
 			{
 				case 0:
 					// message defaults
-					$session->set('message_1', 'Please select the action you wish to perform on the '.$session->current_project[0]['project_name'].'  transcription and click GO. Or create a new '.$session->current_project[0]['project_name'].' transcription. The list is initially ordered by Last change date. Click on column name to change sort order.');
+					$session->set('message_1', 'Please select the action you wish to perform on the '.$session->current_project['project_name'].'  transcription and click GO. Or create a new '.$session->current_project['project_name'].' transcription. The list is initially ordered by Last change date. Click on column name to change sort order.');
 					$session->set('message_class_1', 'alert alert-primary');
 					if ( $session->message_2 == '' OR $session->message_error != '' )
 						{
@@ -86,7 +86,7 @@ class Transcribe extends BaseController
 					break;
 				case 2:
 					$session->BMD_cycle_code = '';
-					$session->set('message_1', 'Please select the action you wish to perform on the '.$session->current_project[0]['project_name'].'  transcription and click GO. Or create a new '.$session->current_project[0]['project_name'].' transcription. The list is initially ordered by Last change date. Click on column name to change sort order.');
+					$session->set('message_1', 'Please select the action you wish to perform on the '.$session->current_project['project_name'].'  transcription and click GO. Or create a new '.$session->current_project['project_name'].' transcription. The list is initially ordered by Last change date. Click on column name to change sort order.');
 					break;
 				default:
 			}
@@ -95,7 +95,7 @@ class Transcribe extends BaseController
 		if ( $session->status == '0' )
 			{
 				$transcriptions = $transcription_model	
-					->where('project_index', $session->current_project[0]['project_index'])
+					->where('project_index', $session->current_project['project_index'])
 					->where('BMD_syndicate_index', $session->syndicate_id)	
 					->where('BMD_identity_index', $session->BMD_identity_index)
 					->where('BMD_header_status', $session->status)
@@ -130,7 +130,7 @@ class Transcribe extends BaseController
 			->join('allocation', 'transcription.BMD_allocation_index = allocation.BMD_allocation_index')
 			->join('syndicate', 'transcription.BMD_syndicate_index = syndicate.BMD_syndicate_index')
 			->join('transcription_comments', 'transcription.BMD_header_index = transcription_comments.transcription_index', 'left')
-			->where('transcription.project_index', $session->current_project[0]['project_index'])
+			->where('transcription.project_index', $session->current_project['project_index'])
 			->where('transcription.BMD_syndicate_index', $session->syndicate_id)	
 			->where('transcription.BMD_identity_index', $session->BMD_identity_index)
 			->where('transcription.BMD_header_status', $session->status)
@@ -160,17 +160,17 @@ class Transcribe extends BaseController
 			{
 				if ( $session->status == '0' )
 					{
-						$session->set('message_2', 'You have no ACTIVE '.$session->current_project[0]['project_name'].' transcriptions to work on. Please create a new one.');
+						$session->set('message_2', 'You have no ACTIVE '.$session->current_project['project_name'].' transcriptions to work on. Please create a new one.');
 					}
 				else
 					{
-						$session->set('message_2', 'You have no CLOSED '.$session->current_project[0]['project_name'].' transcriptions.');
+						$session->set('message_2', 'You have no CLOSED '.$session->current_project['project_name'].' transcriptions.');
 					}
 				$session->set('message_class_2', 'alert alert-danger');
 			}
 			
 		// check status of transcription in project DB
-		switch ( $session->current_project[0]['project_index'] )
+		switch ( $session->current_project['project_index'] )
 			{
 				case 1:
 					break;
@@ -188,7 +188,7 @@ class Transcribe extends BaseController
 							$transcriptions[$key]['image_count'] = $image_count;
 							// get source description
 							$image_source = $allocation_image_sources_model
-								->where('project_index', $session->current_project[0]['project_index'])
+								->where('project_index', $session->current_project['project_index'])
 								->where('source_code', $transcription['source_code'])
 								->find();
 							$transcriptions[$key]['image_source'] = $image_source[0]['source_description'];
@@ -287,7 +287,7 @@ class Transcribe extends BaseController
 																		
 					// get transcription
 					$session->current_transcription = $transcription_model
-						->where('project_index', $session->current_project[0]['project_index'])
+						->where('project_index', $session->current_project['project_index'])
 						->where('BMD_header_index',  $BMD_header_index)
 						->where('BMD_identity_index', $session->BMD_identity_index)
 						->find();	
@@ -311,7 +311,7 @@ class Transcribe extends BaseController
 					// get transcription details
 					$transcription_details = $detail_data_model
 						->where('BMD_header_index', $BMD_header_index)
-						->where('project_index',  $session->current_project[0]['project_index'])
+						->where('project_index',  $session->current_project['project_index'])
 						->orderby('BMD_line_sequence','ASC')
 						->findAll();
 					if ( $transcription_details )
@@ -329,7 +329,7 @@ class Transcribe extends BaseController
 					
 					// get current transcription image source
 					$session->image_source = $allocation_image_sources_model
-						->where('project_index', $session->current_project[0]['project_index'])
+						->where('project_index', $session->current_project['project_index'])
 						->where('source_code', $session->current_transcription[0]['source_code'])
 						->find();
 									
@@ -341,7 +341,7 @@ class Transcribe extends BaseController
 						{
 							// get last action code
 							$session->last_cycle_code = $transcription_cycle_model
-								->where('project_index', $session->current_project[0]['project_index'])
+								->where('project_index', $session->current_project['project_index'])
 								->where('BMD_cycle_type', 'TRANS')
 								->where('BMD_cycle_name', $session->current_transcription[0]['BMD_last_action'])
 								->select('BMD_cycle_code')
@@ -359,7 +359,7 @@ class Transcribe extends BaseController
 		$session->current_allocation = $allocation_model	
 			->where('BMD_allocation_index',  $session->current_transcription[0]['BMD_allocation_index'])
 			->where('BMD_identity_index', $session->BMD_identity_index)
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->find();
 										
 		if ( ! $session->current_allocation )
@@ -371,7 +371,7 @@ class Transcribe extends BaseController
 			
 		// get syndicate
 		$session->current_syndicate = $syndicate_model
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->where('BMD_syndicate_index',  $session->current_transcription[0]['BMD_syndicate_index'])
 			->find();
 
@@ -384,7 +384,7 @@ class Transcribe extends BaseController
 			
 		// load the event types
 		$session->event_types = $project_types_model
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->where('type_controller !=', null)
 			->findAll();
 	
@@ -416,7 +416,7 @@ class Transcribe extends BaseController
 					$this->update_last_action($BMD_header_index);
 									
 					// if FreeREG update current image transcription start date if blank
-					if ( $session->current_project[0]['project_index'] == '2' )
+					if ( $session->current_project['project_index'] == '2' )
 						{															
 							// get current_data entry format from user if blank
 							if ( $session->current_transcription[0]['current_data_entry_format'] == null )
@@ -494,7 +494,7 @@ class Transcribe extends BaseController
 					break;
 				case 'CLOST': // close BMD file
 					// action depends on project
-					switch ($session->current_project[0]['project_index']) 
+					switch ($session->current_project['project_index']) 
 						{
 							case 1: // FreeBMD
 								$session->set('close_header', 'N');
@@ -588,7 +588,7 @@ class Transcribe extends BaseController
 		load_current_data_dictionary();
 			
 		// build data file and populate depending on project: methods are in transcribe helper
-		switch ($session->current_project[0]['project_name'])
+		switch ($session->current_project['project_name'])
 			{
 				case 'FreeBMD':
 					freebmd_createCSV();
@@ -627,7 +627,7 @@ class Transcribe extends BaseController
 		$detail_data_model = new Detail_Data_Model();
 		// get detail data
 		$session->detail_data =	$detail_data_model
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->where('BMD_header_index',  $session->current_transcription[0]['BMD_header_index'])
 			->where('BMD_identity_index', $session->BMD_identity_index)
 			->where('BMD_status', '0')
@@ -647,7 +647,7 @@ class Transcribe extends BaseController
 				return redirect()->to( base_url('transcribe/transcribe_step1/2') );
 			}
 		// show message
-		$session->set('message_2', 'BMD file successfully created but not uploaded to '.$session->current_project[0]['project_name'].'. Use option \'Show raw BMD file\' to see it.');
+		$session->set('message_2', 'BMD file successfully created but not uploaded to '.$session->current_project['project_name'].'. Use option \'Show raw BMD file\' to see it.');
 		$session->set('message_class_2', 'alert alert-success');
 		return redirect()->to( base_url('transcribe/transcribe_step1/2') );
 	}
@@ -724,7 +724,7 @@ class Transcribe extends BaseController
 		
 		// get detail data
 		$session->detail_data =	$detail_data_model
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->where('BMD_header_index',  $session->current_transcription[0]['BMD_header_index'])
 			->where('BMD_identity_index', $session->BMD_identity_index)
 			->where('BMD_status', '0')
@@ -738,7 +738,7 @@ class Transcribe extends BaseController
 			}
 		
 		// has the transcription been verified? Can't upload unless it has Do not enforce if projet = FreeREG
-		if ( $session->current_project[0]['project_index'] != '2' )
+		if ( $session->current_project['project_index'] != '2' )
 			{
 				if ( $session->current_transcription[0]['verified'] == 'NO' )
 					{
@@ -750,7 +750,7 @@ class Transcribe extends BaseController
 			
 		// are there any suggestion comments?
 		$suggestion_comments = $detail_comments_model
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->where('BMD_header_index', $session->current_transcription[0]['BMD_header_index'])
 			->where('BMD_comment_type', 'S')
 			->findAll();
@@ -780,10 +780,10 @@ class Transcribe extends BaseController
 							{
 								// create the temporary upload curl file
 								// set file extension
-								$session->current_project[0]['project_index'] == 1 ? $ext = '.BMD' : $ext = '.CSV';
+								$session->current_project['project_index'] == 1 ? $ext = '.BMD' : $ext = '.CSV';
 								// get file name
 								$upload_file_name = $csv_file[0]['csv_file_name'];
-								$tmpf = getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid.'/CSV_Files/'.$upload_file_name.$ext;
+								$tmpf = getcwd().'/Users/'.$session->current_project['project_name'].'/'.$session->identity_userid.'/CSV_Files/'.$upload_file_name.$ext;
 								// delete it if it exists
 								if ( file_exists($tmpf) ) unlink($tmpf);
 								// open, load and close it
@@ -792,7 +792,7 @@ class Transcribe extends BaseController
 								fclose($fh);
 		
 								// set up the standard fields to pass to curl - do not URL encode this data. Depends on project
-								switch ($session->current_project[0]['project_index'])
+								switch ($session->current_project['project_index'])
 									{
 										case 1: // FreeBMD
 											// set parameters for the curl command
@@ -886,11 +886,11 @@ class Transcribe extends BaseController
 																switch ($session->BMD_file_exists_on_project)
 																	{
 																		case '0': // file did not already exist on FreeBMD
-																			$session->set('message_2', 'Transcription, '.$upload_file_name.', successfully UPLOADED to '.$session->current_project[0]['project_name'].' and closed by FreeComETT. You can see it in your CLOSED Transcriptions list.');
+																			$session->set('message_2', 'Transcription, '.$upload_file_name.', successfully UPLOADED to '.$session->current_project['project_name'].' and closed by FreeComETT. You can see it in your CLOSED Transcriptions list.');
 																			break;
 																			
 																		case '1': // file already existed on FreeBMD
-																			$session->set('message_2', 'Transcription '.$upload_file_name.', successfully REPLACED on '.$session->current_project[0]['project_name'].' and closed by FreeComETT. You can see it in your CLOSED Transcriptions list.');
+																			$session->set('message_2', 'Transcription '.$upload_file_name.', successfully REPLACED on '.$session->current_project['project_name'].' and closed by FreeComETT. You can see it in your CLOSED Transcriptions list.');
 																			break;
 																	}
 																$session->set('message_class_2', 'alert alert-success');
@@ -958,10 +958,10 @@ class Transcribe extends BaseController
 																switch ($session->BMD_file_exists_on_project)
 																	{
 																		case '0': // file did not already exist on FreeBMD
-																			$session->set('message_2', 'Transcription, '.$upload_file_name.', successfully UPLOADED to '.$session->current_project[0]['project_name'].' but with warnings. See warnings by clicking on the status of the file concerned. Transcription remains in your ACTIVE Transcriptions list.');
+																			$session->set('message_2', 'Transcription, '.$upload_file_name.', successfully UPLOADED to '.$session->current_project['project_name'].' but with warnings. See warnings by clicking on the status of the file concerned. Transcription remains in your ACTIVE Transcriptions list.');
 																			break;
 																		case '1': // file already existed on FreeBMD
-																			$session->set('message_2', 'Transcription, '.$upload_file_name.', successfully REPLACED on '.$session->current_project[0]['project_name'].' but with warnings. See warnings by clicking on the status of the file concerned. Transcription remains in your ACTIVE Transcriptions list.');
+																			$session->set('message_2', 'Transcription, '.$upload_file_name.', successfully REPLACED on '.$session->current_project['project_name'].' but with warnings. See warnings by clicking on the status of the file concerned. Transcription remains in your ACTIVE Transcriptions list.');
 																			break;
 																	}
 																$session->set('message_class_2', 'alert alert-warning');
@@ -1180,7 +1180,7 @@ class Transcribe extends BaseController
 			{
 				// get the cycle text
 				$session->set('BMD_cycle_text',	$transcription_cycle_model
-					->where('project_index', $session->current_project[0]['project_index'])
+					->where('project_index', $session->current_project['project_index'])
 					->where('BMD_cycle_code', 'CLOST')
 					->where('BMD_cycle_type', 'TRANS')
 					->find());
@@ -1217,7 +1217,7 @@ class Transcribe extends BaseController
 		$session->transcribe_detail_data = $detail_data_model	
 			->where('BMD_header_index',  $session->current_transcription[0]['BMD_header_index'])
 			->where('BMD_identity_index', $session->BMD_identity_index)
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->orderby('BMD_line_sequence','ASC')
 			->findAll();
 													
@@ -1272,7 +1272,7 @@ class Transcribe extends BaseController
 		// get any header comments.
 		$session->comment_text = '';
 		$session->comment_text_array =	$transcription_comments_model
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->where('identity_index', $session->BMD_identity_index)
 			->where('transcription_index', $session->current_transcription[0]['BMD_header_index'])
 			->where('comment_sequence', 10)
@@ -1336,7 +1336,7 @@ class Transcribe extends BaseController
 		
 		// delete sequence 10 for any transcription comments
 		$transcription_comments_model
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->where('identity_index', $session->BMD_identity_index)
 			->where('transcription_index', $session->current_transcription[0]['BMD_header_index'])
 			->where('comment_sequence', 10)
@@ -1344,7 +1344,7 @@ class Transcribe extends BaseController
 		// now add it again
 		$data =	[
 					'transcription_index' => $session->current_transcription[0]['BMD_header_index'],
-					'project_index' => $session->current_project[0]['project_index'],
+					'project_index' => $session->current_project['project_index'],
 					'identity_index' => $session->BMD_identity_index,
 					'comment_sequence' => 10,
 					'comment_text' => $session->comment_text,
@@ -1533,7 +1533,7 @@ class Transcribe extends BaseController
 		$session->transcribe_detail_data = $detail_data_model	
 			->where('BMD_header_index',  $session->current_transcription[0]['BMD_header_index'])
 			->where('BMD_identity_index', $session->BMD_identity_index)
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->where('BMD_status', 0)
 			->findAll();
 			
@@ -1551,7 +1551,7 @@ class Transcribe extends BaseController
 				$session->transcribe_detail_data_verified = $detail_data_model	
 					->where('BMD_header_index',  $session->current_transcription[0]['BMD_header_index'])
 					->where('BMD_identity_index', $session->BMD_identity_index)
-					->where('project_index', $session->current_project[0]['project_index'])
+					->where('project_index', $session->current_project['project_index'])
 					->where('BMD_status', 0)
 					->where('line_verified', 'YES')
 					->findAll();
@@ -2074,11 +2074,11 @@ class Transcribe extends BaseController
 					
 					// get default entries
 					// get the standard def
-					switch ($session->current_project[0]['project_index'])
+					switch ($session->current_project['project_index'])
 						{
 							case 1: //FreeBMD
 								$session->set('standard_def', $def_fields_model	
-									->where('project_index', $session->current_project[0]['project_index'])
+									->where('project_index', $session->current_project['project_index'])
 									->where('syndicate_index', $session->current_transcription[0]['BMD_syndicate_index'])
 									->where('data_entry_format', $session->current_transcription[0]['current_data_entry_format'])
 									->where('scan_format', $session->current_allocation[0]['scan_format'])
@@ -2088,7 +2088,7 @@ class Transcribe extends BaseController
 							case 2: //FreeREG
 								// get standard defs
 								$session->set('standard_def', $def_fields_model	
-									->where('project_index', $session->current_project[0]['project_index'])
+									->where('project_index', $session->current_project['project_index'])
 									->where('syndicate_index', null)
 									->where('data_entry_format', $session->current_transcription[0]['current_data_entry_format'])
 									->where('scan_format', $session->current_allocation[0]['scan_format'])
@@ -2177,7 +2177,7 @@ class Transcribe extends BaseController
 														'save' => 'Y'
 													];
 					
-		if ( $session->current_project[0]['project_index'] == 1 )
+		if ( $session->current_project['project_index'] == 1 )
 			{
 				$field_parameters["field_line"] = 	[
 														'type' => 'readonly', 
@@ -2226,7 +2226,7 @@ class Transcribe extends BaseController
 														'save' => 'Y'
 													];
 													
-		if ( $session->current_project[0]['project_index'] != 2 )
+		if ( $session->current_project['project_index'] != 2 )
 			{
 				$field_parameters["font_weight"] = 			[	
 																'type' => 'select', 
@@ -2430,7 +2430,7 @@ class Transcribe extends BaseController
 							->update();
 							
 						// set others except if in FreeREG
-						if ( $session->current_project[0]['project_index'] != 2 )
+						if ( $session->current_project['project_index'] != 2 )
 							{
 								$transcription_detail_def_model	
 									->set(['font_weight' => $row['font_weight']])
@@ -2468,7 +2468,7 @@ class Transcribe extends BaseController
 										case 0: // create the layout
 											// add to layout definition
 											$user_data_entry_layouts_model
-												->set(['project_index' => $session->current_project[0]['project_index']])
+												->set(['project_index' => $session->current_project['project_index']])
 												->set(['identity_index' => $session->BMD_identity_index])
 												->set(['event_type' => $session->current_transcription[0]['current_data_entry_format']])
 												->set(['layout_name' => $layout_name])
@@ -2518,7 +2518,7 @@ class Transcribe extends BaseController
 				else
 					{
 						$transcription_current_layout_model
-							->set(['project_index' => $session->current_project[0]['project_index']])
+							->set(['project_index' => $session->current_project['project_index']])
 							->set(['transcription_index' => $session->current_transcription[0]['BMD_header_index']])
 							->set(['identity_index' => $session->BMD_identity_index])
 							->set(['event_type' => $session->current_transcription[0]['current_data_entry_format']])
@@ -2753,7 +2753,7 @@ class Transcribe extends BaseController
 								
 		// reload data entry fields
 		$session->default_field_parms = $def_fields_model
-				->where('project_index', $session->current_project[0]['project_index'])
+				->where('project_index', $session->current_project['project_index'])
 				->where('syndicate_index', $session->reference_synd)
 				->where('data_entry_format', $session->reference_data_entry_format)
 				->where('scan_format', $session->reference_scan_format)
@@ -2907,7 +2907,7 @@ class Transcribe extends BaseController
 		
 		// get detail lines in sequence order
 		$all_detail_lines = $detail_data_model
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->where('BMD_header_index',  $session->current_transcription[0]['BMD_header_index'])			
 			->orderby('BMD_line_sequence','ASC')
 			->findAll();						
@@ -2923,7 +2923,7 @@ class Transcribe extends BaseController
 					
 		// load $session->transcribe_detail_data again
 		$session->transcribe_detail_data = 	$detail_data_model
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->where('BMD_header_index',  $session->current_transcription[0]['BMD_header_index'])			
 			->orderby('BMD_line_sequence','ASC')
 			->findAll();
@@ -3184,12 +3184,12 @@ class Transcribe extends BaseController
 		$session->current_transcription =	$transcription_model
 			->where('BMD_header_index',  $BMD_header_index)
 			->where('BMD_identity_index', $session->BMD_identity_index)
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->find();
 											
 		// reload current_transcription_def_fields
 		$session->current_transcription_def_fields = $transcription_detail_def_model
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->where('transcription_index', $BMD_header_index)
 			->where('scan_format', $session->current_allocation[0]['scan_format'])
 			->orderby('field_order','ASC')
@@ -3391,7 +3391,7 @@ class Transcribe extends BaseController
 		
 		// get all transcriptions, this project, this user, this syndicate, this allocation and ! this page 'id!='
 		$transcriptions = $transcription_model
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->where('BMD_identity_index', $session->current_transcription[0]['BMD_identity_index'])	
 			->where('BMD_syndicate_index', $session->current_transcription[0]['BMD_syndicate_index'])
 			->where('BMD_allocation_index', $session->current_transcription[0]['BMD_allocation_index'])
@@ -3455,7 +3455,7 @@ class Transcribe extends BaseController
 			
 			// get the cycle text
 			$session->set('BMD_cycle_text',	$transcription_cycle_model
-				->where('project_index', $session->current_project[0]['project_index'])
+				->where('project_index', $session->current_project['project_index'])
 				->where('BMD_cycle_code', $session->BMD_cycle_code)
 				->where('BMD_cycle_type', 'TRANS')
 				->find());
@@ -3512,7 +3512,7 @@ class Transcribe extends BaseController
 						}
 						
 					// set up image info URL
-					switch ($session->current_project[0]['project_index']) 
+					switch ($session->current_project['project_index']) 
 						{
 							case 1: //FreeBMD
 								// set servertype and URL
@@ -3603,7 +3603,7 @@ class Transcribe extends BaseController
 			// set the identity last indexes by data entry format
 			$last_indexes = $identity_last_indexes_model
 				->where('identity_index', $session->BMD_identity_index)
-				->where('project_index', $session->current_project[0]['project_index'])
+				->where('project_index', $session->current_project['project_index'])
 				->where('data_entry_format', $session->current_allocation[0]['data_entry_format'])
 				->find();
 			
@@ -3613,7 +3613,7 @@ class Transcribe extends BaseController
 					// record found, so update
 					$identity_last_indexes_model
 						->where('identity_index', $session->BMD_identity_index)
-						->where('project_index', $session->current_project[0]['project_index'])
+						->where('project_index', $session->current_project['project_index'])
 						->where('data_entry_format', $session->current_allocation[0]['data_entry_format'])
 						->set(['transcription_index' => $session->current_transcription[0]['BMD_header_index']])
 						->set(['allocation_index' => $session->current_transcription[0]['BMD_allocation_index']])
@@ -3625,7 +3625,7 @@ class Transcribe extends BaseController
 					// record not found, so insert
 					$identity_last_indexes_model
 						->set(['identity_index' => $session->BMD_identity_index])
-						->set(['project_index' => $session->current_project[0]['project_index']])
+						->set(['project_index' => $session->current_project['project_index']])
 						->set(['data_entry_format' => $session->current_allocation[0]['data_entry_format']])
 						->set(['transcription_index' => $session->current_transcription[0]['BMD_header_index']])
 						->set(['allocation_index' => $session->current_transcription[0]['BMD_allocation_index']])
@@ -3714,7 +3714,7 @@ class Transcribe extends BaseController
 					// get default transcription sets for this type
 					$session->transcription_sets = $def_ranges_model
 						->join('def_image', 'def_ranges.data_entry_format = def_image.data_entry_format')
-						->where('def_ranges.project_index', $session->current_project[0]['project_index'])
+						->where('def_ranges.project_index', $session->current_project['project_index'])
 						->where('def_ranges.type', $session->reference_type)
 						->where('def_image.syndicate_index', $session->reference_synd)
 						->find();
@@ -3879,7 +3879,7 @@ class Transcribe extends BaseController
 				{
 					// get null syndicate records
 					$default_image_parms = $def_image_model
-						->where('project_index', $session->current_project[0]['project_index'])
+						->where('project_index', $session->current_project['project_index'])
 						->where('syndicate_index', null)
 						->where('data_entry_format', $session->reference_data_entry_format)
 						->where('scan_format', $session->reference_scan_format)
@@ -3887,7 +3887,7 @@ class Transcribe extends BaseController
 					
 					// create the record for this syndicate based on null syndicate records
 					$def_image_model
-						->set(['project_index' => $session->current_project[0]['project_index']])
+						->set(['project_index' => $session->current_project['project_index']])
 						->set(['syndicate_index' => $session->reference_synd])
 						->set(['data_entry_format' => $session->def_format])
 						->set(['scan_format' => $session->reference_format])
@@ -3906,7 +3906,7 @@ class Transcribe extends BaseController
 						
 					// now get the image parms for this syndicate again
 					$default_image_parms = $def_image_model
-						->where('project_index', $session->current_project[0]['project_index'])
+						->where('project_index', $session->current_project['project_index'])
 						->where('syndicate_index', $session->reference_synd)
 						->where('data_entry_format', $session->reference_data_entry_format)
 						->where('scan_format', $session->reference_scan_format)
@@ -3939,7 +3939,7 @@ class Transcribe extends BaseController
 			if ( $session->base_on != '' )
 				{
 					$session->default_field_parms = $def_fields_model
-						->where('project_index', $session->current_project[0]['project_index'])
+						->where('project_index', $session->current_project['project_index'])
 						->where('syndicate_index', $session->reference_synd)
 						->where('data_entry_format', $session->base_on_data_entry_format)
 						->where('scan_format', $session->base_on_scan_format)
@@ -3949,7 +3949,7 @@ class Transcribe extends BaseController
 			else
 				{
 						$session->default_field_parms = $def_fields_model
-						->where('project_index', $session->current_project[0]['project_index'])
+						->where('project_index', $session->current_project['project_index'])
 						->where('syndicate_index', $session->reference_synd)
 						->where('data_entry_format', $session->reference_data_entry_format)
 						->where('scan_format', $session->reference_scan_format)
@@ -3962,7 +3962,7 @@ class Transcribe extends BaseController
 				{
 					// get null syndicate records
 					$session->default_field_parms = $def_fields_model
-						->where('project_index', $session->current_project[0]['project_index'])
+						->where('project_index', $session->current_project['project_index'])
 						->where('syndicate_index', null)
 						->where('data_entry_format', $session->reference_data_entry_format)
 						->where('scan_format', $session->reference_scan_format)
@@ -3972,7 +3972,7 @@ class Transcribe extends BaseController
 					foreach ( $session->default_field_parms as $field_parms )
 						{
 							$def_fields_model
-								->set(['project_index' => $session->current_project[0]['project_index']])
+								->set(['project_index' => $session->current_project['project_index']])
 								->set(['syndicate_index' => $session->reference_synd])
 								->set(['data_entry_format' => $session->def_format])
 								->set(['scan_format' => $session->reference_format])
@@ -4010,7 +4010,7 @@ class Transcribe extends BaseController
 						
 					// now get default transcription set field parms again
 					$session->default_field_parms = $def_fields_model
-						->where('project_index', $session->current_project[0]['project_index'])
+						->where('project_index', $session->current_project['project_index'])
 						->where('syndicate_index', $session->reference_synd)
 						->where('data_entry_format', $session->reference_data_entry_format)
 						->where('scan_format', $session->reference_scan_format)
@@ -4157,7 +4157,7 @@ class Transcribe extends BaseController
 			
 					// update default image set
 					$def_image_model
-						->where('project_index', $session->current_project[0]['project_index'])
+						->where('project_index', $session->current_project['project_index'])
 						->where('syndicate_index', $session->reference_synd)
 						->where('data_entry_format', $session->reference_data_entry_format)
 						->where('scan_format', $session->reference_scan_format)
@@ -4187,7 +4187,7 @@ class Transcribe extends BaseController
 					
 					// update default image set
 					$def_image_model
-						->where('project_index', $session->current_project[0]['project_index'])
+						->where('project_index', $session->current_project['project_index'])
 						->where('syndicate_index', $session->reference_synd)
 						->where('data_entry_format', $session->reference_data_entry_format)
 						->where('scan_format', $session->reference_scan_format)
@@ -4228,7 +4228,7 @@ class Transcribe extends BaseController
 			{
 				// get the default image set
 				$session->default_image_parms = $def_image_model
-					->where('project_index', $session->current_project[0]['project_index'])
+					->where('project_index', $session->current_project['project_index'])
 					->where('syndicate_index', $session->reference_synd)
 					->where('data_entry_format', $session->reference_data_entry_format)
 					->where('scan_format', $session->reference_scan_format)
@@ -4351,7 +4351,7 @@ class Transcribe extends BaseController
 			else
 				{
 					$transcription_current_layout_model
-						->set(['project_index' => $session->current_project[0]['project_index']])
+						->set(['project_index' => $session->current_project['project_index']])
 						->set(['transcription_index' => $session->current_transcription[0]['BMD_header_index']])
 						->set(['identity_index' => $session->BMD_identity_index])
 						->set(['event_type' => $session->current_transcription[0]['current_data_entry_format']])

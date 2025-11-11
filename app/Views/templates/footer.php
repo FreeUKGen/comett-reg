@@ -16,7 +16,7 @@
 				<a class="" title="Manage your Identity" href="<?=(base_url('identity/change_details_step2/0')) ?>"><i class="fa-solid fa-id-card"></i>Identity</a>
 				<a class="" title="Housekeeping" href="/housekeeping/index/0"><i class="fa-solid fa-warehouse"></i>Housekeeping</a>
 				<?php
-				switch ( $session->current_project[0]['project_index'] )
+				switch ( $session->current_project['project_index'] )
 					{
 						case 1: ?>
 							<a class="" title="FreeBMD FAQ" href="https://www.freebmd.org.uk/vol_faq.html" target="_blank"><i class="fa-regular fa-circle-question"></i>FAQ</a>
@@ -32,7 +32,7 @@
 					} ?>
 					
 				<?php
-				switch ( $session->current_project[0]['project_index'] )
+				switch ( $session->current_project['project_index'] )
 					{
 						case 1: ?>
 							<a class="" title="FreeBMD File Management" href="<?php echo esc($session->curl_url); ?>" target="_blank"><i class="fa-solid fa-folder-open"></i></a>

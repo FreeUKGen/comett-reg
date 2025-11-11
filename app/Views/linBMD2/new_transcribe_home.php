@@ -109,7 +109,7 @@ use App\Models\Transcription_Comments_Model;
                 <tr>
                     <th>Entry</th>
                     <th>Reg Number</th>
-                    <th><?php echo $session->current_project[0]['allocation_text'].' Name' ?></th>
+                    <th><?php echo $session->current_project['allocation_text'].' Name' ?></th>
                     <th>Document Source</th>
                     <th>Image Source</th>
                     <th>Image Count</th>

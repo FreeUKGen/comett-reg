@@ -16,18 +16,17 @@ class Home extends BaseController
         helper('backup');
     }
 	
-	public function new_index()
+	public function index()
 	{		
-		new Init()->start();
+		new Init()->start(1);
 		// show view to select project
 	}
 
 	/**
 	 * DS Nov 25
 	 * This method is now REDUNDANT
- 	 * Use app/Helpers/Init instead.
 	**/
-    public function index()
+    public function old_index()
     {
         // initialise method
         $session = session();
@@ -489,100 +488,5 @@ class Home extends BaseController
 		$session->set('message_2', 'Your comment has been deleted.');
 		$session->set('message_class_2', 'alert alert-success');
 		return redirect()->to( base_url('/home/issue_comments_see/'.$session->issue_number.'/'.$session->issue_title));
-	}
-	
-	public function speedtest($start_message)
-	{
-		// declare session
-		$session = session();
-		$speedtest_results_model = new Speedtest_Results_Model();
-		
-		// set defaults
-		switch ($start_message) 
-			{
-				case 0:
-					// message defaults
-					$session->set('message_1', '');
-					$session->set('message_class_1', '');
-					$session->set('message_2', '');
-					$session->set('message_class_2', '');
-					break;
-				case 1:
-					break;
-				case 2:
-					break;
-				default:
-			}
-		
-		// load stored speedtest this user
-		$session->speedtests = $speedtest_results_model
-			->where('project_index', $session->current_project[0]['project_index'])
-			->where('identity_index', $session->BMD_identity_index)
-			->orderby('timestamp', 'DESC')
-			->findAll();
-		
-		// calculate averages
-		if ( $session->speedtests )
-			{
-				$count = count($session->speedtests);
-				$total_dl = 0;
-				$total_ul = 0;
-				$total_ping = 0;
-				$total_jitter = 0;
-				$total_distance = 0;
-				foreach ( $session->speedtests as $speedtest )
-					{
-						$total_dl = $total_dl + $speedtest['dl'];
-						$total_ul = $total_ul + $speedtest['ul'];
-						$total_ping = $total_ping + $speedtest['ping'];
-						$total_jitter = $total_jitter + $speedtest['jitter'];
-						$total_distance = $total_distance + $speedtest['distance'];
-					}
-				$session->average_dl = $total_dl / $count;
-				$session->average_ul = $total_ul / $count;
-				$session->average_ping = $total_ping / $count;
-				$session->average_jitter = $total_jitter / $count;
-				$session->average_distance = $total_distance / $count;
-			}
-
-		// show view
-		echo view('templates/header');
-		echo view('linBMD2/speedtest');
-		echo view('templates/footer');	
-		return;
-	}
-	
-	public function speedtest_results()
-	{
-		// store speedtest results
-		// initialise
-		$session = session();
-		$speedtest_results_model = new Speedtest_Results_Model();
-				
-		// get selected field index and action
-		$speedtest_results = json_decode($this->request->getPost('result_data'), true);
-	
-		// create db fields
-		$ispinfo_array = explode('-', $speedtest_results['clientIp']);
-		$isp_array = explode('(', $ispinfo_array[1]);
-			
-		// insert to DB
-		$speedtest_results_model
-			->set(['project_index' => $session->current_project[0]['project_index']])
-			->set(['identity_index' => $session->BMD_identity_index])
-			->set(['ip' => trim($ispinfo_array[0])])
-			->set(['ispinfo' => trim($isp_array[0])])
-			->set(['distance' => trim($isp_array[1], ' km)')])
-			->set(['dl' => $speedtest_results['dlStatus']])
-			->set(['ul' => $speedtest_results['ulStatus']])
-			->set(['ping' => $speedtest_results['pingStatus']])
-			->set(['jitter' => $speedtest_results['jitterStatus']])
-			->insert();
-
-		$session->set('message_1', 'Speedtest successfully performed. See test history below.');
-		$session->set('message_class_1', 'alert alert-success');
-		$session->set('message_2', '');
-		$session->set('message_class_2', '');
-		return redirect()->to( base_url('home/speedtest/1') );
 	}
 }

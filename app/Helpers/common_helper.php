@@ -47,7 +47,7 @@ function load_variables()
 			
 		// get syndicates
 		$syndicates = $syndicate_model	
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->orderby('status', 'ASC')
 			->orderby('BMD_syndicate_name', 'ASC')
 			->findAll();		
@@ -57,7 +57,7 @@ function load_variables()
 			->where('BMD_status', 'Open')
 			->where('BMD_identity_index', $session->BMD_identity_index)
 			->orwhere('BMD_identity_index', 999999)
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->orwhere('project_index', 999999)
 			->findAll();
 							
@@ -68,7 +68,7 @@ function load_variables()
 							];
 		// load types for this project
 		$session->project_types = $project_types_model
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->orderby('type_order')
 			->find();					
 		// load quarters
@@ -123,7 +123,7 @@ function load_variables()
 							];
 		// load transcrition cycle
 		$transcription_cycles = $transcription_cycle_model
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->where('available', 1)
 			->orderby('BMD_cycle_sort', 'ASC')
 			->findAll();
@@ -230,7 +230,7 @@ function load_variables()
 
 	function check_valid_routing(): ?RedirectResponse
 	{
-		if (!isset($session->current_project[0]['project_name']))
+		if (!isset($session->current_project['project_name']))
 			return redirect()->to( base_url('/'));
 		return null;
 	}
@@ -289,12 +289,12 @@ function manage_syndicate_DB()
 		$identity_model = new Identity_Model();
 		
 		// depends on project
-		switch ($session->current_project[0]['project_name']) 
+		switch ($session->current_project['project_name']) 
 			{
 				case 'FreeBMD':
 					// set all not active
 					$syndicate_model
-						->where('project_index', $session->current_project[0]['project_index'])
+						->where('project_index', $session->current_project['project_index'])
 						->set(['status' => '1'])
 						->update();
 					
@@ -314,7 +314,7 @@ function manage_syndicate_DB()
 						{
 							// does this syndicate exist in FreeComETT syndicates table
 							$exists	= $syndicate_model
-								->where('project_index', $session->current_project[0]['project_index'])
+								->where('project_index', $session->current_project['project_index'])
 								->where('BMD_syndicate_name', $active_syndicate['SyndicateName'])
 								->find();
 								
@@ -323,7 +323,7 @@ function manage_syndicate_DB()
 								{
 									// Update it as active
 									$syndicate_model
-										->where('project_index', $session->current_project[0]['project_index'])
+										->where('project_index', $session->current_project['project_index'])
 										->where('BMD_syndicate_name', $active_syndicate['SyndicateName'])
 										->set(['BMD_syndicate_email' => $active_syndicate['SyndicateEmail']])
 										->set(['status' => '0'])
@@ -333,7 +333,7 @@ function manage_syndicate_DB()
 								{
 									// insert it as active
 									$syndicate_model
-										->set(['project_index' => $session->current_project[0]['project_index']])
+										->set(['project_index' => $session->current_project['project_index']])
 										->set(['BMD_syndicate_index' => $active_syndicate['SyndicateID']])
 										->set(['BMD_syndicate_name' => $active_syndicate['SyndicateName']])
 										->set(['BMD_syndicate_leader' => $active_syndicate['CorrectionsContact']])
@@ -365,7 +365,7 @@ function manage_syndicate_DB()
 						{
 							// get coordinator details for this syndicate
 							$coord = $identity_model
-								->where('project_index', $session->current_project[0]['project_index'])
+								->where('project_index', $session->current_project['project_index'])
 								->where('BMD_user', $active_syndicate['syndicate_coordinator'])
 								->find();
 
@@ -376,7 +376,7 @@ function manage_syndicate_DB()
 									$identity_model
 										->set(['BMD_user' => $active_syndicate['syndicate_coordinator']])
 										->set(['role_index' => 2])
-										->set(['project_index' => $session->current_project[0]['project_index']])
+										->set(['project_index' => $session->current_project['project_index']])
 										->insert();
 								}
 							
@@ -393,7 +393,7 @@ function manage_syndicate_DB()
 							
 							// does this syndicate exist in FreeComETT syndicates table
 							$exists	= $syndicate_model
-								->where('project_index', $session->current_project[0]['project_index'])
+								->where('project_index', $session->current_project['project_index'])
 								->where('BMD_syndicate_index', $id)
 								->find();
 													
@@ -402,7 +402,7 @@ function manage_syndicate_DB()
 								{
 									// Update it
 									$syndicate_model
-										->where('project_index', $session->current_project[0]['project_index'])
+										->where('project_index', $session->current_project['project_index'])
 										->where('BMD_syndicate_index', $id)
 										->set(['BMD_syndicate_email' => $coord['email_address']])
 										->set(['BMD_syndicate_name' => $active_syndicate['syndicate_code']])
@@ -412,7 +412,7 @@ function manage_syndicate_DB()
 								{					
 									// insert it as active
 									$syndicate_model
-										->set(['project_index' => $session->current_project[0]['project_index']])
+										->set(['project_index' => $session->current_project['project_index']])
 										->set(['BMD_syndicate_index' => $id])
 										->set(['BMD_syndicate_name' => $active_syndicate['syndicate_code']])
 										->set(['BMD_syndicate_leader' => $coord['person_forename'].' '.$coord['person_surname']])
@@ -445,10 +445,10 @@ function define_mongodb()
 			}
 
 		// get DB params for the environment
-//d($session->current_project[0]['project_index']);
+//d($session->current_project['project_index']);
 //dd($session->environment);
 		$db_parms = $project_db_model
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->where('environment', $session->environment)
 			->find();
 		//log_message('info', 'DBP! ' . print_r($db_parms, true));
@@ -518,7 +518,7 @@ function get_source($key)
 		$source_data = 'error';
 		$source_value = 'error';
 		// get the source info
-		$source_info = get_source_info($session->current_project[0]['project_index'], $key);
+		$source_info = get_source_info($session->current_project['project_index'], $key);
 		if ( $source_info != 'error' ) $source_data = get_source_data($source_info);
 		if ( $source_data != 'error' ) $source_value = get_source_value($source_data, $source_info[0]);
 		

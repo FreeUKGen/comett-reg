@@ -59,7 +59,7 @@ class Identity extends BaseController
 							$today = date("Y-m-d");
 							// get message to show
 							$session->current_message =	$messaging_model
-								->where('project_index', $session->current_project[0]['project_index'])
+								->where('project_index', $session->current_project['project_index'])
 								->where('from_date <=', $today)
 								->where('to_date >=', $today)
 								->find();
@@ -109,7 +109,7 @@ class Identity extends BaseController
 		// build / update FreeComETT syndicate DB ; manage_syndicate_DB() in common_helper
 		// frequency depends on parameter in Projects table, and can be different per project
 		// calculate number of signons / syndicate refresh frequency ; get remainder
-		$update = $session->current_project[0]['signons_to_project'] % $session->current_project[0]['syndicate_refresh'];
+		$update = $session->current_project['signons_to_project'] % $session->current_project['syndicate_refresh'];
 		if ( $update == 0 )
 			{
 				manage_syndicate_DB();
@@ -146,7 +146,7 @@ class Identity extends BaseController
 		$session->UserPassword_base64 = $UserPassword_base64;
 	
 		// validate depending on project
-		switch ($session->current_project[0]['project_name']) 
+		switch ($session->current_project['project_name']) 
 			{
 				case 'FreeBMD':
 					// find identity entered by user
@@ -162,7 +162,7 @@ class Identity extends BaseController
 					// was it found?
 					if ( ! $session->submitter )
 						{
-							$session->set('message_2', 'The identity you entered is not defined for '.$session->current_project[0]['project_name'].'. Please ensure that you have entered your Identity correctly.');
+							$session->set('message_2', 'The identity you entered is not defined for '.$session->current_project['project_name'].'. Please ensure that you have entered your Identity correctly.');
 							$session->set('message_class_2', 'alert alert-danger');
 							return redirect()->to( base_url('identity/signin_step1/1') );
 						}
@@ -180,7 +180,7 @@ class Identity extends BaseController
 						{
 							$get_date = getdate($session->submitter[0]['NotActiveDate']);
 							$not_active_date = $get_date['mday'].'-'.$get_date['month'].'-'.$get_date['year'];
-							$session->set('message_2', 'Your '.$session->current_project[0]['project_name'].' account has been suspended on '.$not_active_date.' for this reason, '.$session->submitter[0]['NotActiveReason'].'. Please contact your coordinator.');
+							$session->set('message_2', 'Your '.$session->current_project['project_name'].' account has been suspended on '.$not_active_date.' for this reason, '.$session->submitter[0]['NotActiveReason'].'. Please contact your coordinator.');
 							$session->set('message_class_2', 'alert alert-danger');
 							return redirect()->to( base_url('identity/signin_step1/1') );
 						}
@@ -227,7 +227,7 @@ class Identity extends BaseController
 						{
 							// set current syndicate if only one syndicate
 							$session->current_syndicate = $syndicate_model
-								->where('project_index', $session->current_project[0]['project_index'])
+								->where('project_index', $session->current_project['project_index'])
 								->where('BMD_syndicate_index', $session->project_user_syndicates[0]['SyndicateID'])
 								->find();
 						}		
@@ -260,7 +260,7 @@ class Identity extends BaseController
 					// was it found?
 					if ( ! $session->submitter )
 						{
-							$session->set('message_2', 'The identity you entered is not defined for '.$session->current_project[0]['project_name'].' on the '.$session->environment.' server. Please ensure that you have entered your Identity correctly. If you are sure, please contact your co-ordinator to make sure that your userid is set up on this server.');
+							$session->set('message_2', 'The identity you entered is not defined for '.$session->current_project['project_name'].' on the '.$session->environment.' server. Please ensure that you have entered your Identity correctly. If you are sure, please contact your co-ordinator to make sure that your userid is set up on this server.');
 							$session->set('message_class_2', 'alert alert-danger');
 							return redirect()->to( base_url('identity/signin_step1/1') );
 						}
@@ -281,7 +281,7 @@ class Identity extends BaseController
 					// is user active? except for me.
 					if ( $session->submitter[0]['active'] == false AND $this->request->getPost('identity') != 'freeregdev' )
 						{
-							$session->set('message_2', 'Your '.$session->current_project[0]['project_name'].' account is not active
+							$session->set('message_2', 'Your '.$session->current_project['project_name'].' account is not active
 							. Please contact your coordinator.');
 							$session->set('message_class_2', 'alert alert-danger');
 							return redirect()->to( base_url('identity/signin_step1/1') );
@@ -310,7 +310,7 @@ class Identity extends BaseController
 					// set current syndicate if only one syndicate
 					$id = $session->project_user_syndicates[0]['_id']->__toString();
 					$session->current_syndicate = $syndicate_model
-						->where('project_index', $session->current_project[0]['project_index'])
+						->where('project_index', $session->current_project['project_index'])
 						->where('BMD_syndicate_index', $id)
 						->find();
 
@@ -321,7 +321,7 @@ class Identity extends BaseController
 							manage_syndicate_DB();
 							// try again
 							$session->current_syndicate = $syndicate_model
-								->where('project_index', $session->current_project[0]['project_index'])
+								->where('project_index', $session->current_project['project_index'])
 								->where('BMD_syndicate_index', $id)
 								->find();
 							// none found ?
@@ -380,15 +380,15 @@ class Identity extends BaseController
 		$session->masquerade = 0;
 		
 		// update number of signons this syndicate in order to know when to next update syndicates table
-		$signons = $session->current_project[0]['signons_to_project'] + 1;
+		$signons = $session->current_project['signons_to_project'] + 1;
 		$projects_model
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->set(['signons_to_project' => $signons])
 			->update();
 
 		// get user identity in FreeComETT by using the UserID
 		$session->current_identity = $identity_model
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->where('BMD_user', $session->identity_userid)
 			->find();
 										
@@ -399,7 +399,7 @@ class Identity extends BaseController
 				// set user defaults for this session, this syndicate
 				// is this user a syndicate leader? default is no = ordinary transcriber
 				$user_role = 4;
-				switch ($session->current_project[0]['project_name']) 
+				switch ($session->current_project['project_name']) 
 					{
 						case 'FreeBMD':	
 							// is the person signing on a coordinator
@@ -432,7 +432,7 @@ class Identity extends BaseController
 				
 				// add record - most fields are provided by DB default definitions.
 				$identity_model
-					->set(['project_index' => $session->current_project[0]['project_index']])
+					->set(['project_index' => $session->current_project['project_index']])
 					->set(['BMD_user' => $session->identity_userid])
 					->set(['environment' => $user_env])
 					->set(['verify_mode' => $user_ver])
@@ -481,12 +481,12 @@ class Identity extends BaseController
 		
 		// get the identity
 		$session->current_identity = $identity_model
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->where('BMD_user', $session->identity_userid)
 			->find();
 			
 		// set identity session parms depending on project
-		switch ($session->current_project[0]['project_name']) 
+		switch ($session->current_project['project_name']) 
 			{
 				case 'FreeBMD':	
 					// set session variables
@@ -541,7 +541,7 @@ class Identity extends BaseController
 									// does this assignment exist in freecomett allocations table?
 									$id = $assignment['_id']->__toString();
 									$allocation = $allocation_model
-										->where('project_index', $session->current_project[0]['project_index'])
+										->where('project_index', $session->current_project['project_index'])
 										->where('REG_assignment_id', $id)
 										->find();
 								
@@ -606,7 +606,7 @@ class Identity extends BaseController
 												
 											// add it to the freecomett allocations table
 											$allocation_model
-												->set(['project_index' => $session->current_project[0]['project_index']])
+												->set(['project_index' => $session->current_project['project_index']])
 												->set(['BMD_identity_index' => $session->current_identity[0]['BMD_identity_index']])
 												->set(['BMD_syndicate_index' => $session->current_syndicate[0]['BMD_syndicate_index']])
 												->set(['BMD_allocation_name' => $assignment_group[0]['group_name']])
@@ -621,7 +621,7 @@ class Identity extends BaseController
 												->set(['BMD_letter' => ''])
 												->set(['BMD_type' => 'C']) // C = Composite, ie assignment could contain any event type.
 												->set(['BMD_scan_type' => 'jpg'])
-												->set(['BMD_last_action' => 'Create '.$session->current_project[0]['allocation_text']])
+												->set(['BMD_last_action' => 'Create '.$session->current_project['allocation_text']])
 												->set(['BMD_status' => 'Open'])
 												->set(['BMD_sequence' => 'SEQUENCED'])
 												->set(['data_entry_format' => 'composite'])
@@ -643,7 +643,7 @@ class Identity extends BaseController
 										
 											// load allocation record
 											$session->current_allocation = $allocation_model
-												->where('project_index', $session->current_project[0]['project_index'])
+												->where('project_index', $session->current_project['project_index'])
 												->where('BMD_allocation_index', $allocation_index)
 												->find();
 												
@@ -668,7 +668,7 @@ class Identity extends BaseController
 																.http_build_query($image_params);
 													
 													$allocation_images_model
-														->set(['project_index' => $session->current_project[0]['project_index']])
+														->set(['project_index' => $session->current_project['project_index']])
 														->set(['allocation_index' => $allocation_index])
 														->set(['transcription_index' => NULL])
 														->set(['identity_index' => $session->current_identity[0]['BMD_identity_index']])
@@ -696,7 +696,7 @@ class Identity extends BaseController
 										{
 											// update it
 											$allocation_model
-												->where('project_index', $session->current_project[0]['project_index'])
+												->where('project_index', $session->current_project['project_index'])
 												->where('BMD_allocation_index', $allocation[0]['BMD_allocation_index'])
 												->set(['BMD_syndicate_index' => $session->current_syndicate[0]['BMD_syndicate_index']])
 												->update();
@@ -706,7 +706,7 @@ class Identity extends BaseController
 							// get all allocations created from backend and test to see if they are still assignments.
 							$allocations = $allocation_model
 								->where('BMD_identity_index', $session->BMD_identity_index)
-								->where('project_index', $session->current_project[0]['project_index'])
+								->where('project_index', $session->current_project['project_index'])
 								->where('source_code', 'FS')
 								->findAll();
 								
@@ -745,7 +745,7 @@ class Identity extends BaseController
 															$status = 'bt';
 														}
 													$allocation_status = $status_codes_model
-														->where('project_index', $session->current_project[0]['project_index'])
+														->where('project_index', $session->current_project['project_index'])
 														->where('status_project_code', $status)
 														->find();											
 													if ( $allocation_status )
@@ -803,7 +803,7 @@ class Identity extends BaseController
 		}
 				
 		// setup curl by trying to DL an image - any image will do
-		switch ($session->current_project[0]['project_name']) 
+		switch ($session->current_project['project_name']) 
 			{
 				case 'FreeBMD':
 				
@@ -908,13 +908,13 @@ class Identity extends BaseController
 		switch ($session->environment) 
 			{
 				case 'LIVE':
-					$session->set('curl_url', $session->current_project[0]['project_autouploadurllive']);
+					$session->set('curl_url', $session->current_project['project_autouploadurllive']);
 					break;
 				case 'TEST':
-					$session->set('curl_url', $session->current_project[0]['project_autouploadurltest']);
+					$session->set('curl_url', $session->current_project['project_autouploadurltest']);
 					break;
 				default:
-					$session->set('curl_url', $session->current_project[0]['project_autouploadurltest']);
+					$session->set('curl_url', $session->current_project['project_autouploadurltest']);
 					break;
 			}
 		
@@ -996,7 +996,7 @@ class Identity extends BaseController
 		
 		// find identity entered by user
 		$identity = $model
-					->where('project_index', $session->current_project[0]['project_index'])
+					->where('project_index', $session->current_project['project_index'])
 					->where('BMD_user', $session->identity)
 					->find();
 		// was it found?
@@ -1045,7 +1045,7 @@ class Identity extends BaseController
 		
 		if ( $start_message == 0 )
 			{				
-				$session->set('message_1', 'Change your Identity details for '.$session->current_project[0]['project_name'].'.');
+				$session->set('message_1', 'Change your Identity details for '.$session->current_project['project_name'].'.');
 				$session->set('message_class_1', 'alert alert-primary');
 				$session->set('message_2', '');
 				$session->set('message_class_2', '');
@@ -1078,12 +1078,12 @@ class Identity extends BaseController
 		
 		// reload current identity and user
 		$session->current_identity = 	$identity_model
-										->where('project_index', $session->current_project[0]['project_index'])
+										->where('project_index', $session->current_project['project_index'])
 										->where('BMD_identity_index', $session->BMD_identity_index)
 										->findAll();
 		
 		// go back to transcribe home
-		$session->set('message_2', 'Your Identity has been changed on FreeComETT for this project '.$session->current_project[0]['project_name'].'.');
+		$session->set('message_2', 'Your Identity has been changed on FreeComETT for this project '.$session->current_project['project_name'].'.');
 		$session->set('message_class_2', 'alert alert-success');
 		return redirect()->to( base_url('transcribe/transcribe_step1/2') );
 	}
@@ -1111,7 +1111,7 @@ class Identity extends BaseController
 		
 		// set current syndicate
 		$session->current_syndicate = $syndicate_model
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->where('BMD_syndicate_index', $this->request->getPost('syndicate'))
 			->find();
 		
