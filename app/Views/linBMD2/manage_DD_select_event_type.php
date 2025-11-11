@@ -15,7 +15,7 @@
 						<?php
 						} ?>
 				</select>
-				<input type="submit" value="<?=$session->current_project[0]['submit_button_text']?>" />
+				<input type="submit" value="<?=$session->current_project['submit_button_text']?>" />
 			</div>
 			
 		</div>
@@ -26,6 +26,6 @@
 	
 	<div class="row mt-4 d-flex justify-content-between">	
 		<a id="return" class="btn btn-primary mr-0" href="<?= (base_url('housekeeping/index/0')); ?>">
-			<?php echo $session->current_project[0]['back_button_text']?>
+			<?php echo $session->current_project['back_button_text']?>
 		</a>
 	</div>

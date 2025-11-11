@@ -301,7 +301,7 @@ class Report extends BaseController
 		$session = session();
 		
 		// build csv file name
-		$csv_file = getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid.'/CSV_Files/freecomett_report.csv';
+		$csv_file = getcwd().'/Users/'.$session->current_project['project_name'].'/'.$session->identity_userid.'/CSV_Files/freecomett_report.csv';
 		
 		// open csv file for writing
 		$f = fopen($csv_file, 'w');
@@ -326,5 +326,3 @@ class Report extends BaseController
 		return $this->response->download($csv_file, null);		
 	}		
 }
-			
-	

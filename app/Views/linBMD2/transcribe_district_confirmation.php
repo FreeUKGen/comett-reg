@@ -61,14 +61,14 @@
 		
 			<div class="row d-flex justify-content-between mt-4">
 				<button type="submit" class="btn btn-primary mr-0 d-flex">
-				<span><?php echo $session->current_project[0]['back_button_text']?></span>	
+				<span><?php echo $session->current_project['back_button_text']?></span>
 				</button>
 				
 				<?php
 				use App\Models\Help_Model;
 				$help_model = new Help_Model();
 				$session->current_help =	$help_model
-											->where('help_project', $session->current_project[0]['project_index'])
+											->where('help_project', $session->current_project['project_index'])
 											->where('help_index', '12')
 											->find();
 				?>
@@ -97,4 +97,3 @@ document.addEventListener("DOMContentLoaded", () =>
 		});
 });
   </script>
-	

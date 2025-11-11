@@ -7,7 +7,7 @@
 	<form action="<?php echo(base_url('projects/manage_projects_step3')) ?>" method="post">
 		<div class="row d-flex justify-content-between mt-4">
 			<a id="return" class="btn btn-primary mr-0" href="<?=(base_url('projects/manage_projects_step1/0')); ?>">
-			<?php echo $session->current_project[0]['back_button_text']?>
+			<?php echo $session->current_project['back_button_text']?>
 			</a>
 			
 			<button type="submit" class="btn btn-primary mr-0">
@@ -103,7 +103,7 @@
 		
 		<div class="row d-flex justify-content-between mt-4">
 			<a id="return" class="btn btn-primary mr-0 flex-column align-items-center" href="<?=(base_url('projects/manage_projects_step1/0')); ?>">
-			<?php echo $session->current_project[0]['back_button_text']?>
+			<?php echo $session->current_project['back_button_text']?>
 			</a>
 			
 			<button type="submit" class="btn btn-primary mr-0">

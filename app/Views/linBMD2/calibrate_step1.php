@@ -105,7 +105,7 @@
 				if ( $session->verifytranscribe_calibrate == 'N' )
 					{ ?>
 						<a id="return" class="btn btn-primary mr-0" href="<?php echo(base_url('transcribe/transcribe_step1/2') ); ?>">
-						<?php echo $session->current_project[0]['back_button_text']?>
+						<?php echo $session->current_project['back_button_text']?>
 						</a>
 					<?php
 					}
@@ -116,7 +116,7 @@
 								case 'VERIT':
 									$session->BMD_cycle_code = $session->last_cycle_code; ?>
 										<a id="return" class="btn btn-primary mr-0" href="<?php echo(base_url('transcribe/verify_step1/'.$session->current_transcription[0]['BMD_header_index'])); ?>">
-										<?php echo $session->current_project[0]['back_button_text']?>
+										<?php echo $session->current_project['back_button_text']?>
 										</a>
 									<?php
 									break;
@@ -126,19 +126,19 @@
 										{
 											case 'B': // = Births in FreeBMD ?>
 													<a id="return" class="btn btn-primary mr-0" href="<?php echo(base_url('births/transcribe_births_step1/0/')); ?>">
-													<?php echo $session->current_project[0]['back_button_text']?>
+													<?php echo $session->current_project['back_button_text']?>
 													</a> 
 												<?php
 												break;
 											case 'M': // = Marriages in FreeBMD ?>
 													<a id="return" class="btn btn-primary mr-0" href="<?php echo(base_url('marriages/transcribe_marriages_step1/0/')); ?>">
-													<?php echo $session->current_project[0]['back_button_text']?>
+													<?php echo $session->current_project['back_button_text']?>
 													</a> 
 												<?php
 												break;
 											case 'D': // = Deaths in FreeBMD ?>
 													<a id="return" class="btn btn-primary mr-0" href="<?php echo(base_url('deaths/transcribe_deaths_step1/0/')); ?>">
-													<?php echo $session->current_project[0]['back_button_text']?>
+													<?php echo $session->current_project['back_button_text']?>
 													</a> 
 												<?php
 												break;
@@ -227,4 +227,3 @@
 		}
 		
 </script>
-

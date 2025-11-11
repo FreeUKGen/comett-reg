@@ -122,7 +122,7 @@ class Births extends BaseController
 			}
 			
 		// if verify onthefly active, verify
-		switch ($session->current_project[0]['project_index']) 
+		switch ($session->current_project['project_index'])
 			{
 				case 1: // FreeBMD verify transcription file
 					if ( $session->current_identity[0]['verify_mode'] == 'onthefly' AND $session->verify_onthefly == 0 )

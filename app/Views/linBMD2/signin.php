@@ -3,12 +3,12 @@
 	<div class="form-group ml-2 mt-4">
 		<label for="identity" class="col-1">Identity</label>
 		<input type="text" class="form-control col-2" id="id" aria-describedby="userHelp">
-		<span id="userHelp" class="form-text text-muted pl-2">Your <?php echo $session->current_project[0]['project_name']; ?> user name.</span>
+		<span id="userHelp" class="form-text text-muted pl-2">Your <?php echo $session->current_project['project_name']; ?> user name.</span>
 	</div>
 	<div class="form-group ml-2 mt-4">
 		<label for="password" class="col-1">Password++</label>
 		<input type="password" class="form-control col-2" id="pw">
-		<span id="userHelp" class="form-text text-muted pl-2">Your <?php echo $session->current_project[0]['project_name']; ?> password.</span>
+		<span id="userHelp" class="form-text text-muted pl-2">Your <?php echo $session->current_project['project_name']; ?> password.</span>
 	</div>
 	
 	<div class="row mt-4 ml-2 d-flex justify-content-between">
@@ -35,19 +35,19 @@
 	
 	<div class="mt-2">
 		<?php
-		switch ($session->current_project[0]['project_index'])
+		switch ($session->current_project['project_index'])
 			{
 				case 1: ?>
-					<label for="create_freebmd_identity" class="pl-0 pr-2">You don't have a <?=$session->current_project[0]['project_name']?> Identity?</label>
+					<label for="create_freebmd_identity" class="pl-0 pr-2">You don't have a <?=$session->current_project['project_name']?> Identity?</label>
 					<a id="create_freebmd_identity" class="btn btn-outline-primary d-flex" href="https://www.freebmd.org.uk/Signup.html">
-						<span><?=$session->current_project[0]['project_name']?> registration</span>
+						<span><?=$session->current_project['project_name']?> registration</span>
 					</a>
 					<?php
 					break;
 				case 2: ?>
-					<label for="create_freereg_identity" class="pl-0 pr-2">You don't have a <?=$session->current_project[0]['project_name']?> Identity?</label>
+					<label for="create_freereg_identity" class="pl-0 pr-2">You don't have a <?=$session->current_project['project_name']?> Identity?</label>
 					<a id="create_freereg_identity" class="btn btn-outline-primary d-flex" href="https://www.freereg.org.uk/cms/opportunities-to-volunteer-with-freereg.html">
-						<span><?=$session->current_project[0]['project_name']?> registration </span>
+						<span><?=$session->current_project['project_name']?> registration </span>
 					</a>
 					<?php
 					break;
@@ -103,6 +103,3 @@
 				$('form[name="signin"]').submit();
 			});
 </script>			
-				
-
-

@@ -33,18 +33,18 @@ class Email extends BaseController
 					$mail->addAddress($session->current_syndicate[0]['BMD_syndicate_email']);
 					$mail->addReplyTo($session->identity_emailid);
 					$mail->addCC($session->identity_emailid);
-					$mail->Subject = 'Message from FreeComETT - '.$session->current_project[0]['allocation_text'].' '.$session->current_allocation[0]['BMD_allocation_name'].' completed';
+					$mail->Subject = 'Message from FreeComETT - '.$session->current_project['allocation_text'].' '.$session->current_allocation[0]['BMD_allocation_name'].' completed';
 					$mail->Body = 	'<html>Hello '
 												.$leader[0]
 												.','
-												.'<br><br>I completed the '.$session->current_project[0]['allocation_text'].' '
+												.'<br><br>I completed the '.$session->current_project['allocation_text'].' '
 												.'<b>'
 												.$session->current_allocation[0]['BMD_allocation_name']
 												.'</b>'
 												.' on '
 												.$session->current_allocation[0]['BMD_end_date']
 												.'.'
-												.'<br><br>Please provide me with another '.$session->current_project[0]['allocation_text']
+												.'<br><br>Please provide me with another '.$session->current_project['allocation_text']
 												.'<br><br>Thank you.'
 												.'<br><br>Best wishes,'
 												.'<br><br>'
@@ -53,7 +53,7 @@ class Email extends BaseController
 												.$session->identity_userid;
 					$mail->AltBody = 'Allocation '.$session->current_allocation[0]['BMD_allocation_name'].'completed';
 					// set return message
-					$session->set('message_2', 'An email was sent to the syndicate owner informing him/her that this '.$session->current_project[0]['allocation_text'].' is complete and asking for another one.');
+					$session->set('message_2', 'An email was sent to the syndicate owner informing him/her that this '.$session->current_project['allocation_text'].' is complete and asking for another one.');
 					break;
 					
 				case 'BMD_file':

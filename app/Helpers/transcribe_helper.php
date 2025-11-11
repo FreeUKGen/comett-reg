@@ -542,7 +542,7 @@ use MongoDB\BSON\Regex;
 					// by default to first data entry field
 					$session->set('position_cursor', $session->current_transcription_def_fields[1][0]['html_name']);
 					// then depends on project
-					switch ( $session->current_project[0]['project_index'] )
+					switch ( $session->current_project['project_index'] )
 						{
 							case 1:
 								if ( empty($session->surname) )
@@ -564,7 +564,7 @@ use MongoDB\BSON\Regex;
 					$session->comment_text = '';
 					$session->source_text = '';
 					$session->comment_text_array =	$transcription_comments_model
-						->where('project_index', $session->current_project[0]['project_index'])
+						->where('project_index', $session->current_project['project_index'])
 						->where('identity_index', $session->BMD_identity_index)
 						->where('transcription_index', $session->current_transcription[0]['BMD_header_index'])
 						->where('comment_sequence', 10)
@@ -578,7 +578,7 @@ use MongoDB\BSON\Regex;
 						
 					// Check for Suggestion Comments
 					$suggestion_comments = $detail_comments_model
-						->where('project_index', $session->current_project[0]['project_index'])
+						->where('project_index', $session->current_project['project_index'])
 						->where('BMD_header_index', $session->current_transcription[0]['BMD_header_index'])
 						->where('BMD_comment_type', 'S')
 						->findAll();
@@ -591,7 +591,7 @@ use MongoDB\BSON\Regex;
 					// get data groups for this data set and create array for view
 					$session->data_group_titles_view = array();
 					$session->data_group_titles = $data_group_model
-						->where('project_index', $session->current_project[0]['project_index'])
+						->where('project_index', $session->current_project['project_index'])
 						->where('data_set', $session->current_transcription[0]['current_data_entry_format'])
 						->findAll();
 					if ( $session->data_group_titles )
@@ -607,7 +607,7 @@ use MongoDB\BSON\Regex;
 					create_current_used_transcription_def_fields($session->current_transcription[0]['current_data_entry_format']);
 					
 					// count the number of detail records for each data type if FreeREG
-					if ( $session->current_project[0]['project_index'] == 2 )
+					if ( $session->current_project['project_index'] == 2 )
 						{
 							if ( $session->event_types )
 								{
@@ -703,7 +703,7 @@ use MongoDB\BSON\Regex;
 					
 					// load predefined data entry layouts - these are identified by an identity index = 999999
 					$predefined_data_entry_layouts = $user_data_entry_layouts_model
-						->where('project_index', $session->current_project[0]['project_index'])
+						->where('project_index', $session->current_project['project_index'])
 						->where('identity_index', 999999)
 						->where('event_type',  $session->current_transcription[0]['current_data_entry_format'])
 						->orderby('layout_name')
@@ -717,7 +717,7 @@ use MongoDB\BSON\Regex;
 					
 					// load user data entry layouts
 					$user_data_entry_layouts = $user_data_entry_layouts_model
-						->where('project_index', $session->current_project[0]['project_index'])
+						->where('project_index', $session->current_project['project_index'])
 						->where('identity_index', $session->BMD_identity_index)
 						->where('event_type',  $session->current_transcription[0]['current_data_entry_format'])
 						->findAll();
@@ -825,7 +825,7 @@ use MongoDB\BSON\Regex;
 				// normal transcription - details enter is build up from multiple small views that are selected depending on project
 				// the order of views matters here!
 				case 'transcribe':
-					switch ($session->current_project[0]['project_index'])
+					switch ($session->current_project['project_index'])
 						{
 							case 1:
 								echo view('linBMD2/transcribe_details_enter_form');
@@ -1053,7 +1053,7 @@ use MongoDB\BSON\Regex;
 		$session->verify_onthefly = 0;
 		
 		// test length of comment_text for FreeBMD
-		if ( $session->current_project[0]['project_index'] == 1 )
+		if ( $session->current_project['project_index'] == 1 )
 			{
 				if ( strlen($session->comment_text) > 100 )
 					{
@@ -1514,7 +1514,7 @@ use MongoDB\BSON\Regex;
 			
 				// initialise database fields
 				// set standard fields for add/update of detail data
-				switch ($session->current_project[0]['project_index'])
+				switch ($session->current_project['project_index'])
 					{
 						case 1:
 							$chapman_code = NULL;
@@ -1541,7 +1541,7 @@ use MongoDB\BSON\Regex;
 			
 				// load data array
 				$data =	[
-							'project_index' => $session->current_project[0]['project_index'],
+							'project_index' => $session->current_project['project_index'],
 							'BMD_identity_index' => $session->BMD_identity_index,
 							'BMD_header_index' => $session->current_transcription[0]['BMD_header_index'],
 							'data_entry_format' => $session->current_transcription[0]['current_data_entry_format'],
@@ -1651,7 +1651,7 @@ use MongoDB\BSON\Regex;
 								$new_sequence = 0;	
 								// get detail lines in sequence order
 								$all_detail_lines = $detail_data_model
-									->where('project_index', $session->current_project[0]['project_index'])
+									->where('project_index', $session->current_project['project_index'])
 									->where('BMD_header_index',  $session->current_transcription[0]['BMD_header_index'])			
 									->orderby('BMD_line_sequence','ASC')
 									->findAll();						
@@ -1665,7 +1665,7 @@ use MongoDB\BSON\Regex;
 									}	
 								// load $session->transcribe_detail_data again
 								$session->transcribe_detail_data = 	$detail_data_model
-									->where('project_index', $session->current_project[0]['project_index'])
+									->where('project_index', $session->current_project['project_index'])
 									->where('BMD_header_index',  $session->current_transcription[0]['BMD_header_index'])			
 									->orderby('BMD_line_sequence','ASC')
 									->findAll();
@@ -1728,7 +1728,7 @@ use MongoDB\BSON\Regex;
 																		
 				// delete sequence 10 for any transcription comments
 				$transcription_comments_model
-					->where('project_index', $session->current_project[0]['project_index'])
+					->where('project_index', $session->current_project['project_index'])
 					->where('identity_index', $session->BMD_identity_index)
 					->where('transcription_index', $session->current_transcription[0]['BMD_header_index'])
 					->where('comment_sequence', 10)
@@ -1736,7 +1736,7 @@ use MongoDB\BSON\Regex;
 				// now add it again
 				$data =	[
 							'transcription_index' => $session->current_transcription[0]['BMD_header_index'],
-							'project_index' => $session->current_project[0]['project_index'],
+							'project_index' => $session->current_project['project_index'],
 							'identity_index' => $session->BMD_identity_index,
 							'comment_sequence' => 10,
 							'comment_text' => $session->comment_text,
@@ -1825,7 +1825,7 @@ use MongoDB\BSON\Regex;
 			}
 		
 		// ? check is by project
-		switch ($session->current_project[0]['project_index'])
+		switch ($session->current_project['project_index'])
 			{
 				case 1: // FreeBMD
 					// check that if ? is present in the field, it is the one and only character
@@ -3796,7 +3796,7 @@ use MongoDB\BSON\Regex;
 		// first header line, eg +INFO,dreamstogo@gmail.com,Password,SEQUENCED,BIRTHS
 		// get project type name
 		$type_name =	$project_types_model
-						->where('project_index',  $session->current_project[0]['project_index'])
+						->where('project_index',  $session->current_project['project_index'])
 						->where('type_code', $session->current_allocation[0]['BMD_type'])
 						->select('type_name_upper')
 						->find();
@@ -4061,7 +4061,7 @@ use MongoDB\BSON\Regex;
 		// third header line, eg CREDIT,Hilary Wright,dreamstogo@gmail.com,dreamstogo, only if syndicate coordinator allows this.
 		if ( $session->current_syndicate[0]['BMD_syndicate_credit'] == 'Y' )
 			{
-				switch ($session->current_project[0]['project_index'])
+				switch ($session->current_project['project_index'])
 					{
 						case 1:
 							$line_array = ['#', "CREDIT", $session->realname, $session->identity_emailid];
@@ -4104,7 +4104,7 @@ use MongoDB\BSON\Regex;
 		
 		// add mandatory fields
 		$mandatory_fields = $def_fields_model
-			->where('project_index',  $session->current_project[0]['project_index'])
+			->where('project_index',  $session->current_project['project_index'])
 			->where('data_entry_format', $type_name_lower)
 			->where('mandatory', 1)
 			->findAll();
@@ -4171,7 +4171,7 @@ use MongoDB\BSON\Regex;
 			{
 				// if not found add
 				$transcription_CSV_file_model
-					->set(['project_index' => $session->current_project[0]['project_index']])
+					->set(['project_index' => $session->current_project['project_index']])
 					->set(['transcription_index' => $session->current_transcription[0]['BMD_header_index']])
 					->set(['identity_index' => $session->BMD_identity_index])
 					->set(['data_entry_format' => $type_name_lower])
@@ -4236,7 +4236,7 @@ use MongoDB\BSON\Regex;
 		for ($i = 1; $i <= 10; $i++) 
 			{
 				$transcription_def_fields = $transcription_detail_def_model
-					->where('project_index', $session->current_project[0]['project_index'])
+					->where('project_index', $session->current_project['project_index'])
 					->where('transcription_index', $session->current_transcription[0]['BMD_header_index'])
 					//->where('data_entry_format', $session->current_transcription[0]['current_data_entry_format'])
 					->where('scan_format', $session->current_allocation[0]['scan_format'])
@@ -4318,7 +4318,7 @@ use MongoDB\BSON\Regex;
 												$current_transcription_def_fields[$i][$j]['field_check'] = 'N';
 												// now enable field as per the standard data dictionary
 												$layout_field = $def_fields_model
-													->where('project_index', $session->current_project[0]['project_index'])
+													->where('project_index', $session->current_project['project_index'])
 													->where('data_entry_format', $session->current_transcription[0]['current_data_entry_format'])
 													->where('html_id', $current_transcription_def_fields[$i][$j]['html_id'])
 													->find();
@@ -4547,7 +4547,7 @@ use MongoDB\BSON\Regex;
 						}
 						
 					// set up image info URL
-					switch ($session->current_project[0]['project_index']) 
+					switch ($session->current_project['project_index'])
 						{
 							case 1: //FreeBMD
 								// set servertype and URL
@@ -4638,7 +4638,7 @@ use MongoDB\BSON\Regex;
 			// set the identity last indexes by data entry format
 			$last_indexes = $identity_last_indexes_model
 				->where('identity_index', $session->BMD_identity_index)
-				->where('project_index', $session->current_project[0]['project_index'])
+				->where('project_index', $session->current_project['project_index'])
 				->where('data_entry_format', $session->current_allocation[0]['data_entry_format'])
 				->find();
 			
@@ -4648,7 +4648,7 @@ use MongoDB\BSON\Regex;
 					// record found, so update
 					$identity_last_indexes_model
 						->where('identity_index', $session->BMD_identity_index)
-						->where('project_index', $session->current_project[0]['project_index'])
+						->where('project_index', $session->current_project['project_index'])
 						->where('data_entry_format', $session->current_allocation[0]['data_entry_format'])
 						->set(['transcription_index' => $session->current_transcription[0]['BMD_header_index']])
 						->set(['allocation_index' => $session->current_transcription[0]['BMD_allocation_index']])
@@ -4660,7 +4660,7 @@ use MongoDB\BSON\Regex;
 					// record not found, so insert
 					$identity_last_indexes_model
 						->set(['identity_index' => $session->BMD_identity_index])
-						->set(['project_index' => $session->current_project[0]['project_index']])
+						->set(['project_index' => $session->current_project['project_index']])
 						->set(['data_entry_format' => $session->current_allocation[0]['data_entry_format']])
 						->set(['transcription_index' => $session->current_transcription[0]['BMD_header_index']])
 						->set(['allocation_index' => $session->current_transcription[0]['BMD_allocation_index']])
@@ -4668,5 +4668,3 @@ use MongoDB\BSON\Regex;
 						->insert();
 				}
 		}
-	
-

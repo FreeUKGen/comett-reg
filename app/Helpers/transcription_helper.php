@@ -33,7 +33,7 @@ function FreeREG_create_transcription_package($current_assignment, $bmd_file_nam
 		
 		// load image source record for this assignment
 		$assignment_source = $allocation_image_sources_model
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->where('source_code', $current_assignment['source_code'])
 			->findAll();
 		
@@ -51,7 +51,7 @@ function FreeREG_create_transcription_package($current_assignment, $bmd_file_nam
 			
 		// load standard data dictionary for all event types
 		$standard_data_dictionary = $def_fields_model
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->findAll();
 						
 		// create transcription
@@ -88,7 +88,7 @@ function FreeREG_create_transcription_package($current_assignment, $bmd_file_nam
 		$type = 'C';			
 	
 		// set last action
-		switch ( $session->current_project[0]['project_index'] )
+		switch ( $session->current_project['project_index'] )
 			{
 				case 1:
 					$last_action = 'BMD file created';
@@ -103,7 +103,7 @@ function FreeREG_create_transcription_package($current_assignment, $bmd_file_nam
 		
 		// insert header to transcription table
 		$transcription_model
-			->set(['project_index' => $session->current_project[0]['project_index']])
+			->set(['project_index' => $session->current_project['project_index']])
 			->set(['BMD_identity_index' => $session->BMD_identity_index])
 			->set(['BMD_allocation_index' => $current_assignment['BMD_allocation_index']])
 			->set(['BMD_syndicate_index' => $current_assignment['BMD_syndicate_index']])
@@ -141,7 +141,7 @@ function FreeREG_create_transcription_package($current_assignment, $bmd_file_nam
 		// insert comment and source
 		$transcription_comments_model
 			->set(['transcription_index' => $transcription_index])
-			->set(['project_index' => $session->current_project[0]['project_index']])
+			->set(['project_index' => $session->current_project['project_index']])
 			->set(['identity_index' => $session->BMD_identity_index])
 			->set(['comment_sequence' => 10])
 			->set(['comment_text' => $session->document_comment])
@@ -189,7 +189,7 @@ function FreeREG_create_transcription_package($current_assignment, $bmd_file_nam
 			
 		// reload identity
 		$session->current_identity = $identity_model	
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->where('BMD_identity_index', $session->BMD_identity_index)
 			->find();
 			

@@ -14,7 +14,7 @@ class Parish extends BaseController
 		$def_ranges_model = new Def_Ranges_Model();
 		
 		// only for FreeREG
-		if ( $session->current_project[0]['project_index'] != 2 )
+		if ( $session->current_project['project_index'] != 2 )
 			{
 				$session->set('message_2',  'Manage Parishes is for FreeREG only.');
 				$session->set('message_class_2', 'alert alert-danger');
@@ -67,7 +67,7 @@ class Parish extends BaseController
 		$session->set('BMD_cycle_code', $this->request->getPost('BMD_next_action'));
 		// get cycle text
 		$session->set('BMD_cycle_text', $transcription_cycle_model
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->where('BMD_cycle_code', $session->BMD_cycle_code)
 			->where('BMD_cycle_type', 'PARNA')
 			->find());

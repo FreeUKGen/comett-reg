@@ -1,13 +1,13 @@
 	<?php $session = session(); ?>
 		
 	<div class="row">
-		<h2 class="col-8 pl-0"><?php echo 'Change '.$session->current_project[0]['project_name'].' details for your identity : '.$session->identity_userid.', '.$session->realname ?></h2>		
+		<h2 class="col-8 pl-0"><?php echo 'Change '.$session->current_project['project_name'].' details for your identity : '.$session->identity_userid.', '.$session->realname ?></h2>
 	</div>
 	
 	<br>
 	
 	<div class="row">
-		<p class="col-8 pl-0"><?php echo 'Changing your identity is done directly through your project '.$session->current_project[0]['project_name'].'.';?></p>		
+		<p class="col-8 pl-0"><?php echo 'Changing your identity is done directly through your project '.$session->current_project['project_name'].'.';?></p>
 	</div>
 	
 	<div class="row">
@@ -28,11 +28,11 @@
 	
 	<div class="row d-flex justify-content-between mt-4">	
 		<a id="return" class="btn btn-primary mr-0" href="<?php echo(base_url('transcribe/transcribe_step1/0')); ?>">
-		<?php echo $session->current_project[0]['back_button_text']?>
+		<?php echo $session->current_project['back_button_text']?>
 		</a>
 		
 		<a class="btn btn-primary mr-0" target="_blank" href="https://www.freebmd.org.uk/cgi/bmd-user-admin.pl">
-		<span><?php echo $session->current_project[0]['project_name']?> => Change Identity</span>
+		<span><?php echo $session->current_project['project_name']?> => Change Identity</span>
 		</a>
 		
 		<a id="return" class="btn btn-primary mr-0" href="<?php echo(base_url("home/signout/")); ?>">
@@ -42,7 +42,7 @@
 	<br><br>
 	
 	<?php
-	if ( $session->current_project[0]['project_index'] != 2 )
+	if ( $session->current_project['project_index'] != 2 )
 		{ ?>
 			<div class="row">
 				<h2 class="col-12 pl-0"><?php echo 'There are certain parameters which are unique to FreeComETT and which can be managed here for your identity : '.$session->identity_userid.', '.$session->realname ?></h2>		
@@ -71,7 +71,7 @@
 
 			<div class="row d-flex justify-content-between mt-4">	
 				<a id="return" class="btn btn-primary mr-0" href="<?php echo(base_url('transcribe/transcribe_step1/0')); ?>">
-				<?php echo $session->current_project[0]['back_button_text']?>
+				<?php echo $session->current_project['back_button_text']?>
 				</a>
 				
 				<button type="submit" class="btn btn-primary mr-0">
@@ -84,8 +84,3 @@
 	</form>
 	
 	<br>
-
-
-
-
-

@@ -16,7 +16,7 @@
 
 	<div class="alert row mt-2 d-flex justify-content-between">
 		<a id="return" class="btn btn-primary mr-0" href="<?php echo(base_url('syndicate/show_all_transcriptions_step1/'.$session->saved_syndicate_index)); ?>">
-		<?php echo $session->current_project[0]['back_button_text']?>
+		<?php echo $session->current_project['back_button_text']?>
 		</a>
 	</div>
 	

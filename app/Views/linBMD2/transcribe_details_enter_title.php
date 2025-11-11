@@ -24,7 +24,7 @@
 
 	<div class="row mt-2 justify-content-between align-items-center alert alert-primary">
 		
-		<span id="return" class="" title="<?=$session->current_project[0]['back_button_text']?>" style="cursor: pointer">
+		<span id="return" class="" title="<?=$session->current_project['back_button_text']?>" style="cursor: pointer">
 			<i class="fa-solid fa-backward"></i>
 		</span>
 		
@@ -46,7 +46,7 @@
 				
 		
 		<?php
-		switch ( $session->current_project[0]['project_name'] )
+		switch ( $session->current_project['project_name'] )
 			{
 				case 'FreeBMD': 
 					break;
@@ -279,7 +279,7 @@
 $(document).ready(function() 
 	{
 		// initialise image : previous and next buttons for FreeREG only if images are required
-		var project_name = "<?=$session->current_project[0]['project_name']?>";
+		var project_name = "<?=$session->current_project['project_name']?>";
 		var source_images = "<?=$session->image_source[0]['source_images']?>";
 		if ( project_name == 'FreeREG' && source_images == 'yes' )
 			{

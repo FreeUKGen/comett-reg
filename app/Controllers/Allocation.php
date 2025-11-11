@@ -249,7 +249,7 @@ class Allocation extends BaseController
 				// determine data entry format for allocation by project, type, year and quarter
 				// get ranges
 				$def_ranges = $def_ranges_model	
-					->where('project_index', $session->current_project[0]['project_index'])
+					->where('project_index', $session->current_project['project_index'])
 					->where('type',  $session->type)
 					->find();
 				
@@ -307,7 +307,7 @@ class Allocation extends BaseController
 			
 		// test if an allocation already exists which has the same pages as the being created
 		$allocations =	$allocation_model
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->where('BMD_syndicate_index', $session->syndicate_id)
 			->where('BMD_identity_index', $session->BMD_identity_index)
 			->where('BMD_year', $session->year)
