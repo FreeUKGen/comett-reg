@@ -5,7 +5,7 @@
 		<span class="font-weight-bold"><?='Data Entry Fields - Manage'?></span>
 		<span>
 			<?php
-			switch ( $session->current_project[0]['project_name'] )
+			switch ( $session->current_project['project_name'] )
 				{
 					case 'FreeBMD': 
 						break;
@@ -323,7 +323,7 @@
 	<div class="row mt-4 d-flex justify-content-between">	
 		
 		<?php
-		if ( $session->current_project[0]['project_index'] == 1 )
+		if ( $session->current_project['project_index'] == 1 )
 			{ ?>
 		
 				<a id="return" class="btn btn-primary mr-0 flex-column align-items-center" href="<?php echo(base_url('/transcribe/inherit_parameters')); ?>">
@@ -366,7 +366,7 @@
 	$(document).ready(function() 
 		{
 			// initialise image : previous and next buttons for FreeREG only
-			var project_name = "<?=$session->current_project[0]['project_name']?>";
+			var project_name = "<?=$session->current_project['project_name']?>";
 			var source_images = "<?=$session->image_source[0]['source_images']?>";
 			if ( project_name == 'FreeREG' && source_images == 'yes' )
 			{
@@ -888,4 +888,3 @@
 		}
 		
 </script>
-	

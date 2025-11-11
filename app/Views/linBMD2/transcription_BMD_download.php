@@ -6,7 +6,7 @@
 		<div class="form-group row">
 			<label for="BMD_file" class="col-2 pl-0">Transcription to DOWNLOAD</label>
 			<input type="text" class="form-control col-2" id="BMD_file" name="BMD_file" aria-describedby="userHelp" value="<?php echo($session->BMD_file) ?>">
-			<small id="userHelp" class="form-text text-muted col-2">eg, 1988BL0319. The transcription must be one that you did not originally create with FreeComETT and must be in your transcriptions uploaded to <?php echo $session->current_project[0]['project_name'];?>. Do not enter the file extension eg .BMD</small>
+			<small id="userHelp" class="form-text text-muted col-2">eg, 1988BL0319. The transcription must be one that you did not originally create with FreeComETT and must be in your transcriptions uploaded to <?php echo $session->current_project['project_name'];?>. Do not enter the file extension eg .BMD</small>
 			
 			<label for="scan_page_suffix" class="col-2 pl-0">Scan Page Suffix</label>
 			<input type="text" class="form-control col-2" id="scan_page_suffix" name="scan_page_suffix" aria-describedby="userHelp" value="<?php echo($session->scan_page_suffix) ?>">
@@ -36,10 +36,10 @@
 			
 		<div class="row d-flex justify-content-between mt-4">
 			<a id="return" class="btn btn-primary mr-0" href="<?=(base_url('transcribe/transcribe_step1/0')); ?>">
-			<?php echo $session->current_project[0]['back_button_text']?>
+			<?php echo $session->current_project['back_button_text']?>
 			</a>
 			
-			<a class="btn btn-primary mr-0 d-flex" href="<?=(base_url('allocation/manage_allocations/0')) ?>">Manage your <?php echo $session->current_project[0]['project_name'] ?> Allocations</a>
+			<a class="btn btn-primary mr-0 d-flex" href="<?=(base_url('allocation/manage_allocations/0')) ?>">Manage your <?php echo $session->current_project['project_name'] ?> Allocations</a>
 			
 			<button type="submit" class="btn btn-primary mr-0 d-flex">
 				<span>DOWNLOAD Transcription</span>
@@ -47,4 +47,3 @@
 		</div>
 
 	</form>
-

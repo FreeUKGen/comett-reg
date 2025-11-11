@@ -27,7 +27,7 @@
 		
 		<div class="row d-flex justify-content-between mt-4">
 			<a id="return" class="btn btn-primary mr-0" href="<?=(base_url('parameter/manage_parameters_step1/0')); ?>">
-			<?php echo $session->current_project[0]['back_button_text']?>
+			<?php echo $session->current_project['back_button_text']?>
 			</a>
 				
 			<button type="submit" class="btn btn-primary mr-0">

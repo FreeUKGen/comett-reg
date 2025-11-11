@@ -5,7 +5,7 @@
 			class="bg-warning col-12 pl-0 text-center font-weight-bold" 
 			style="font-size:1.5vw;">
 			<?php
-				echo $session->current_project[0]['allocation_text'].' List Images for -> '.$session->current_allocation[0]['BMD_allocation_name'];	
+				echo $session->current_project['allocation_text'].' List Images for -> '.$session->current_allocation[0]['BMD_allocation_name'];
 			?>
 		</p>
 	</div>
@@ -42,8 +42,6 @@
 	
 	<div class="row mt-4 d-flex justify-content-between">	
 		<a id="return" class="btn btn-primary mr-0" href="<?=(base_url('allocation/manage_allocations/0')); ?>">
-			<?php echo $session->current_project[0]['back_button_text']?>
+			<?php echo $session->current_project['back_button_text']?>
 		</a>
 	</div>
-
-

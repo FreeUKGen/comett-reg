@@ -203,7 +203,7 @@
 	
 	<div class="alert row mt-2 d-flex justify-content-between">	
 		<a id="return" class="btn btn-primary mr-0" href="<?=(base_url('report/report_step1/0')); ?>">
-			<?php echo $session->current_project[0]['back_button_text']?>
+			<?php echo $session->current_project['back_button_text']?>
 		</a>
 		
 		<a id="return" class="btn btn-primary mr-0" href="<?=(base_url('report/report_create_csv')); ?>">

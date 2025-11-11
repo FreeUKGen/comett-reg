@@ -6,7 +6,7 @@
 					{ 
 						?>
 					<h3>
-						<a href="<?=(base_url('allocation/toogle_allocations'))?>"><?php echo 'ACTIVE '.$session->current_project[0]['allocation_text'].'s for '.$session->identity_userid.', transcribing for '.$session->syndicate_name;?></a>
+						<a href="<?=(base_url('allocation/toogle_allocations'))?>"><?php echo 'ACTIVE '.$session->current_project['allocation_text'].'s for '.$session->identity_userid.', transcribing for '.$session->syndicate_name;?></a>
 					</h3>
 					<?php
 					}
@@ -14,7 +14,7 @@
 					{
 						?>
 						<h3>
-						<a href="<?=(base_url('allocation/toogle_allocations'))?>"><?php echo 'CLOSED '.$session->current_project[0]['allocation_text'].'s for '.$session->identity_userid.', transcribing for '.$session->syndicate_name; ?></a>
+						<a href="<?=(base_url('allocation/toogle_allocations'))?>"><?php echo 'CLOSED '.$session->current_project['allocation_text'].'s for '.$session->identity_userid.', transcribing for '.$session->syndicate_name; ?></a>
 						</h3>
 					<?php
 					}
@@ -25,13 +25,13 @@
 		<table class="table table-hover table-borderless" style="border-collapse: separate; border-spacing: 0;">
 			<thead class="sticky-top bg-white">
 				<tr class="text-primary">
-					<th><?php echo $session->current_project[0]['allocation_text'].' Name'?></th>
+					<th><?php echo $session->current_project['allocation_text'].' Name'?></th>
 					<th>Start Date</th>
 					<th>End Date</th>
 					<th>Last page uploaded</th>
 					<th>Status</th>
 					<?php
-					if ( $session->current_project[0]['project_index'] == '2' )
+					if ( $session->current_project['project_index'] == '2' )
 						{ ?>
 							<th>Country</th>
 							<th>County</th>
@@ -68,7 +68,7 @@
 											<td class="align-middle"><?= esc($allocation['BMD_last_uploaded'])?></td>
 											<td class="align-middle"><?= esc($allocation['BMD_status'])?></td>
 											<?php
-											if ( $session->current_project[0]['project_name'] == 'FreeREG' )
+											if ( $session->current_project['project_name'] == 'FreeREG' )
 												{ ?>
 													<td class="align-middle"><?= esc($allocation['REG_county_group'])?></td>
 													<td class="align-middle"><?= esc($allocation['REG_county'].':'.$allocation['REG_chapman_code'])?></td>
@@ -143,7 +143,7 @@ $(document).ready(function()
 		$('#alloc').on("click", function()
 			{			
 				// get project
-				var project_name = "<?=$session->current_project[0]['project_name']?>";
+				var project_name = "<?=$session->current_project['project_name']?>";
 				switch(project_name) 
 					{
 						case 'FreeBMD':
@@ -164,5 +164,3 @@ $(document).ready(function()
 	});
 
 </script>
-
-

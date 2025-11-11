@@ -28,7 +28,7 @@
 		
 			<div class="row mt-4 d-flex justify-content-between">	
 				<a id="return" class="btn btn-primary mr-0" href="<?php echo(base_url('transcribe/transcribe_step1/0')); ?>">
-					<?php echo $session->current_project[0]['back_button_text']?>
+					<?php echo $session->current_project['back_button_text']?>
 				</a>
 				<button type="submit" class="create_message btn btn-primary mr-0 d-flex">
 					<span>Add / Change / Remove Document Comments/Document Source</span>	

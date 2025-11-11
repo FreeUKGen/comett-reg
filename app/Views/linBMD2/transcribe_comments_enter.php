@@ -38,14 +38,14 @@
 					if ( $session->BMD_cycle_code == 'VERIT' )
 						{ ?>
 							<a id="return" class="btn btn-primary mr-0" href="<?php echo(base_url('transcribe/verify_step1/'.$session->detail_line['BMD_header_index'])); ?>">
-							<?php echo $session->current_project[0]['back_button_text']?>
+							<?php echo $session->current_project['back_button_text']?>
 							</a>
 						<?php
 						}
 					else
 						{ ?>
 							<a id="return" class="btn btn-primary mr-0" href="<?php echo(base_url($session->controller.'/transcribe_'.$session->controller.'_step1/0')); ?>">
-							<?php echo $session->current_project[0]['back_button_text']?>
+							<?php echo $session->current_project['back_button_text']?>
 							</a>
 						<?php
 						} ?>
@@ -56,10 +56,3 @@
 				
 			</div>
 		</form>
-
-
-		
-	
-
-
-

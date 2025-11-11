@@ -60,7 +60,7 @@
 	<div>	
 		<br>
 		<a id="return" class="btn btn-primary mr-0" href="<?= (base_url('housekeeping/index/0')); ?>">
-			<?php echo $session->current_project[0]['back_button_text']?>
+			<?php echo $session->current_project['back_button_text']?>
 		</a>
 	</div>
 

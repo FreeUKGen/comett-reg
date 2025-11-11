@@ -21,7 +21,7 @@
 		<div class="row mt-2 d-flex justify-content-between">
 			
 				<a id="return" class="btn btn-primary mr-0" href="<?php echo(base_url('condition/manage_conditions/0')); ?>">
-					<?php echo $session->current_project[0]['back_button_text']?>
+					<?php echo $session->current_project['back_button_text']?>
 				</a>
 
 				<button type="submit" class="btn btn-primary mr-0">
@@ -31,5 +31,3 @@
 		</div>
 		
 	</form>
-
-

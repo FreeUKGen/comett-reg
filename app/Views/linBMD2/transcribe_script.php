@@ -213,7 +213,7 @@
 	// copy surnames
 	$(document).ready(function()
 		{	
-			var projectIndex	= <?php echo json_encode($session->current_project[0]['project_index']); ?>;
+			var projectIndex	= <?php echo json_encode($session->current_project['project_index']); ?>;
 			var dataEntryFormat = <?php echo json_encode($session->current_allocation[0]['data_entry_format']); ?>;
 		
 			// test for project
@@ -858,7 +858,3 @@ function getSearch()
 	}
 
 </script>
-
-
-
-

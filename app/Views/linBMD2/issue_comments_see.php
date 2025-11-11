@@ -63,7 +63,7 @@
 	
 	<div class="row mt-4 d-flex justify-content-between">
 		<a id="return" class="btn btn-primary mr-0" href="<?php echo(base_url('/home/issue_see/open')); ?>">
-			<?php echo $session->current_project[0]['back_button_text']?>
+			<?php echo $session->current_project['back_button_text']?>
 		</a>					
 	</div>
 
@@ -77,4 +77,3 @@
 				});
 		});
 </script>
-

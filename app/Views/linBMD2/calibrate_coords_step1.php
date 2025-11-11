@@ -150,7 +150,7 @@
 				if ( $session->calibrate == 0 ) 
 					{ ?>
 						<a id="return" class="btn btn-primary mr-0" href="<?php echo(base_url('transcribe/calibrate_reference_step1/1')); ?>">
-						<?php echo $session->current_project[0]['back_button_text']?>
+						<?php echo $session->current_project['back_button_text']?>
 						</a>
 					<?php
 				} ?>
@@ -159,7 +159,7 @@
 				if ( $session->calibrate != 0 ) 
 					{ ?>
 						<a id="return" class="btn btn-primary mr-0" href="<?php echo(base_url('/transcribe/calibrate_coord_step1/0/back')); ?>">
-						<?php echo $session->current_project[0]['back_button_text']?>
+						<?php echo $session->current_project['back_button_text']?>
 						</a>
 					<?php
 					} ?>

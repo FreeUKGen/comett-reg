@@ -27,10 +27,10 @@
 		<table class="table table-borderless" style="border-collapse: separate; border-spacing: 0;" id="show_table">
 			<thead class="sticky-top bg-white">
 				<tr class="text-primary">
-					<th><?php echo $session->current_project[0]['allocation_text'].' Name'?></th>
+					<th><?php echo $session->current_project['allocation_text'].' Name'?></th>
 					<th>File</th>
 					<?php
-					if ( $session->current_project[0]['project_index'] == 2 ) 
+					if ( $session->current_project['project_index'] == 2 )
 						{ ?>
 							<th>Document Source</th>
 							<th>Image Source</th>
@@ -42,7 +42,7 @@
 					<th>Start Date</th>
 					<th>Last change date/time</th>
 					<?php
-					if ( $session->current_project[0]['project_index'] == 1 ) 
+					if ( $session->current_project['project_index'] == 1 )
 						{ ?>
 							<th>Verified</th>
 						<?php
@@ -87,7 +87,7 @@
 									<td style="border-bottom: 2pt solid green;"><?= esc($transcription['BMD_file_name'])?></td>
 									
 									<?php
-									if ( $session->current_project[0]['project_index'] == 2 ) 
+									if ( $session->current_project['project_index'] == 2 )
 										{ ?>
 											<td style="border-bottom: 2pt solid green; cursor:pointer;"
 												class="next_action"
@@ -121,7 +121,7 @@
 									<td style="border-bottom: 2pt solid green;"><?= esc($transcription['BMD_start_date'])?></td>
 									<td style="border-bottom: 2pt solid green;"><?= esc($transcription['Change_date'])?></td>
 									<?php
-									if ( $session->current_project[0]['project_index'] == 1 ) 
+									if ( $session->current_project['project_index'] == 1 )
 										{ ?>
 											<td style="border-bottom: 2pt solid green;"><?= esc($transcription['verified'])?></td>
 										<?php
@@ -231,7 +231,7 @@ $(document).ready(function()
 		$('#csv_file').on("click", function()
 			{			
 				// get project
-				var project_name = "<?=$session->current_project[0]['project_name']?>";
+				var project_name = "<?=$session->current_project['project_name']?>";
 				switch(project_name) 
 					{
 						case 'FreeBMD':
@@ -247,7 +247,7 @@ $(document).ready(function()
 		$('#alloc').on("click", function()
 			{			
 				// get project
-				var project_name = "<?=$session->current_project[0]['project_name']?>";
+				var project_name = "<?=$session->current_project['project_name']?>";
 				switch(project_name) 
 					{
 						case 'FreeBMD':
@@ -284,5 +284,3 @@ function editAssignment(event)
 	}
 
 </script>
-
-

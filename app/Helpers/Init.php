@@ -32,8 +32,6 @@ class Init
         $session = session();
         $projects_model = new Projects_Model();
 
-		log_message('info', 'PI::' . $project_index);
-
         // destroy the session variables no longer required
         $session->environment = '';
         $session->realname = '';
@@ -48,18 +46,18 @@ class Init
 
         // load projects
         $projects = $projects_model->findAll();
-		log_message('info', 'PRO:' . print_r($projects, true));
+
+		// were any found? if not, this is first use of the system
+		if (!$projects)
+			var_dump('first_use');
 
 		$session->current_project = $projects[$project_index];
-
-		$session->projects = $projects;
+		//@TODO DS 11 Nov 25
+		// is $session->projects still useful??
+		// $session->projects = $projects;
 
 		// set the project environment - see Identity controller for using the environment parameter
 		$session->environment_project = $session->current_project['environment'];
-
-        // were any found? if not, this is first use of the system
-        if (! $session->projects)
-            var_dump('first_use');
 
 		//@TODO handle JS check - for now assume JS is enabled
         $session->javascript = 'enabled';

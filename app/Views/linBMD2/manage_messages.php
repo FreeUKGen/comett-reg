@@ -62,7 +62,7 @@
 	
 	<div class="row mt-4 d-flex justify-content-between">	
 		<a id="return" class="btn btn-primary mr-0" href="<?=(base_url('database/coord_step1/0')); ?>">
-			<span><?php echo $session->current_project[0]['back_button_text']?></span>
+			<span><?php echo $session->current_project['back_button_text']?></span>
 		</a>
 		<a class="btn btn-primary mr-0" href="<?=(base_url('messaging/create_message_step1/0')) ?>">Create a new message</a>
 	</div>
@@ -85,5 +85,3 @@ $(document).ready(function()
 	});
 
 </script>
-
-

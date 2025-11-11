@@ -21,7 +21,7 @@
 	<div class="row">
 		<label for="manage syndicates" class="col-8 pl-0">Manage your Syndicate(s) for FreeComETT</label>
 		<a class="btn btn-outline-primary btn-sm col-4" href="<?=(base_url('syndicate/manage_syndicates/0')) ?>">
-			<span>Manage your <?php echo $session->current_project[0]['project_name'] ?> Syndicates for FreeComETT</span>
+			<span>Manage your <?php echo $session->current_project['project_name'] ?> Syndicates for FreeComETT</span>
 		</a>
 	</div>
 			
@@ -29,6 +29,6 @@
 	
 	<div class="row mt-4 d-flex justify-content-between">	
 		<a id="return" class="btn btn-primary mr-0" href="<?php echo(base_url('housekeeping/index/0')); ?>">
-			<?php echo $session->current_project[0]['back_button_text']?>
+			<?php echo $session->current_project['back_button_text']?>
 		</a>
 	</div>

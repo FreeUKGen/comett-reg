@@ -2,7 +2,7 @@
 
 	<!-- show transcription comment text  -->
 	<?php
-	if ( $session->current_project[0]['project_index'] != 2 )
+	if ( $session->current_project['project_index'] != 2 )
 		{ ?>
 			<div class="form-group row d-flex align-items-center">
 				<label for="comment_text" class="col-2">Comment for this transcription =></label>
@@ -11,6 +11,3 @@
 			</div>
 		<?php
 		} ?>
-
-
-

@@ -56,7 +56,7 @@
 	
 	<div class="row mt-4 d-flex justify-content-between">
 		<a id="return" class="btn btn-primary mr-0" href="<?=(base_url('district/manage_districts/0')); ?>">
-			<?php echo $session->current_project[0]['back_button_text']?>
+			<?php echo $session->current_project['back_button_text']?>
 		</a>
 		
 		<a id="add_volume" class="btn btn-primary mr-0" href="<?php echo(base_url('district/add_volume_step1/0')) ?>">

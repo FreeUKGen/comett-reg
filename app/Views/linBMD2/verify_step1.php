@@ -128,7 +128,7 @@
 		<div class="alert row mt-2 d-flex justify-content-between">
 			
 				<a id="return" class="btn btn-outline-primary mr-0" href="<?php echo(base_url('transcribe/transcribe_step1/0')); ?>">
-					<?php echo $session->current_project[0]['back_button_text']?>
+					<?php echo $session->current_project['back_button_text']?>
 				</a>
 				
 				<a id="delete_line" class="btn btn-outline-primary mr-0" href="<?=(base_url('transcribe/verify_delete_line/')) ?>">
@@ -177,10 +177,3 @@
 	</form>	
 		
 	<!-- ATTENTION - the form is closed in the transcribe_buttons view -->
-	
-
-		
-	
-
-
-
