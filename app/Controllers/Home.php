@@ -1,11 +1,8 @@
 <?php namespace App\Controllers;
 
 use App\Helpers\Init;
-use App\Models\Identity_Model;
 use App\Models\Parameter_Model;
 use App\Models\Projects_Model;
-use App\Models\Help_Model;
-use App\Models\Speedtest_Results_Model;
 use App\Config\Session;
 
 class Home extends BaseController
@@ -15,8 +12,11 @@ class Home extends BaseController
         helper('common');
         helper('backup');
     }
-	
-	public function index()
+
+	/**
+	 * @throws \ReflectionException
+	 */
+	public function index(): void
 	{		
 		new Init()->start(1);
 		// show view to select project
