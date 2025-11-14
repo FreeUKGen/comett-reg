@@ -42,7 +42,8 @@
             <input class="login__submit" type="submit" value="Log in">
             <div class="login__register">
               <p>You don't have a FreeREG Identity?</p>
-              <a href="#">Start the FreeREG registration process</a>
+
+              <a href="https://www.freereg.org.uk/cms/opportunities-to-volunteer-with-freereg.html">Start the FreeREG registration process</a>
             </div>
           </form>
         </div>
