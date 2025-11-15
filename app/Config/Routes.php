@@ -335,6 +335,13 @@ $routes->group
 		}
 	);
 
+// DS Added 14 Nov 2025
+$routes->group ("file", ['filter' => 'sessionexists'], function($routes)
+		{
+			$routes->post('file/upload', 'File::upload');
+		}
+	);
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
