@@ -336,11 +336,11 @@ $routes->group
 	);
 
 // DS Added 14 Nov 2025
-$routes->group ("file", ['filter' => 'sessionexists'], function($routes)
-		{
-			$routes->post('file/upload', 'File::upload');
-		}
-	);
+$routes->post('file/upload', 'File::upload');
+
+// DS Added 15 Nov 2025
+$routes->get('issue', 'Issue::index');
+$routes->post('issue/create', 'Issue::create');
 
 /*
  * --------------------------------------------------------------------

@@ -47,7 +47,7 @@
           <li>Support
             <ul>
               <li>Help</li>
-              <li>Report/View Issues</li>
+              <li><a href="<?php echo base_url('issue')?>">Report/View Issues</a></li>
 
 				<li>Post Comment (LIa)</li>
               <li>Message Coordinator</li>

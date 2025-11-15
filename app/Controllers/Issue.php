@@ -11,23 +11,37 @@ use CodeIgniter\HTTP\RedirectResponse;
 class Issue extends BaseController
 {
 	static string $url = 'https://api.github.com/repos/FreeUKGen/ComETT/issues';
-	static string $githubAccount = 'dreamstogo';
-	public function create(): RedirectResponse
+	static string $githubAccount = 'FreeREGcomputer';
+
+	public function index(): void
+	{
+		$session = session();
+		$session->set('subject1', "");
+		$session->set('body', "");
+		echo view('templates/header');
+		echo view('linBMD2/new_issue');
+		echo view('templates/footer');
+	}
+
+	public function create(): mixed
 	{
 		// declare session
 		$session = session();
 
 		// get inputs
-		$subject = $this->request->getPost('subject1');
+		$subject = $this->request->getPost('subject');
 		if ($subject === '') {
 			$session->set('message_2', 'You must enter a subject.');
 			$session->set('message_class_2', 'alert alert-danger');
-			return redirect()->to( base_url('home/issue_step1/1'));
+			return redirect()->to( base_url('issue/'));
 		}
 
 		$label =  $this->request->getPost('label');
 		$subject = trim(htmlspecialchars(stripslashes($subject), ENT_QUOTES));
 		$body = trim(htmlspecialchars(stripslashes($this->request->getPost('body')), ENT_QUOTES));
+
+		$session->set('subject1', $subject);
+		$session->set('issue_body', $body);
 
 		$postParams = json_encode([
 			'title' => $subject,
@@ -36,11 +50,20 @@ class Issue extends BaseController
 		]);
 
 		$result = $this->curlRequest(null, $postParams);
+log_message('info', 'INFO:' . print_r($result, true));
 
 	// get issue number and return
-		$session->set('message_2', 'Your report has been registered under reference number FreeUKGen/ComETT/'.$result['number']);
-		$session->set('message_class_2', 'alert alert-success');
-		return redirect()->to( base_url('home/issue_step1/1'));
+		if (isset($result['number'])) {
+			$session->set('message_2', 'Your report has been registered under reference number FreeUKGen/ComETT/'.$result['number']);
+			$session->set('message_class_2', 'alert alert-success');
+			return redirect()->to( base_url('issue/index'));
+		}
+		else {
+			echo view('templates/header');
+			echo view('linBMD2/new_issue');
+			echo view('templates/footer');
+		}
+		return false;
 	}
 
 	/**
@@ -156,7 +179,7 @@ class Issue extends BaseController
 	 * @param string|null $postParams
 	 * @return mixed
 	 */
-	private function curlRequest(string $queryString, ?string $postParams=null): mixed
+	private function curlRequest(?string $queryString, ?string $postParams=null): mixed
 	{
 		$url = self::$url;
 		$ch = curl_init();
@@ -175,8 +198,8 @@ class Issue extends BaseController
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $postParams);
 		}
 
-		//curl_setopt($ch, CURLOPT_VERBOSE, true);
-		//curl_setopt($ch, CURLOPT_STDERR, fopen(getcwd()."/curl.log", 'a+'));
+		curl_setopt($ch, CURLOPT_VERBOSE, true);
+		curl_setopt($ch, CURLOPT_STDERR, fopen(getcwd()."/curl.log", 'a+'));
 
 		$result = curl_exec($ch);
 		curl_close($ch);
@@ -189,7 +212,7 @@ class Issue extends BaseController
 		return [
 			'Accept: application/vnd.github+json',
 			'X-GitHub-Api-Version: 2022-11-28',
-			'Authorization: Bearer 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',
+			'Authorization: Bearer ' . getenv('github.key')
 		];
 	}
 }
