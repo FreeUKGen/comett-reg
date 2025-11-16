@@ -10,8 +10,26 @@ use CodeIgniter\HTTP\RedirectResponse;
  */
 class Issue extends BaseController
 {
-	static string $url = 'https://api.github.com/repos/FreeUKGen/ComETT/issues';
-	static string $githubAccount = 'FreeREGcomputer';
+	static string $base_url = 'https://api.github.com/repos/FreeUKGen/';
+
+	static string $githubAccount;
+	static string $githubKey;
+	static string $githubRepo;
+
+	private bool $stateOk;
+
+	public function __construct()
+	{
+		self::$githubAccount = getenv('github.account');
+		self::$githubKey = getenv('github.key');
+		self::$githubRepo = getenv('github.repo');
+
+		//@TODO DS - check credentials during operations, report
+		//@TODO      invalidity on user views
+		$this->stateOk = false;
+		if (self::$githubRepo && self::$githubAccount && self::$githubKey)
+			$this->stateOk = true;			
+	}
 
 	public function index(): void
 	{
@@ -181,7 +199,7 @@ log_message('info', 'INFO:' . print_r($result, true));
 	 */
 	private function curlRequest(?string $queryString, ?string $postParams=null): mixed
 	{
-		$url = self::$url;
+		$url = self::URL();
 		$ch = curl_init();
 
 		if ($queryString)
@@ -212,7 +230,12 @@ log_message('info', 'INFO:' . print_r($result, true));
 		return [
 			'Accept: application/vnd.github+json',
 			'X-GitHub-Api-Version: 2022-11-28',
-			'Authorization: Bearer ' . getenv('github.key')
+			'Authorization: Bearer ' . self::$githubKey
 		];
+	}
+
+	private static function URL() 
+	{
+		return self::$base_url . self::$githubRepo . '/Issues';
 	}
 }
