@@ -1068,6 +1068,34 @@ class Allocation extends BaseController
 		echo view('templates/footer');
 	}
 
+
+	public function new_list_images()
+	{
+		// initialise
+		$session = session();
+		$allocation_model = new Allocation_Model();
+		$allocation_images_model = new Allocation_Images_Model();
+
+		$allocator = [];
+		$allocator[] = ['BMD_allocation_name' => "WK ImageTest Allocation"];
+		$session->current_allocation = $allocator;
+		//$session->current_allocation[0]['BMD_allocation_name'] = "WK ImageTest Allocation";
+
+		// get images
+		$session->allocation_images = $allocation_images_model
+			->where('allocation_index', 1001430)
+			->orderby('original_image_file_name')
+			->findAll();
+
+		// show images
+		echo view('templates/header');
+		echo view('linBMD2/allocations_list_images');
+		echo view('linBMD2/sortTableNew');
+		echo view('linBMD2/searchTableNew');
+		echo view('templates/footer');
+	}
+
+
 	public function new_create_assignment()
 	{
 load_variables();
@@ -1095,7 +1123,7 @@ load_variables();
 
 				// Images Sources - comes from FreeComETT DB
 				$session->allocation_image_sources = $allocation_image_sources_model
-					->where('project_index', $session->current_project[0]['project_index'])
+					->where('project_index', $session->current_project['project_index'])
 					->where('source_manual', 'Y')
 					->orderby('source_order')
 					->findAll();
@@ -1122,7 +1150,7 @@ load_variables();
 
 				// get register types
 				$session->register_types = $register_type_model
-					->where('project_index', $session->current_project[0]['project_index'])
+					->where('project_index', $session->current_project['project_index'])
 					->where('register_active', 'yes')
 					->orderby('register_order')
 					->findAll();
@@ -1171,7 +1199,7 @@ load_variables();
 
 					// Images Sources - comes from FreeComETT DB
 					$session->allocation_image_sources = $allocation_image_sources_model
-						->where('project_index', $session->current_project[0]['project_index'])
+						->where('project_index', $session->current_project['project_index'])
 						->where('source_manual', 'Y')
 						->orderby('source_order')
 						->findAll();
@@ -1198,7 +1226,7 @@ log_message('info', 'groups:' . print_r($session->county_groups, true));
 				
 					// get register types
 					$session->register_types = $register_type_model
-						->where('project_index', $session->current_project[0]['project_index'])
+						->where('project_index', $session->current_project['project_index'])
 						->where('register_active', 'yes')
 						->orderby('register_order')
 						->findAll();
@@ -1273,7 +1301,7 @@ log_message('info', 'groups:' . print_r($session->county_groups, true));
 		
 		// add it to the freecomett allocations table
 		$allocation_model
-			->set(['project_index' => $session->current_project[0]['project_index']])
+			->set(['project_index' => $session->current_project['project_index']])
 			->set(['BMD_identity_index' => $session->current_identity[0]['BMD_identity_index']])
 			->set(['BMD_syndicate_index' => $session->current_syndicate[0]['BMD_syndicate_index']])
 			->set(['BMD_allocation_name' => $ass_name])
@@ -1288,7 +1316,7 @@ log_message('info', 'groups:' . print_r($session->county_groups, true));
 			->set(['BMD_letter' => ''])
 			->set(['BMD_type' => 'C']) // C = Composite, ie assignment could contain any event type.
 			->set(['BMD_scan_type' => 'jpg'])
-			->set(['BMD_last_action' => 'Create '.$session->current_project[0]['allocation_text']])
+			->set(['BMD_last_action' => 'Create '.$session->current_project['allocation_text']])
 			->set(['BMD_status' => 'Open'])
 			->set(['BMD_sequence' => 'SEQUENCED'])
 			->set(['data_entry_format' => 'composite'])
@@ -1310,7 +1338,7 @@ log_message('info', 'groups:' . print_r($session->county_groups, true));
 					
 		// load allocation record
 		$session->current_allocation = $allocation_model
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->where('BMD_allocation_index', $allocation_index)
 			->find();
 			
@@ -1356,7 +1384,7 @@ log_message('info', 'groups:' . print_r($session->county_groups, true));
 											// create file name
 											$image_name = $allocation_index.'_'.$image_no_err.'_'.$_FILES['images']['name'][$key];
 											$image_name_noext = pathinfo($image_name, PATHINFO_FILENAME);
-											//$image_path = getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid.'/Scans/';
+											//$image_path = getcwd().'/Users/'.$session->current_project['project_name'].'/'.$session->identity_userid.'/Scans/';
 											$user_path = getenv('app.userDir');
 											$image_path = $user_path .'/' . $session->identity_userid.'/Scans/';
 											$image_url = $image_path.$image_name;
@@ -1395,7 +1423,7 @@ log_message('info', 'groups:' . print_r($session->county_groups, true));
 									$ori_name = explode('_', $img_name)[2];
 									// write image record
 									$allocation_images_model
-										->set(['project_index' => $session->current_project[0]['project_index']])
+										->set(['project_index' => $session->current_project['project_index']])
 										->set(['allocation_index' => $allocation_index])
 										->set(['transcription_index' => NULL])
 										->set(['identity_index' => $session->current_identity[0]['BMD_identity_index']])
@@ -1531,7 +1559,7 @@ log_message('info', 'groups:' . print_r($session->county_groups, true));
 											// create file name
 											$image_name = $session->current_allocation[0]['BMD_allocation_index'].'_'.$image_no_err.'_'.$_FILES['images']['name'][$key];
 											$image_name_noext = pathinfo($image_name, PATHINFO_FILENAME);
-											$image_path = getcwd().'/Users/'.$session->current_project[0]['project_name'].'/'.$session->identity_userid.'/Scans/';
+											$image_path = getcwd().'/Users/'.$session->current_project['project_name'].'/'.$session->identity_userid.'/Scans/';
 											$image_url = $image_path.$image_name;
 											// Upload file
 											if ( move_uploaded_file($_FILES['images']['tmp_name'][$key],$image_url) )
@@ -1575,7 +1603,7 @@ log_message('info', 'groups:' . print_r($session->county_groups, true));
 										{
 											// write image record
 											$allocation_images_model
-												->set(['project_index' => $session->current_project[0]['project_index']])
+												->set(['project_index' => $session->current_project['project_index']])
 												->set(['allocation_index' => $session->current_allocation[0]['BMD_allocation_index']])
 												->set(['transcription_index' => $session->current_TP_index])
 												->set(['identity_index' => $session->current_identity[0]['BMD_identity_index']])
@@ -1670,7 +1698,7 @@ log_message('info', 'groups:' . print_r($session->county_groups, true));
 							
 					// Images Sources - comes from FreeComETT DB
 					$session->allocation_image_sources = $allocation_image_sources_model
-						->where('project_index', $session->current_project[0]['project_index'])
+						->where('project_index', $session->current_project['project_index'])
 						->where('source_manual', 'Y')
 						->orderby('source_order')
 						->findAll();
@@ -1696,7 +1724,7 @@ log_message('info', 'groups:' . print_r($session->county_groups, true));
 					
 					// get register types - comes from FreeComETT DB
 					$session->register_types = $register_type_model
-						->where('project_index', $session->current_project[0]['project_index'])
+						->where('project_index', $session->current_project['project_index'])
 						->where('register_active', 'yes')
 						->orderby('register_order')
 						->findAll();
@@ -2177,7 +2205,7 @@ log_message('info', 'groups:' . print_r($session->county_groups, true));
 		
 		// if there is an import in progress the user cannot start another
 		$import_in_progress = $transcription_model
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->where('BMD_identity_index', $session->current_identity[0]['BMD_identity_index'])
 			->like('BMD_submit_status', 'Import CSV in Progress')
 			->findAll();
@@ -2273,7 +2301,7 @@ else
 		
 		// has this CSV file already been loaded
 		$loaded = $allocation_model
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->where('BMD_reference', $csv_file_name)
 			->find();
 			if ( $loaded )
@@ -2287,7 +2315,7 @@ else
 		// set source key depending on environment
 		// get_source_info = common_helper = get instantiation parameters
 		$source_key = 'csv_files_path_'.$session->environment;
-		$source_info = get_source_info($session->current_project[0]['project_index'], $source_key);
+		$source_info = get_source_info($session->current_project['project_index'], $source_key);
 		if ( $source_info == 'error' )
 			{
 				$session->set('message_2', 'Cannot load CSV access information in method allocation/load_csv_file_step2. Report to '.$session->linbmd2_email);
@@ -2388,7 +2416,7 @@ if ( $session->identity_userid == 'freeregdev' )
 					}
 				
 				// get the field defs for this event type
-				$source_info = get_source_info($session->current_project[0]['project_index'], $current_assignment['event_type_lower'].'_entry_order_definition');
+				$source_info = get_source_info($session->current_project['project_index'], $current_assignment['event_type_lower'].'_entry_order_definition');
 				if ( $source_info == 'error' )
 					{
 						$session->set('message_2', 'Cannot load CSV LDS field definitions in method Allocation/load_csv_file_step2. Report to '.$session->linbmd2_email);
@@ -2484,7 +2512,7 @@ if ( $session->identity_userid == 'freeregdev' )
 				// isolate register type
 				$register_type = substr($csv_data_fields[$data_array_key], -2);
 				$valid = $register_type_model
-					->where('project_index', $session->current_project[0]['project_index'])
+					->where('project_index', $session->current_project['project_index'])
 					->where('register_code', $register_type)
 					->find();
 				if ( $valid )
@@ -2599,7 +2627,7 @@ if ( $session->identity_userid == 'freeregdev' )
 			
 		// create the assignment
 		$allocation_model
-			->set(['project_index' => $session->current_project[0]['project_index']])
+			->set(['project_index' => $session->current_project['project_index']])
 			->set(['BMD_identity_index' => $session->current_identity[0]['BMD_identity_index']])
 			->set(['BMD_syndicate_index' => $session->current_syndicate[0]['BMD_syndicate_index']])
 			->set(['BMD_allocation_name' => $current_assignment['BMD_allocation_name']])
@@ -2614,7 +2642,7 @@ if ( $session->identity_userid == 'freeregdev' )
 			->set(['BMD_letter' => ''])
 			->set(['BMD_type' => 'C']) // C = Composite, ie assignment could contain any event type.
 			->set(['BMD_scan_type' => 'jpg'])
-			->set(['BMD_last_action' => 'Create '.$session->current_project[0]['allocation_text']])
+			->set(['BMD_last_action' => 'Create '.$session->current_project['allocation_text']])
 			->set(['BMD_status' => 'Open'])
 			->set(['BMD_sequence' => 'SEQUENCED'])
 			->set(['data_entry_format' => 'composite'])
@@ -2636,7 +2664,7 @@ if ( $session->identity_userid == 'freeregdev' )
 					
 		// load allocation record
 		$session->current_allocation = $allocation_model
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->where('BMD_allocation_index', $allocation_index)
 			->find();
 			
@@ -2672,13 +2700,13 @@ if ( $session->identity_userid == 'freeregdev' )
 								'first_data_line_key' => $first_data_line_key,
 								'csv_def_fields' => json_encode($csv_def_fields),
 								'csv_line_array' => json_encode($csv_line_array, JSON_INVALID_UTF8_IGNORE),
-								'project_index' => $session->current_project[0]['project_index'],
+								'project_index' => $session->current_project['project_index'],
 								'BMD_identity_index' => $session->current_identity[0]['BMD_identity_index'],
 								'data_entry_format' => $session->project_types[$type_array_key]['type_name_lower'],
 								'register_type' => $current_assignment['REG_register_type'],
 								'REG_church_name' => $current_assignment['REG_church_name'],
 								'password' => $session->UserPassword_base64,
-								'project' => $session->current_project[0]['project_name'],	
+								'project' => $session->current_project['project_name'],	
 							);			
 	
 		// load data lines to DB in background process

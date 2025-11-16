@@ -192,6 +192,7 @@ $routes->group
 			$routes->get('new_create_assignment', 'Allocation::new_create_assignment');
 			// DS TODO - should be GET not POST
 			$routes->post('doublons', 'Allocation::doublons');
+			$routes->get('new_list_images', 'Allocation::new_list_images');
 		}
 	);
 
