@@ -1081,9 +1081,15 @@ class Allocation extends BaseController
 		$session->current_allocation = $allocator;
 		//$session->current_allocation[0]['BMD_allocation_name'] = "WK ImageTest Allocation";
 
+		// test mode - use .env setting if it exists
+		$allocation_index = (int)getenv('test.allocation_index');
+		if (!$allocation_index) {
+			$allocation_index = $session->current_allocation[0]['BMD_allocation_index'];
+		}
+
 		// get images
 		$session->allocation_images = $allocation_images_model
-			->where('allocation_index', 1001430)
+			->where('allocation_index', $allocation_index)
 			->orderby('original_image_file_name')
 			->findAll();
 
