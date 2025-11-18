@@ -343,6 +343,9 @@ $routes->post('file/upload', 'File::upload');
 $routes->get('issue', 'Issue::index');
 $routes->post('issue/create', 'Issue::create');
 
+// DS Added 18 Nov 2025
+$routes->post('image/rotate', 'Image:rotate');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
@@ -359,4 +362,3 @@ $routes->post('issue/create', 'Issue::create');
 if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
     require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }
-
