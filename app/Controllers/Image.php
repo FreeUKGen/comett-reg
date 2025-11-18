@@ -9,15 +9,23 @@ class Image
 
 	/**
 	 * @TODO DS - currently only handles jpegs
-	 * @param string $filename
-	 * @param int $degrees
+	 * @endpoint POST /image/rotate
 	 * @return void
 	 */
 	#[NoReturn]
-	public function rotate(string $filename, int $degrees): void
+	public function rotate(): void
 	{
 		$error = null;
-		if (is_file($filename)) {
+		$filename = strip_tags($_POST['filename']);
+		$degrees = (int)$_POST['degrees'];
+		if (!$degrees)
+			$error = 'No rotation to do';
+		if (!$error && !$filename)
+			$error = 'No file specified';
+		if ($error && !is_file($filename))
+			$error = 'File does not exist';
+
+		if (!$error && is_file($filename)) {
 			$source = imagecreatefromjpeg($filename);
 			$rotatedImage = imagerotate($source, $degrees, 0);
 			if ($rotatedImage) {
@@ -26,9 +34,6 @@ class Image
 			}
 			else
 				$error = 'Rotate operation failed';
-		}
-		else {
-			$error = 'file does not exist';
 		}
 		http_response_code(400);
 		die(json_encode(['ok' => false, 'error' => $error]));
