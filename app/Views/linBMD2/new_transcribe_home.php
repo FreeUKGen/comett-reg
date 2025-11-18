@@ -8,8 +8,8 @@ use App\Models\Transcription_Comments_Model;
           <div class="sub-nav-left">
             <p class="py-2">Assignment - STS198_174927493857810</p>
           </div>
-          <div class="row d-flex">
-			<aside>
+          <div class="row d-flex mb-1">
+			<aside class="flex-centre">
             	<img class="w1" src="<?php echo base_url().'/Icons/btn-left.png'?>" />
            		<span>Image 1 of 4</span>
             	<img class="w1" src="<?php echo base_url().'/Icons/btn-right.png'?>" />
@@ -76,7 +76,6 @@ use App\Models\Transcription_Comments_Model;
 
       <div class="wrap-container container">
         <div class="image-container">
-          <img id="image" class="w20" src="<?php echo base_url().'/Icons/marriage.jpeg'?>" />
         </div>
       </div>
       <h4>Marriages</h4>
@@ -115,12 +114,10 @@ use App\Models\Transcription_Comments_Model;
                     <th>Image Count</th>
                     <th>Current Scan</th>
                     <th>N° lines trans</th>
+<!--
                     <th>Start Date</th>
                     <th>Last change date/time</th>
-                    <th>Upload Date</th>
-                    <th>Status</th>
-                    <th>Comments</th>
-                    <th>Last Action Performed</th>
+-->
                 </tr>
                 </thead>
                 <tbody>
@@ -175,6 +172,8 @@ use App\Models\Transcription_Comments_Model;
                         data-action='INPRO'>
                         <?= esc($transcription['BMD_records'])?>
                     </td>
+
+<!--
                     <td><?= esc($transcription['BMD_start_date'])?></td>
                     <td><?= esc($transcription['Change_date'])?></td>
                     <td><?= esc($transcription['BMD_submit_date'])?></td>
@@ -221,6 +220,7 @@ use App\Models\Transcription_Comments_Model;
                         <?php
                     }
                     ?>
+-->
 
                     </tr>
                 </tbody>
