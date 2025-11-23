@@ -20,13 +20,19 @@
         </div>
 
         <section class="view-images-grid-container centre container px-0">
-        <?php foreach ($session->allocation_images as $image): ?>)
+        <?php foreach ($session->allocation_images as $image): ?>
 
             <div class="view-images-image-wrapper centre col-4 col-md-3 col-lg-2">
-                <img alt="FreeREG image" class="allocation-thumbnail" src=<?php esc($image['image_url']); ?> />
-                <p><?= esc($image['image_file_name'])?></p>
+                <img
+                    alt="FreeREG image"
+                    class="allocation-thumbnail"
+                    src="<?= esc($image['image_url']) ?>"
+                    data-image-index="<?= esc($image['image_index']) ?>"
+                    data-image-filename="<?= esc($image['image_file_name']) ?>"
+                />
+                <p><?= esc($image['image_file_name']) ?></p>
             </div>
-            <?php endforeach; ?>
+        <?php endforeach; ?>
 
         </section>
 
@@ -66,7 +72,9 @@
 
             // generate unique key for each image
             function getKeyForImg(img) {
-                // Prefer explicit filename if provided by server/template
+                // Prefer explicit image index (most stable and secure)
+                if (img.dataset.imageIndex) return `id:${img.dataset.imageIndex}`;
+                // Next prefer explicit filename if provided by server/template
                 if (img.dataset.imageFilename) return img.dataset.imageFilename;
                 // Fallback: use basename plus a per-element index (set at init) to ensure uniqueness
                 const idx = img.dataset.imageIndex || '0';
@@ -131,19 +139,16 @@
             }
 
             // Send rotation request for a single image. Returns parsed JSON or throws.
-            async function sendRotateRequest(filename, degrees) {
-                // Server expects POST params: filename, degrees
+            async function sendRotateRequest(imageIndex, degrees) {
+                // Server should accept POST params: image_index, degrees
                 const fd = new FormData();
-                fd.append('filename', filename);
+                fd.append('image_index', String(imageIndex));
                 fd.append('degrees', String(degrees));
 
                 const res = await fetch(ENDPOINT, {
                     method: 'POST',
                     credentials: 'same-origin',
                     body: fd,
-                    headers: {
-                        // do not set Content-Type for FormData
-                    }
                 });
                 if (!res.ok) {
                     const txt = await res.text().catch(() => '');
@@ -168,24 +173,24 @@
 
                 for (const img of toSave) {
                     const key = getKeyForImg(img);
-                    const filename = img.dataset.imageFilename || basename(img.src) || key;
+                    const imageIndex = img.dataset.imageIndex || img.dataset.imageFilename || null;
                     const degrees = previewAngles.get(key) || 0;
 
                     try {
-                        console.log(`ImageRotate: sending rotate for ${filename} ${degrees}°`);
-                        const json = await sendRotateRequest(filename, degrees);
+                        console.log(`ImageRotate: sending rotate for id=${imageIndex} ${degrees}°`);
+                        const json = await sendRotateRequest(imageIndex, degrees);
                         // Server may return success or updated URL
                         if (json && (json.success || json.results || json.ok)) {
                             // If server returned new URL, use it. Otherwise cache-bust current src.
-                            const newUrl = json.image_url || (img.src.split('?')[0] + '?v=' + Date.now());
-                            img.src = newUrl;
+                               const newUrl = json.image_url || (img.src.split('?')[0] + '?v=' + Date.now());
+                               img.src = newUrl;
                             console.log(`ImageRotate: rotate success for ${filename}`);
                         } else if (json && json.error) {
-                            console.error('ImageRotate: rotate error', filename, json);
+                               console.error('ImageRotate: rotate error', imageIndex, json);
                         } else {
                             // assume success if HTTP 200 but no body
                             img.src = img.src.split('?')[0] + '?v=' + Date.now();
-                            console.log(`ImageRotate: rotate assumed success for ${filename}`);
+                               console.log(`ImageRotate: rotate assumed success for ${imageIndex}`);
                         }
                     } catch (err) {
                         console.error('ImageRotate: rotate request failed', err, filename);
