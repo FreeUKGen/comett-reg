@@ -1,231 +1,204 @@
-<?php $session = session();
-use App\Models\Transcription_Comments_Model;
-?>
 
-<main>
-      <div class="nav-container">
-        <div class="sub-nav">
-          <div class="sub-nav-left">
-            <p class="py-2">Assignment - STS198_174927493857810</p>
-          </div>
-          <div class="row d-flex mb-1">
-			<aside class="flex-centre">
-            	<img class="w1" src="<?php echo base_url().'/Icons/btn-left.png'?>" />
-           		<span>Image 1 of 4</span>
-            	<img class="w1" src="<?php echo base_url().'/Icons/btn-right.png'?>" />
-			</aside>
-            <img class="w1" src="<?php echo base_url().'/Icons/contrast-symbol.png'?>" />
-            <img class="w1" src="<?php echo base_url().'/Icons/triangle-symbol.png'?>" />
+	<?php $session = session();
+	use App\Models\Transcription_Comments_Model; ?>
+	
+	<div class="row mt-2 mb-2">		
+		<header>	
+		<aside>
+			<?php					
+				if ( $session->status == '0' ) 
+					{ 
+						?>
+						<a href="<?=(base_url('transcribe/toogle_transcriptions'))?>"><?php echo 'Your ACTIVE transcriptions' ?></a>
+					<?php
+					}
+				else
+					{
+						?>
+						<a href="<?=(base_url('transcribe/toogle_transcriptions'))?>"><?php echo 'Your CLOSED transcriptions' ?></a>
+					<?php
+					}
+					?>
+		</aside>
+		</header>
+	</div>
+	
+	<div class="row text-center table-responsive w-auto">
+		<table class="table table-borderless" style="border-collapse: separate; border-spacing: 0;" id="show_table">
+			<thead class="sticky-top bg-white">
+				<tr class="pb-1 text-primary">
+					<th><?php echo $session->current_project['allocation_text'].' Name'?></th>
+					<th>File</th>
+					<?php
+					if ( $session->current_project['project_index'] == 2 )
+						{ ?>
+							<th>Document Source</th>
+							<th>Image Source</th>
+							<th>Images</th>
+						<?php
+						} ?>
+					<th>Current Scan</th>
+					<th>Lines trans</th>
+					<th>Start Date</th>
+					<th>Last change date/time</th>
+				</tr>		
+			</thead>
 
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 18 18"
-              strokeWidth="{1.5}"
-              stroke="currentColor"
-              class="w2"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
-              />
-            </svg>
+			<tbody id="user_table">
+				<?php foreach ($session->transcriptions as $transcription) 
+					{
+						if ( $transcription['BMD_header_index'] == $session->current_header_index )
+							{ ?>
+								<tr class="alert alert-success">
+							<?php 
+							}
+						else
+							{ ?>
+								<tr class="alert alert-light">
+							<?php 
+							} ?>
+									<td class="edit_assignment" title="ClickMe to edit assignment if in FreeREG"
+										data-id="<?=esc($transcription['BMD_allocation_index'])?>"
+										data-action='CHGEA'>
+										<?= esc($transcription['BMD_allocation_name'])?>
+									</td>
+									<td><?= esc($transcription['BMD_file_name'])?></td>
+									
+									<?php
+									if ( $session->current_project['project_index'] == 2 )
+										{ ?>
+											<td class="next_action"
+												title="<?=esc($transcription['source_text'])?>"
+												data-id="<?=esc($transcription['BMD_header_index'])?>"
+												data-action='UPCOM'>
+												<?php 	
+												if ( !is_null($transcription['source_text']) )
+													{ 
+														echo esc(ellipsize($transcription['source_text'], 100, .5, '...'));
+													}
+												else
+													{
+														echo esc($transcription['source_text']);
+													}
+												?>
+											</td>
+											<td><?= esc($transcription['image_source'])?></td>
+											<td class="centre"><?= esc($transcription['image_count'])?></td>
+										<?php
+										} ?>
+									
+									<td><?= esc($transcription['BMD_scan_name'])?></td>
+									<td class="centre next_action"
+										title="ClickMe to Transcribe from Scan"
+										data-id='<?=esc($transcription['BMD_header_index'])?>'
+										data-action='INPRO'>
+										<?= esc($transcription['BMD_records'])?>
+									</td>
+									<td><?= esc($transcription['BMD_start_date'])?></td>
+									<td><?= esc($transcription['Change_date'])?></td>
+							</tr>
+				
+					<?php 
+					} ?>
+			</tbody>
+		</table>
+	</div>
+	
+	<div>
+		<form action="<?=(base_url('transcribe/next_action')); ?>" method="POST" name="form_next_action" >
+			<input name="BMD_header_index" id="BMD_header_index" type="hidden" />
+			<input name="BMD_next_action" id="BMD_next_action" type="hidden" />
+		</form>
+	</div>
+	
+	<div>
+		<form action="<?=(base_url('allocation/next_action')); ?>" method="POST" name="alloc_next_action" >
+			<input name="allocation_index" id="allocation_index" type="hidden" />
+			<input name="alloc_next_action" id="alloc_next_action" type="hidden" />
+		</form>
+	</div>
+	
+	<form action="<?=(base_url('allocation/load_csv_file_step1/0')); ?>" method="POST" name="form_csvFile" ></form>
+	
+	<form action="<?=(base_url('allocation/create_assignment_step1/0')); ?>" method="POST" name="form_assig" ></form>
+	
+	<form action="<?=(base_url('transcribe/transcribe_step1/0')); ?>" method="POST" name="form_refresh" ></form>
+	
+	
 
-            <svg class="w2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
-              <path
-                d="M561.4 65.8C552.4 62.1 542.1 64.1 535.2 71L483.4 122.8C382.8 39.3 233.3 44.7 139.1 139C39.1 239 39.1 401 139.1 501C239.1 601 401.2 601 501.1 501C516 486.1 528.7 469.8 539.2 452.5C546.1 441.2 542.4 426.4 531.1 419.5C519.8 412.6 505 416.3 498.1 427.6C489.6 441.6 479.3 454.9 467.1 467C385.9 548.2 254.2 548.2 172.9 467C91.6 385.8 91.7 254.1 172.9 172.8C248.4 97.3 367.5 92 449.1 156.8L399.1 207C392.2 213.9 390.2 224.2 393.9 233.2C397.6 242.2 406.4 248 416.1 248L552.2 248C565.5 248 576.2 237.3 576.2 224L576.2 88C576.2 78.3 570.4 69.5 561.4 65.8zM528.2 145.9L528.2 200L474.1 200L528.2 145.9z"
-              />
-            </svg>
+<script>
+	
+$(document).ready(function()
+	{	
+		$('.go_button').on("click", function()
+			{
+				// define the variables
+				var id=$(this).data('id');
+				var BMD_next_action=$(this).parents('tr').find('select[name="next_action"]').val();
+				// load variables to form
+				$('#BMD_header_index').val(id);
+				$('#BMD_next_action').val(BMD_next_action);
+				// and submit the form
+				$('form[name="form_next_action"]').submit();
+			});
+		
+		$('.next_action').on("click", nextAction)
+		
+		$('.edit_assignment').on("click", editAssignment)
+		
+		$('#csv_file').on("click", function()
+			{			
+				// get project
+				var project_name = "<?=$session->current_project['project_name']?>";
+				switch(project_name) 
+					{
+						case 'FreeBMD':
+							break;
+						case 'FreeREG':
+							$('form[name="form_csvFile"]').submit();
+							break;
+						case 'FreeREG':
+							break;
+					}			
+			});
+			
+		$('#alloc').on("click", function()
+			{			
+				// get project
+				var project_name = "<?=$session->current_project['project_name']?>";
+				switch(project_name) 
+					{
+						case 'FreeBMD':
+							break;
+						case 'FreeREG':
+							$('form[name="form_assig"]').submit();
+							break;
+						case 'FreeREG':
+							break;
+					}
+			});
+			
+		$('#refresh').on("click", function()
+			{			
+				$('form[name="form_refresh"]').submit();
+			});
+			
+	});
+	
+function nextAction(event)
+	{
+		$('#BMD_header_index').val(event.target.dataset.id);
+		$('#BMD_next_action').val(event.target.dataset.action);
+		// and submit the form
+		$('form[name="form_next_action"]').submit();
+	}
+	
+function editAssignment(event)
+	{
+		$('#allocation_index').val(event.target.dataset.id);
+		$('#alloc_next_action').val(event.target.dataset.action);
+		// and submit the form
+		$('form[name="alloc_next_action"]').submit();
+	}
 
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w2"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM10.5 7.5v6m3-3h-6"
-              />
-            </svg>
-
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w2"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM13.5 10.5h-6"
-              />
-            </svg>
-          </div>
-          <div class="sub-nav-right">
-            <p>Records transcribed: 2</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="wrap-container container">
-        <div class="image-container">
-        </div>
-      </div>
-      <h4>Marriages</h4>
-      <form class="row d-flex table-search-bar">
-
-			<section>
-			<select>
-				<option value="marriage">Marriage</option>
-			</select>
-			<select class="ml-2">
-				<option value="baptism">Baptism</option>
-			</select>
-			<select class="ml-2">
-				<option value="burial">Burials</option>
-			</select>
-			</section>
-
-			<section>
-            <button class="adjust-fields"><p>Adjust fields</p></button>
-            <input
-              class="search"
-              type="text"
-              placeholder="Search  &#x1F50E;&#xFE0E;"
-            />
-			</section>
-        </form>
-          <div class="table-scroll">
-            <table>
-                <thead>
-                <tr>
-                    <th>Entry</th>
-                    <th>Reg Number</th>
-                    <th><?php echo $session->current_project['allocation_text'].' Name' ?></th>
-                    <th>Document Source</th>
-                    <th>Image Source</th>
-                    <th>Image Count</th>
-                    <th>Current Scan</th>
-                    <th>N° lines trans</th>
-<!--
-                    <th>Start Date</th>
-                    <th>Last change date/time</th>
--->
-                </tr>
-                </thead>
-                <tbody>
-
-                <tbody id="user_table">
-                <?php $n=0; foreach ($session->transcriptions as $transcription)
-                {
-                    if ( $transcription['BMD_header_index'] == $session->current_header_index )
-                    { ?>
-                        <tr class="alert alert-success">
-                        <?php
-                    }
-                    else
-                    { ?>
-                        <tr class="alert alert-light">
-                        <?php
-                    } ?>
-                    <td><?php echo $n+=1; ?></td>
-                    <td
-                            class="edit_assignment"
-                            title="ClickMe to edit assignment if in FreeREG"
-                            data-id="<?=esc($transcription['BMD_allocation_index'])?>"
-                            data-action='CHGEA'>
-                        <?= esc($transcription['BMD_allocation_name'])?>
-                    </td>
-                    <td><?= esc($transcription['BMD_file_name'])?></td>
-
-                        <td class="next_action"
-                            title="<?=esc($transcription['source_text'])?>"
-                            data-id="<?=esc($transcription['BMD_header_index'])?>"
-                            data-action='UPCOM'>
-                            <?php
-                            if ( !is_null($transcription['source_text']) )
-                            {
-                                echo esc(ellipsize($transcription['source_text'], 100, .5, '...'));
-                            }
-                            else
-                            {
-                                echo esc($transcription['source_text']);
-                            }
-                            ?>
-                        </td>
-                        <td><?= esc($transcription['image_source'])?></td>
-                        <td><?= esc($transcription['image_count'])?></td>
-                        <?php
-                    } ?>
-
-                    <td><?= esc($transcription['BMD_scan_name'])?></td>
-                    <td class="next_action"
-                        title="ClickMe to Transcribe from Scan"
-                        data-id='<?=esc($transcription['BMD_header_index'])?>'
-                        data-action='INPRO'>
-                        <?= esc($transcription['BMD_records'])?>
-                    </td>
-
-<!--
-                    <td><?= esc($transcription['BMD_start_date'])?></td>
-                    <td><?= esc($transcription['Change_date'])?></td>
-                    <td><?= esc($transcription['BMD_submit_date'])?></td>
-                    <td class="next_action"
-                        title="ClickMe for Upload detail"
-                        data-id='<?=esc($transcription['BMD_header_index'])?>'
-                        data-action='UPDET'>
-                        <?= esc($transcription['BMD_submit_status'])?>
-                    </td>
-
-                    <td class="next_action"
-                        title="<?=esc($transcription['comment_text'])?>"
-                        data-id='<?=esc($transcription['BMD_header_index'])?>'
-                        data-action='UPCOM'>
-                        <?php
-                        if ( !is_null($transcription['comment_text']) )
-                        {
-                            echo esc(ellipsize($transcription['comment_text'], 100, .5, '...'));
-                        }
-                        else
-                        {
-                            echo esc($transcription['comment_text']);
-                        }
-                        ?>
-                    </td>
-
-                    <td><?= esc($transcription['BMD_last_action'])?></td>
-
-                    <?php
-                    if ( $session->status == '0' )
-                    {
-                        ?>
-                        <td>
-                            <select class="box" name="next_action" id="next_action">
-                                <?php foreach ($session->transcription_cycles as $key => $transcription_cycle): ?>
-                                    <?php if ( $transcription_cycle['BMD_cycle_type'] == 'TRANS' ): ?>
-                                        <option value="<?= esc($transcription_cycle['BMD_cycle_code'])?>">
-                                            <?= esc($transcription_cycle['BMD_cycle_name'])?>
-                                        </option>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                            </select>
-                        </td>
-                        <?php
-                    }
-                    ?>
--->
-
-                    </tr>
-                </tbody>
-			</table>
-        </div>
-    </main>
-  </body>
-</html>
+</script>

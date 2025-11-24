@@ -673,7 +673,7 @@ class Allocation extends BaseController
 		// add allocation to table
 		// create the data for the insert
 		$data =	[
-					'project_index' => $session->current_project[0]['project_index'],
+					'project_index' => $session->current_project['project_index'],
 					'BMD_identity_index' => $session->BMD_identity_index,
 					'BMD_syndicate_index' => $session->syndicate_id,
 					'BMD_allocation_name' => $session->name,
@@ -705,7 +705,7 @@ class Allocation extends BaseController
 		// reload identity
 		$session->current_identity = $identity_model	
 			->where('BMD_identity_index', $session->BMD_identity_index)
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->find();
 		// reload allocation
 		load_variables();
@@ -730,7 +730,7 @@ class Allocation extends BaseController
 		switch ($start_message) 
 			{
 				case 0:
-					$session->set('message_1', $session->current_project[0]['allocation_text'].' Home Page');
+					$session->set('message_1', $session->current_project['allocation_text'].' Home Page');
 					$session->set('message_class_1', 'alert alert-primary');
 					$session->set('message_2', '');
 					$session->set('message_class_2', '');
@@ -745,7 +745,7 @@ class Allocation extends BaseController
 				case 1:
 					break;
 				case 2:
-					$session->set('message_1', 'Manage '.$session->current_project[0]['allocation_text'].'.');
+					$session->set('message_1', 'Manage '.$session->current_project['allocation_text'].'.');
 					$session->set('message_class_1', 'alert alert-primary');
 					break;
 			}
@@ -754,7 +754,7 @@ class Allocation extends BaseController
 		if (0 == $start_message) {
 			$session->allocations = $allocation_model
 			->where('allocation.BMD_identity_index', $session->BMD_identity_index)
-			->where('allocation.project_index', $session->current_project[0]['project_index'])
+			->where('allocation.project_index', $session->current_project['project_index'])
 			->where('allocation.BMD_syndicate_index', $session->syndicate_id)
 			->where('allocation.BMD_status', $session->allocation_status)
 			->join('syndicate', 'allocation.BMD_syndicate_index = syndicate.BMD_syndicate_index')
@@ -766,7 +766,7 @@ class Allocation extends BaseController
 		else {
 			$session->allocations = $allocation_model
 			->where('allocation.BMD_identity_index', $session->BMD_identity_index)
-			->where('allocation.project_index', $session->current_project[0]['project_index'])
+			->where('allocation.project_index', $session->current_project['project_index'])
 			->where('allocation.BMD_syndicate_index', $session->syndicate_id)
 			->where('allocation.BMD_status', $session->allocation_status)
 			->join('syndicate', 'allocation.BMD_syndicate_index = syndicate.BMD_syndicate_index')
@@ -799,7 +799,7 @@ class Allocation extends BaseController
 		$session->set('BMD_cycle_code', $this->request->getPost('alloc_next_action'));
 		
 		$session->set('BMD_cycle_text', $transcription_cycle_model	
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->where('BMD_cycle_code', $session->BMD_cycle_code)
 			->where('BMD_cycle_type', 'ALLOC')
 			->find());
@@ -808,12 +808,12 @@ class Allocation extends BaseController
 		$session->current_allocation = $allocation_model	
 			->where('BMD_allocation_index',  $BMD_allocation_index)
 			->where('BMD_identity_index', $session->BMD_identity_index)
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->find();
 		// should never happen but ...
 		if ( ! $session->current_allocation )
 			{
-				$session->set('message_2', 'Invalid '.$session->current_project[0]['allocation_text'].'. Please contact '.$session->linbmd2_email);
+				$session->set('message_2', 'Invalid '.$session->current_project['allocation_text'].'. Please contact '.$session->linbmd2_email);
 				$session->set('message_class_2', 'alert alert-danger');
 				return redirect()->to( base_url('allocation/manage_allocations/2') );
 			}
@@ -821,7 +821,7 @@ class Allocation extends BaseController
 		// get syndicate 
 		$session->current_syndicate = $syndicate_model		
 			->where('BMD_syndicate_index',  $session->current_allocation[0]['BMD_syndicate_index'])
-			->where('project_index', $session->current_project[0]['project_index'])
+			->where('project_index', $session->current_project['project_index'])
 			->find();
 		// should never happen but...
 		if ( ! $session->current_syndicate )
@@ -842,7 +842,7 @@ class Allocation extends BaseController
 				
 				case 'CHGEA': // List images
 					// only for FreeREG
-					if ( $session->current_project[0]['project_index'] != 2 )
+					if ( $session->current_project['project_index'] != 2 )
 						{
 							$session->set('message_2', 'Edit Assignment option is only available to FreeREG transcribers.');
 							$session->set('message_class_2', 'alert alert-danger');
@@ -852,7 +852,7 @@ class Allocation extends BaseController
 					// only for FreeComETT created assignments
 					// get source records
 					$source = $allocation_image_sources_model
-						->where('project_index', $session->current_project[0]['project_index'])
+						->where('project_index', $session->current_project['project_index'])
 						->where('source_code', $session->current_allocation[0]['source_code'])
 						->find();
 					if ( ! $source OR $source[0]['source_manual'] != 'Y' )
@@ -874,7 +874,7 @@ class Allocation extends BaseController
 					
 				case 'LISTI': // List images
 					// only for FreeREG
-					if ( $session->current_project[0]['project_index'] != 2 )
+					if ( $session->current_project['project_index'] != 2 )
 						{
 							$session->set('message_2', 'List images option is only available to FreeREG transcribers.');
 							$session->set('message_class_2', 'alert alert-danger');
@@ -893,7 +893,7 @@ class Allocation extends BaseController
 					
 				case 'CLOSA': // close 
 					// action depends on project
-					switch ($session->current_project[0]['project_index']) 
+					switch ($session->current_project['project_index']) 
 						{
 							case 1: // FreeBMD
 								$data =	[
@@ -902,7 +902,7 @@ class Allocation extends BaseController
 											'BMD_last_action' => $session->BMD_cycle_text[0]['BMD_cycle_name'],
 										];
 								$allocation_model->update($BMD_allocation_index, $data);
-								$session->set('message_2', 'The '.$session->current_project[0]['allocation_text'].' you selected was closed successfully.');
+								$session->set('message_2', 'The '.$session->current_project['allocation_text'].' you selected was closed successfully.');
 								$session->set('message_class_2', 'alert alert-success');
 								return redirect()->to( base_url('allocation/manage_allocations/2') );
 								break;
@@ -917,7 +917,7 @@ class Allocation extends BaseController
 										'BMD_last_action' => $session->BMD_cycle_text[0]['BMD_cycle_name'],
 									];
 					$allocation_model->update($BMD_allocation_index, $data);
-					$session->set('message_2', 'The '.$session->current_project[0]['allocation_text'].' you selected was re-opened successfully.');
+					$session->set('message_2', 'The '.$session->current_project['allocation_text'].' you selected was re-opened successfully.');
 					$session->set('message_class_2', 'alert alert-success');
 					return redirect()->to( base_url('allocation/manage_allocations/2') );
 					break;
@@ -935,7 +935,7 @@ class Allocation extends BaseController
 						}
 					else
 						{
-							$session->set('message_2', 'Cannot send email to request new '.$session->current_project[0]['allocation_text'].' as the current '.$session->current_project[0]['allocation_text'].' is not closed.');
+							$session->set('message_2', 'Cannot send email to request new '.$session->current_project['allocation_text'].' as the current '.$session->current_project['allocation_text'].' is not closed.');
 							$session->set('message_class_2', 'alert alert-danger');
 							return redirect()->to( base_url('allocation/manage_allocations/2') );
 						}
@@ -946,12 +946,12 @@ class Allocation extends BaseController
 
 					$transcriptions = $transcription_model->where('BMD_allocation_index',  $BMD_allocation_index)
 														->where('BMD_identity_index', $session->BMD_identity_index)
-														->where('project_index', $session->current_project[0]['project_index'])
+														->where('project_index', $session->current_project['project_index'])
 														->find();
 					// if any found cannot delete
 					if ( $transcriptions )
 						{
-							$session->set('message_2', 'Cannot delete this '.$session->current_project[0]['allocation_text'].' because Transcriptions exist against it.');
+							$session->set('message_2', 'Cannot delete this '.$session->current_project['allocation_text'].' because Transcriptions exist against it.');
 							$session->set('message_class_2', 'alert alert-danger');
 							return redirect()->to( base_url('allocation/manage_allocations/2') );
 						}
@@ -959,7 +959,7 @@ class Allocation extends BaseController
 						{
 							// delete it
 							$allocation_model->delete($BMD_allocation_index);
-							$session->set('message_2', $session->current_project[0]['allocation_text'].', '.$session->current_allocation[0]['BMD_allocation_name'].', has been deleted.');
+							$session->set('message_2', $session->current_project['allocation_text'].', '.$session->current_allocation[0]['BMD_allocation_name'].', has been deleted.');
 							$session->set('message_class_2', 'alert alert-success');
 							return redirect()->to( base_url('allocation/manage_allocations/2') );
 						}
@@ -2194,6 +2194,17 @@ log_message('info', 'groups:' . print_r($session->county_groups, true));
 		return redirect()->to( base_url($session->return_route.'/1') );
 	}
 	
+	public function upload_csv_file()
+	{
+		echo view('templates/header');
+		echo view('linBMD2/new_upload_csv');
+		echo view('linBMD2/searchTableNew');
+		echo view('templates/footer');
+	}
+
+
+	// DS 24 Nov 25
+	// replaced with upload_csv_file()
 	public function load_csv_file_step1($start_message)
 	{
 		// initialise method

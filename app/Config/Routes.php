@@ -346,6 +346,9 @@ $routes->post('issue/create', 'Issue::create');
 // DS Added 18 Nov 2025
 $routes->post('image/rotate', 'Image:rotate');
 
+// DS Added 24 Nov 2025
+$routes->get('allocation/upload_csv_file', 'Allocation::upload_csv_file');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

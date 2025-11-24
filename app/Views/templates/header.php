@@ -29,7 +29,7 @@
           </li>
           <li>Tools
 			<ul>
-				<li><a href="<?php echo base_url('allocation/load_csv_file_step1/1')?>">Upload CSV</a></li>
+				<li><a href="<?php echo base_url('allocation/upload_csv_file')?>">Upload CSV</a></li>
 				<li>View Upload Status</li>
 				<li><a href="<?php echo base_url('allocation/new_list_images')?>">List Images</a></li>
 				<li>Refresh Page</li>
