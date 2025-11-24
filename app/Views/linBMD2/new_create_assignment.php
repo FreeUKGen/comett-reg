@@ -23,10 +23,9 @@
 	</div>
 	<form>
 
-    <section class="mb-3">
-        <label id="county_group_label" for="county_group" class="w8 right">Country
-		</label>
-        <select class="w14" id="county_group">
+    <section class="mb-3 flex">
+        <label id="county_group_label" for="county_group" class="label">Country
+        <select class="w14 block" id="county_group">
 			<option selected="selected" disabled="disabled">Select here</option>
 			<option>England</option>
 			<option>Scotland</option>
@@ -34,48 +33,59 @@
 			<option>Islands</option>
 			<option>Specials</option>
 		</select>
-		<span id="county_container" class="ml-2 hidden">
-       		<label for="county" class="w4 right">County</label>
-        	<select class="w14" id="county"></select>
-    	</span>
-        <label for="chapman_code" id="chapman_label" class="ml-2 w8 hidden">Chapman Code</label>
-    	  <input class="hidden" type="text" size="3" id="chapman_code">
-    </section>
-
-    <section id="place_container" class="hidden mb-3">
-        <label id="place_label" for="place" class="w8 right">Place</label>
-        <select class="w14" id="place"></select>
-        <label id="church_label" class="w4 ml-2 right hidden" for="church">Church</label>
-        <select id="church" class="w14 hidden"></select>
-        <label id="church_code_label" class="w8 ml-2 hidden" for="church_code">Church Code</label>
-       	 <input class="hidden" type="text" size="3" id="church_code">
-    </section>
-
-	<section id="register_container" class="hidden mb-3">
-        <label id="register_label" class="w8 right" for="register">Register</label>
-		<select id="register" class="w14"></select>
-    </section>
-
-    <section class="hidden mb-3" id="source_inputs">
-        <label id="source_label" class="w8 right" for="source">Images Source
 		</label>
-		<select class="w14" id="source"></select>
+		<label id="county_container" class="w14 ml-4 disabled">
+			County
+        	<select class="w14 block" id="county" disabled="disabled" ></select>
+    	</label>
+        <label for="chapman_code" id="chapman_label" class="ml-2 w8 hidden">Chapman Code
+    	  <input class="hidden no-border" type="text" size="3" id="chapman_code">
+		</label>
     </section>
 
-	<section id="doc_source_container" class="hidden mb-3">
-		<label class="w8 right" for="doc_source">Document Source</label>
-			<select id="doc_source" class="w14"></select>
+    <section id="place_container" class="flex mb-3 disabled">
+        <label id="place_label" for="place" class="disabled">Place
+        	<select class="w14 block" disabled="disabled" id="place"></select>
+		</label>
+
+        <label id="church_label" class="w14 ml-4 disabled" for="church">Church
+        <select id="church" class="w14 block" disabled="disabled"></select>
+		</label>
+
+        <label id="church_code_label" class="w8 ml-2 hidden" for="church_code">Church Code
+       	 <input class="hidden no-border" type="text" size="3" id="church_code">
+		</label>
+    </section>
+
+	<section id="register_container" class="mb-3">
+        <label id="register_label" class="disabled">Register
+			<select id="register" disabled="disabled" class="w14 block"></select>
+		</label>
+    </section>
+
+    <section class="mb-3" id="source_inputs">
+        <label id="source_label" class="disabled">Images Source
+		<select class="w14 block" disabled="disabled" id="source"></select>
+		</label>
+    </section>
+
+	<section id="doc_source_container" class="mb-3">
+		<label id="doc_source_label" class="disabled">Document Source
+			<select id="doc_source" class="w14 block"></select>
+		</label>
 	</section>
 
-    <section id="credit_container" class="hidden mb-3">
-        <label for="credit" class="w8 right">Credit To</label>
-        <input type='text' class="w14" id='credit' />
+    <section id="credit_container" class="mb-3">
+        <label id="credit_label" class="disabled">Credit To
+        <input type='text' class="w14 block" id='credit' />
+		</label>
     </section>
 
-    <section id="doc_comment" class="hidden mb-3">
-        <label class="w8 right" for="comments">Document Comments</label>
-        <textarea class="w30" id='comments'></textarea>
-		<a id="confirm" class="btn inline-block right ml-4 hidden" title="Create Assignment">Confirm</a>
+    <section id="doc_comment" class="mb-3 flex flex-end">
+        <label class="disabled" id="doc_comment_label">Document Comments
+        <textarea class="w30 block" id='comments'></textarea>
+		</label>
+		<a id="confirm" class="btn inline-block right submit hidden" title="Create Assignment">Confirm</a>
     </section>
 
      <!-- progress -->
@@ -164,7 +174,7 @@
 					if ( counties ) { 
 						load_sources(counties, 'county', null, null); 
 						const cc = document.getElementById('county_container');
-						cc.classList.remove('hidden');	
+						cc.classList.remove('disabled');	
 						next_element('county_group', 'county', 'yes');
 					}
 					else { alert('Cannot create assignment. Counties cannot be loaded for this Country. Report to '+error_email); }
@@ -183,7 +193,7 @@
 				document.getElementById('chapman_code').classList.remove('hidden');	
 				document.getElementById('chapman_label').classList.remove('hidden');	
 				document.getElementById('place_container').classList.remove('hidden');	
-				document.getElementById('place_label').classList.remove('hidden');	
+				document.getElementById('place_label').classList.remove('disabled');	
 				document.getElementById('place').classList.remove('hidden');	
 
 				// call the php method to get the places for the entered county	
@@ -219,9 +229,9 @@
 				formData.append('county', document.getElementById("county").value);
 				formData.append('place', document.getElementById("place").value);
 
-				document.getElementById('church').classList.remove('hidden');	
+				document.getElementById('church').classList.remove('disabled');	
+				document.getElementById('church_label').classList.remove('disabled');	
 				document.getElementById('church_code').classList.remove('hidden');	
-				document.getElementById('church_label').classList.remove('hidden');	
 				document.getElementById('church_code_label').classList.remove('hidden');	
 
 				var url = "<?=base_url('allocation/get_churches')?>";
@@ -270,8 +280,8 @@
 			sources = <?php echo json_encode($session->register_types); ?>;							
 			if ( sources ) { 
 				load_sources(sources, 'register', 'register_code', 'register_description'); 
-				const rc = document.getElementById("register_container");
-				rc.classList.remove('hidden');
+				const rc = document.getElementById("register_label");
+				rc.classList.remove('disabled');
 				
 			}
 			else { alert('Cannot create assignment. Register Types cannot be loaded. Report to '+error_email); }
@@ -288,8 +298,8 @@
 			sources = <?php echo json_encode($session->allocation_image_sources); ?>;
 			if ( sources ) { 
 				load_sources(sources, 'source', 'source_code', 'source_name'); 
-				const sc = document.getElementById("source_inputs");
-				sc.classList.remove('hidden');
+				const sc = document.getElementById("source_label");
+				sc.classList.remove('disabled');
 			}
 			else { alert('Cannot create assignment. Sources Types cannot be loaded. Report to '+error_email); }
 		});
@@ -307,12 +317,12 @@
 				{
 					var input = document.createElement("input");
 					input.setAttribute('type', 'file');
-					input.setAttribute('class', 'w16 remove');
+					input.setAttribute('class', 'w16 remove inline ml-4');
 					input.setAttribute('id', 'images_local');
 					input.setAttribute('accept', '.jpg, .jpeg, .png, .pdf');
 					input.setAttribute('multiple', '');
 					var label = document.createElement("label");
-					label.setAttribute('class', 'w5 remove');								
+					label.setAttribute('class', 'remove');								
 					let si = document.getElementById('source_inputs');
 					if (si) {
 						si.appendChild(label);
@@ -321,15 +331,15 @@
 					else 
 						console.warn('DS: SI NOT FOUND!!!');
 
+					const ds = document.getElementById("doc_source_label");
+					ds.classList.remove('disabled');
 					// set this_element, next_element, focus
-					const ds = document.getElementById("doc_source_container");
-					ds.classList.remove('hidden');
 					next_element('source', 'images_local', 'yes');
 				}
 				else
 				{
-					const ds = document.getElementById("doc_source_container");
-					ds.classList.remove('hidden');
+					const ds = document.getElementById("doc_source_label");
+					ds.classList.remove('disabled');
 
 					// set this_element, next_element, focus
 					next_element('source', 'doc_source', 'yes');
@@ -348,9 +358,13 @@
 
 				// set this_element, next_element, focus
 				const cc = document.getElementById("credit_container");
-				cc.classList.remove('hidden');
+				cc.classList.remove('disabled');
+				const cl = document.getElementById("credit_label");
+				cl.classList.remove('disabled');
 				const dc = document.getElementById("doc_comment");
-				dc.classList.remove('hidden');
+				dc.classList.remove('disabled');
+				const dcl = document.getElementById("doc_comment_label");
+				dcl.classList.remove('disabled');
 				const co = document.getElementById("confirm");
 				co.classList.remove('hidden');
 				next_element('doc_source', 'credit', 'yes');
@@ -360,7 +374,7 @@
 				 e.preventDefault();
 				// set this_element, next_element, focus
 				const cc = document.getElementById("doc_comment");
-				cc.classList.remove('hidden');
+				cc.classList.remove('disabled');
 				next_element('credit', 'comments', 'yes');
 			});
 
@@ -564,9 +578,9 @@
 			{
 				// create select
 				var optionsAsString = "";
+				$('#' + element).removeAttr('disabled');
 				optionsAsString += "<option value='" + "SL" + "'>" + "Select:" + "</option>";
-				for( var i = 0; i < sources.length; i++ ) 
-				{
+				for( var i = 0; i < sources.length; i++ ) {
 					( source_code === null )
 					? optionsAsString += "<option value='" + sources[i] + "'>" + sources[i] + "</option>" 
 					: optionsAsString += "<option value='" + sources[i][source_code] + "'>" + sources[i][source_name] + "</option>";
