@@ -1051,6 +1051,8 @@ class Allocation extends BaseController
 	{
 		// initialise
 		$session = session();
+		$session->operation = 'list_images';
+
 		$allocation_model = new Allocation_Model();
 		$allocation_images_model = new Allocation_Images_Model();
 		
@@ -1073,6 +1075,8 @@ class Allocation extends BaseController
 	{
 		// initialise
 		$session = session();
+		$session->operation = 'list_images';
+
 		$allocation_model = new Allocation_Model();
 		$allocation_images_model = new Allocation_Images_Model();
 

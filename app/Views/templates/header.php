@@ -21,7 +21,7 @@
 <div class="container-fluid">
     <header>
       <nav role="navigation">
-        <a class="logo" href="https://reg.dev2.freecomett.org.uk/">
+        <a class="logo" href="https://reg.dev.freecomett.org.uk/">
           <img src="/images/freecomett.svg" alt="FreeComETT logo">
         </a>
         <ul>
@@ -54,12 +54,12 @@
               <li>Help</li>
               <li><a href="<?php echo base_url('issue')?>">Report/View Issues</a></li>
 
-				<li>Post Comment (LIa)</li>
+				<li>Post Comment</li>
               <li>Message Coordinator</li>
             </ul>
           </li>
         </ul>
-        <a class="logo" href="https://reg.dev2.freecomett.org.uk/">
+        <a class="logo" href="https://reg.dev.freecomett.org.uk/">
           <img src="/images/freereg.svg" alt="FreeREG logo">
         </a>
       </nav>
