@@ -1062,7 +1062,7 @@ class Allocation extends BaseController
 
 		// show images
 		echo view('templates/header');
-		echo view('linBMD2/allocations_list_images');
+		echo view('linBMD2/new_list_images');
 		echo view('linBMD2/sortTableNew');
 		echo view('linBMD2/searchTableNew');
 		echo view('templates/footer');
@@ -1095,7 +1095,7 @@ class Allocation extends BaseController
 
 		// show images
 		echo view('templates/header');
-		echo view('linBMD2/allocations_list_images');
+		echo view('linBMD2/new_list_images');
 		echo view('linBMD2/sortTableNew');
 		echo view('linBMD2/searchTableNew');
 		echo view('templates/footer');

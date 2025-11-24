@@ -66,4 +66,7 @@
 				<a class="" target="_blank" title="Copyright" href="https://www.freeukgenealogy.org.uk"><i class="fa-solid fa-copyright"></i> FreeUKGen 2020 - <?php echo date("Y"); ?></a>
 	</footer>
   </body>
+	<?php if (isset($session->operation) && $session->operation === 'list_images'): ?>
+  		<script type="module" src="/js/ImageRotate.js"></script>
+	<?php endif; ?>
 </html>

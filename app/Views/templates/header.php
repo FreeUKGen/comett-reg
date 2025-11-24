@@ -10,6 +10,11 @@
 	<?php include 'header-assets3.php'; ?>
 
 	<link rel="stylesheet" href="<?php echo base_url().'css/fc-reg.css'; ?>">
+	<style>
+		.allocation-thumbnail {
+			height:150px;
+		}
+	</style>
 </head>
 
 <body>

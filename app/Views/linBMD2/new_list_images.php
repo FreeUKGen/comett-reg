@@ -1,22 +1,20 @@
 	<?php $session = session(); ?>
 	
 	<div class="row">
-		<p 
-			class="bg-warning col-12 pl-0 text-center font-weight-bold" 
-			style="font-size:1.5vw;">
+		<p class="col-12 pl-0 my-2 text-center font-weight-bold" >
 			<?php
 				echo $session->current_project['allocation_text'].' List Images for -> '.$session->current_allocation[0]['BMD_allocation_name'];
 			?>
 		</p>
 	</div>
 
-    <div class="col-md-8 col-md-offset-2">
-        <div class="title py-2 px-2">
+    <div>
+        <div class="title">
             <h1 class="mt-1">View Images</h1>
         </div>
-        <div class="button-rotate-feature">
+        <div class="my-2">
             <button id="rotate-clockwise">Rotate clockwise</button>
-            <button id="rotate-anticlockwise">Rotate anti-clockwise</button>
+            <button class="ml-4" id="rotate-anticlockwise">Rotate anti-clockwise</button>
         </div>
 
         <section class="view-images-grid-container centre container px-0">
