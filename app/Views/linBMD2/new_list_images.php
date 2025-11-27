@@ -12,7 +12,7 @@
         <div class="title">
             <h1 class="mt-1">View Images</h1>
         </div>
-        <div class="my-2">
+        <div class="button-rotate-feature">
             <button id="rotate-clockwise">Rotate clockwise</button>
             <button class="ml-4" id="rotate-anticlockwise">Rotate anti-clockwise</button>
         </div>
