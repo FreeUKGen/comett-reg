@@ -6,7 +6,10 @@ if [ ! -d ../public/css ];then
 fi
 
 # generate CSS from SASS
-sass reg/main.scss > ../public/css/fc-reg.css
+sass reg/main.scss > /tmp/reg.scss
+if [ $? -eq 0 ];then
+	mv /tmp/reg.scss ../public/css/fc-reg.css
+fi
 
 # link images to sub-dir of web root
 cd /var/www/freecomett-reg/public

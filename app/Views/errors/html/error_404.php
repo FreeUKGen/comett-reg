@@ -1,84 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <title><?= lang('Errors.pageNotFound') ?></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Comment page testing myspace2</title>
+
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+
+    <!-- css -->
+    <link rel="stylesheet" href="<?= base_url('css/fc-reg.css') ?>">
+
+
+    <!-- button href needs to be confirmed -->
 
     <style>
-        div.logo {
-            height: 200px;
-            width: 155px;
-            display: inline-block;
-            opacity: 0.08;
-            position: absolute;
-            top: 2rem;
-            left: 50%;
-            margin-left: -73px;
+        :root {
+            --font-body: "Source Sans 3", sans-serif;
+            --fs-1: var(--size-1);
+            --ls-1: 4%;
+            --fw-normal: 400;
+            --fw-heading: 600;
+            --line-height: 2;
         }
-        body {
+
+        /* Base typography */
+
+        html {
             height: 100%;
-            background: #fafafa;
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            color: #777;
-            font-weight: 300;
         }
+
+        body {
+            font-family: var(--font-body);
+            font-size: var(--fs-1);
+            letter-spacing: var(--ls-1);
+            font-weight: var(--fw-normal);
+            height: 100%;
+            margin: 0;
+        }
+
+        /* Breadcrumb trail */
+        .breadcrumb-trail img {
+            margin-inline: 6px;
+        }
+
+        .breadcrumb-trail a {
+            text-decoration: none;
+        }
+
+        .container-fluid {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        .error-wrapper {
+            flex: 1;
+
+        }
+
         h1 {
-            font-weight: lighter;
-            letter-spacing: normal;
-            font-size: 3rem;
-            margin-top: 0;
-            margin-bottom: 0;
-            color: #222;
+            font-weight: var(--fw-heading);
         }
-        .wrap {
-            max-width: 1024px;
-            margin: 5rem auto;
-            padding: 2rem;
-            background: #fff;
+
+        /* Error message box */
+
+        .error-message {
             text-align: center;
-            border: 1px solid #efefef;
-            border-radius: 0.5rem;
-            position: relative;
+            line-height: var(--line-height);
+
+            font-size: var(--fs-1);
+            font-weight: var(--fw-normal);
         }
-        pre {
-            white-space: normal;
-            margin-top: 1.5rem;
+
+        /* Button  */
+
+        .btn-wrapper {
+            display: grid;
+            justify-content: center;
         }
-        code {
-            background: #fafafa;
-            border: 1px solid #efefef;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            display: block;
-        }
-        p {
-            margin-top: 1.5rem;
-        }
-        .footer {
-            margin-top: 2rem;
-            border-top: 1px solid #efefef;
-            padding: 1em 2em 0 2em;
-            font-size: 85%;
-            color: #999;
-        }
-        a:active,
-        a:link,
-        a:visited {
-            color: #dd4814;
+
+        .btn-error-home {
+            border: none;
+            font-size: var(--fs-1);
         }
     </style>
-</head>
-<body>
-    <div class="wrap">
-        <h1>404</h1>
 
-        <p>
-            <?php if (ENVIRONMENT !== 'production') : ?>
-                <?= nl2br(esc($message)) ?>
-            <?php else : ?>
-                <?= lang('Errors.sorryCannotFind') ?>
-            <?php endif; ?>
-        </p>
+
+</head>
+
+<body>
+    <section class="breadcrumb-trail my-4 mx-4" aria-label="breadcrumb">
+        <a href="#" class="text-md">Home</a>
+        <img
+            src="./images/icon-breadcrumb-arrow.svg"
+            alt="breadcrumb trail next item indicator" />
+        <span>Page not found</span>
+    </section>
+    <div class="mx-4 error-wrapper">
+        <h1 class="pb-3 mb-2">Page not found</h1>
+        <div class="px-3 py-3 mb-4 error-wrapper">
+            <p class="error-message my-3">Sorry, the page you are looking for does not exist.<br> If you believe this is an error, please reach out to your coordinator for assistance.</p>
+            <div class="my-3 btn-wrapper">
+                <button type="button" class="btn-error-home"
+                    onclick="window.location.href= '<?= base_url() ?>' ">
+                    Go to Home
+                </button>
+
+            </div>
+
+        </div>
     </div>
+
 </body>
+
 </html>
