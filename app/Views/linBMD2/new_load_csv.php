@@ -1,3 +1,4 @@
+<?php $session = session(); ?>
     <main class="gutter">
         <section class="breadcrumb-trail row py-4">
             <div class="breadcrumb">
@@ -44,39 +45,22 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <?php foreach ( $session->physical_files as $physical_file )
+					{ ?>
                         <tr>
-                            <td>xxxxxxxxxx</td>
+                            <td class="align-middle"><?= esc($physical_file['file_name'])?></td>
+
                             <td>Text Cell</td>
                             <td>Text Cell</td>
                             <td>21</td>
                             <td>xxxxxxxxxx</td>
                             <td>Text Cell</td>
-                            <td>Text Cell</td>
+                            <td class="align-middle"><?= esc($physical_file['proc_date'])?></td>
                             <td>Y</td>
                             <td>N</td>
                         </tr>
-                        <tr>
-                            <td>xxxxxxxxxx</td>
-                            <td>Text Cell</td>
-                            <td>Text Cell</td>
-                            <td>12</td>
-                            <td>xxxxxxxxxx</td>
-                            <td>Text Cell</td>
-                            <td>Text Cell</td>
-                            <td>N</td>
-                            <td>N</td>
-                        </tr>
-                        <tr>
-                            <td>xxxxxxxxxx</td>
-                            <td>Text Cell</td>
-                            <td>Text Cell</td>
-                            <td>33</td>
-                            <td>xxxxxxxxxx</td>
-                            <td>Text Cell</td>
-                            <td>Text Cell</td>
-                            <td>Y</td>
-                            <td>N</td>
-                        </tr>
+                        <?php
+                    } ?>
                     </tbody>
                 </table>
             </div>
@@ -105,39 +89,22 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <?php foreach ( $session->physical_files as $physical_file )
+                    { ?>
                         <tr>
-                            <td>xxxxxxxxxx</td>
+                            <td class="align-middle"><?= esc($physical_file['file_name'])?></td>
+
                             <td>Text Cell</td>
                             <td>Text Cell</td>
                             <td>21</td>
                             <td>xxxxxxxxxx</td>
                             <td>Text Cell</td>
-                            <td>Text Cell</td>
+                            <td class="align-middle"><?= esc($physical_file['proc_date'])?></td>
                             <td>Y</td>
                             <td>N</td>
                         </tr>
-                        <tr>
-                            <td>xxxxxxxxxx</td>
-                            <td>Text Cell</td>
-                            <td>Text Cell</td>
-                            <td>12</td>
-                            <td>xxxxxxxxxx</td>
-                            <td>Text Cell</td>
-                            <td>Text Cell</td>
-                            <td>N</td>
-                            <td>N</td>
-                        </tr>
-                        <tr>
-                            <td>xxxxxxxxxx</td>
-                            <td>Text Cell</td>
-                            <td>Text Cell</td>
-                            <td>33</td>
-                            <td>xxxxxxxxxx</td>
-                            <td>Text Cell</td>
-                            <td>Text Cell</td>
-                            <td>Y</td>
-                            <td>N</td>
-                        </tr>
+                        <?php
+                    } ?>
                     </tbody>
                 </table>
             </div>

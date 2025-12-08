@@ -2198,17 +2198,17 @@ log_message('info', 'groups:' . print_r($session->county_groups, true));
 		return redirect()->to( base_url($session->return_route.'/1') );
 	}
 	
-	public function upload_csv_file()
+	public function load_csv_file()
 	{
 		echo view('templates/header');
-		echo view('linBMD2/new_upload_csv');
+		echo view('linBMD2/new_load_csv');
 		echo view('linBMD2/searchTableNew');
 		echo view('templates/footer');
 	}
 
 
 	// DS 24 Nov 25
-	// replaced with upload_csv_file()
+	// replaced with load_csv_file()
 	public function load_csv_file_step1($start_message)
 	{
 		// initialise method
@@ -2306,11 +2306,8 @@ else
 		$session = session();
 		$allocation_model = new Allocation_Model();
 		$transcription_model = new Transcription_Model();
-		$detail_data_model = new Detail_Data_Model();
-		$def_fields_model = new Def_Fields_Model();
 		$register_type_model = new Register_Type_Model();
 		$document_sources_model = new Document_Sources_Model();
-		$transcription_detail_def_model = new Transcription_Detail_Def_Model();
 		define_environment(3);
 		$mongodb = define_mongodb();
 		$collection_counties = $mongodb['database']->selectCollection('counties');

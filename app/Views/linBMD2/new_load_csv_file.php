@@ -7,7 +7,7 @@
                         Tools
                     </a>
                     <div class="dropdown-menu" aria-labelledby="toolsDropdown">
-                        <a class="dropdown-item" href="#" onclick="document.getElementById('csvFileInput').click(); return false;">Upload CSV</a>
+                        <a class="dropdown-item" href="#" onclick="document.getElementById('csvFileInput').click(); return false;">Load CSV</a>
                         <a class="dropdown-item" href="#" onclick="showDemoToast()">Demo Toast</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="javascript:location.reload();">Refresh Page</a>
@@ -17,7 +17,7 @@
         </nav>
 
         <!-- Hidden file input for CSV upload -->
-        <input type="file" id="csvFileInput" accept=".csv" style="display: none;" onchange="handleFileUpload(this)">
+        <input type="file" id="csvFileInput" accept=".csv" style="display: none;" onchange="handleFileLoad(this)">
     </div>
 
     <!-- Toast Container -->
@@ -51,7 +51,7 @@
     <script>
         let selectedFile = null;
 
-        function handleFileUpload(input) {
+        function handleFileLoad(input) {
             const file = input.files[0];
             
             if (!file) {
