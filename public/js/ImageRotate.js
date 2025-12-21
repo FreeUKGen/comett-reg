@@ -109,6 +109,7 @@ Behaviour:
     const selected = getThumbnails().filter((img) =>
       img.classList.contains(SELECTED_CLASS)
     );
+
     if (selected.length === 0) return;
     selected.forEach((img) => {
       const key = getKeyForImg(img);
@@ -123,6 +124,7 @@ Behaviour:
       // const next = (((prev + delta) % 360) + 360) % 360;
 
       const next = prev + delta;
+      console.log("hi");
       previewAngles.set(key, next); // Save state by storing the updated angle back into the Map.
       img.style.transition = "transform 0.5s ease"; // apply CSS preview
       img.style.transform = `rotate(${next}deg)`;
@@ -218,6 +220,7 @@ Behaviour:
     rotateSvg.forEach((x) =>
       x.addEventListener("click", () => adjustSelection(90))
     );
+
     rightBtn.addEventListener("click", () => adjustSelection(-90));
     saveBtn.addEventListener("click", saveRotations);
 
