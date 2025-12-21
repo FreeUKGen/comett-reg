@@ -348,10 +348,11 @@ class Identity extends BaseController
 	    return false;
 	}
 
-	private function imageServer() :string
+	public static function imageServer($session) :?string
 	{
-		$session = session();
-		return getenv('app.imageServer') ?? $session->freeukgen_source_values['image_server'];
+		static $is = getenv('app.imageServer');
+		$session->freeukgen_source_values['image_server'] = $is;
+		return $is;
 	}
 
 	public function signin_step3()
@@ -370,6 +371,7 @@ class Identity extends BaseController
 		$session->signon_success = 1;
 		$new_user = 0;
 		$session->masquerade = 0;
+		$userPath = null;
 		
 		// update number of signons this syndicate in order to know when to next update syndicates table
 		$signons = $session->current_project['signons_to_project'] + 1;
@@ -438,6 +440,7 @@ class Identity extends BaseController
 					if (mkdir($userPath)) {
 						mkdir($userPath . '/Backups');
 						mkdir($userPath . '/Scans');
+						mkdir($userPath . '/Rotated');
 						mkdir($userPath . '/CSV_Files');
 					}
 					else {
@@ -452,26 +455,27 @@ class Identity extends BaseController
 			{
 				// if found verify directories exist
 				// create user folder and subfolders if they don't exist
-				$userDir = getenv('app.userDir');
-				if (!$userDir) {
+				$userPath = getenv('app.userDir');
+				if (!$userPath) {
 					log_message('error', '.env does not have app.userDir setting');
 					exit(1);
 				}
 
-				$userDir = $userDir . '/' . $session->identity_userid;
-				if (!is_dir($userDir))
-					mkdir($userDir, 0777, true);
-				if (!is_dir($userDir . '/Backups'))
-					mkdir($userDir . '/Backups');
-				if (!is_dir($userDir . '/CSV_Files'))
-					mkdir($userDir . '/CSV_Files');
-				if (!is_dir($userDir . '/Scans'))
-					mkdir($userDir . '/Scans');
+				$userPath = $userPath . '/' . $session->identity_userid;
+				if (!is_dir($userPath))
+					mkdir($userPath, 0777, true);
+				if (!is_dir($userPath . '/Backups'))
+					mkdir($userPath . '/Backups');
+				if (!is_dir($userPath . '/CSV_Files'))
+					mkdir($userPath . '/CSV_Files');
+				if (!is_dir($userPath . '/Scans'))
+					mkdir($userPath . '/Scans');
 			}
 		
 		// signon is validated - WOW! At last!
 		
 		// get the identity
+		$session->user_path = $userPath;
 		$session->current_identity = $identity_model
 			->where('project_index', $session->current_project['project_index'])
 			->where('BMD_user', $session->identity_userid)
@@ -785,7 +789,7 @@ class Identity extends BaseController
 		// Can I reach the image server and get an image?			
 		
 		// do I have an image server access from Freeukgen sources
-		$server = $this->imageServer();
+		$server = self::imageServer($session);
 		if (!$server || ($server == 'error'))
 		{
 			// this should never happen but, if it does, send error
@@ -836,7 +840,7 @@ class Identity extends BaseController
 					break;
 					
 				case 'FreeREG':			
-					$server = $this->imageServer();
+					$server = self::imageServer($session);
 					if (!$server || $server == 'error')
 					{
 						// this should never happen but, if it does, send error
@@ -869,7 +873,7 @@ class Identity extends BaseController
 					$curl_response = curl_exec($ch);
 					curl_close($ch);
 					
-					// test the reponse
+					// test the response
 					if ( str_contains($curl_response, 'Errors')) 
 						{
 							$session->set('message_2', 'A technical problem occurred. Please send an email to '.$session->linbmd2_email.' describing what you were doing when the error occurred => Malformed URL in Identity::signin_step3 for FreeREG');

@@ -193,7 +193,7 @@ log_message('info', 'INFO:' . print_r($result, true));
 	 * Build the CURL request, handles GET and POSTs
 	 * GET requests with string $params
 	 * POST request with array $params
-	 * @param string $queryString
+	 * @param string|null $queryString
 	 * @param string|null $postParams
 	 * @return mixed
 	 */

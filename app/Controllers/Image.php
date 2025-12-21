@@ -8,6 +8,11 @@ use App\Models\Allocation_Images_Model;
 use JetBrains\PhpStorm\NoReturn;
 class Image extends BaseController
 {
+	function __construct()
+	{
+		helper('common');
+	}
+
 	/**
 	 * POST /image/rotate
 	 * Accepts POST params: image_index, degrees
@@ -57,12 +62,13 @@ class Image extends BaseController
 			$path = $imageUrl;
 		}
 
-		$publicPath = rtrim(FCPATH, '/\\') . DIRECTORY_SEPARATOR . ltrim($path, '/\\');
-		if (!file_exists($publicPath)) {
-			return $this->response->setStatusCode(404)->setJSON(['ok' => false, 'error' => 'file_not_found']);
-		}
+		$publicPath = $path;
+		//$publicPath = rtrim(FCPATH, '/\\') . DIRECTORY_SEPARATOR . ltrim($path, '/\\');
+		//if (!file_exists($publicPath)) {
+		//	return $this->response->setStatusCode(404)->setJSON(['ok' => false, 'error' => 'file_not_found']);
+		//}
 
-		$info = @getimagesize($publicPath);
+		$info = @getimagesize($path);
 		if ($info === false) {
 			return $this->response->setStatusCode(400)->setJSON(['ok' => false, 'error' => 'invalid_image']);
 		}
@@ -109,10 +115,11 @@ class Image extends BaseController
 		}
 
 		// Save rotated copy under public/uploads/rotated/<allocation_index>/
-		$destDir = rtrim(FCPATH, '/\\') . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'rotated' . DIRECTORY_SEPARATOR . $allocationIndex . DIRECTORY_SEPARATOR;
-		if (!is_dir($destDir)) {
-			mkdir($destDir, 0755, true);
-		}
+//		$destDir = rtrim(FCPATH, '/\\') . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'rotated' . DIRECTORY_SEPARATOR . $allocationIndex . DIRECTORY_SEPARATOR;
+//		if (!is_dir($destDir)) {
+//			mkdir($destDir, 0755, true);
+//		}
+		$destDir = getenv('app.userDir') . '/Rotated/';
 
 		$ext = pathinfo($publicPath, PATHINFO_EXTENSION) ?: 'jpg';
 		$newFilename = 'rotated_' . time() . '_' . $imageIndex . '.' . $ext;

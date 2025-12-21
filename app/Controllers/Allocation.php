@@ -1279,10 +1279,7 @@ log_message('info', 'groups:' . print_r($session->county_groups, true));
 	{				
 		// initialise method
 		$session = session();
-		$allocation_image_sources_model = new Allocation_Image_Sources_Model();
-		$project_types_model = new Project_Types_Model();
 		$allocation_model = new Allocation_Model();
-		$register_type_model = new Register_Type_Model();
 		$allocation_images_model = new Allocation_Images_Model();
 		define_environment(3);
 		$mongodb = define_mongodb();
@@ -1366,7 +1363,7 @@ log_message('info', 'groups:' . print_r($session->county_groups, true));
 				]
 			);
 			
-		// initialse files count
+		// initialise files count
 		$image_in = 0;
 		$image_out = 0;
 		$image_no_err = 0;
