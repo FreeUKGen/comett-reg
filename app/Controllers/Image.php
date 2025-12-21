@@ -56,13 +56,7 @@ class Image extends BaseController
 		log_message('info', 'URL:' . $imageUrl);
 		log_message('info', 'FIL:' . $imageFile);
 
-		if (str_contains($imageUrl, '://')) {
-			$path = parse_url($imageUrl, PHP_URL_PATH);
-		} else {
-			$path = $imageUrl;
-		}
-
-		$publicPath = $path;
+		$publicPath = $path = $imageUrl;
 		//$publicPath = rtrim(FCPATH, '/\\') . DIRECTORY_SEPARATOR . ltrim($path, '/\\');
 		//if (!file_exists($publicPath)) {
 		//	return $this->response->setStatusCode(404)->setJSON(['ok' => false, 'error' => 'file_not_found']);

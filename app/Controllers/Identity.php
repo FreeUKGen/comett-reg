@@ -351,7 +351,6 @@ class Identity extends BaseController
 	public static function imageServer($session) :?string
 	{
 		static $is = getenv('app.imageServer');
-		$session->freeukgen_source_values['image_server'] = $is;
 		return $is;
 	}
 
