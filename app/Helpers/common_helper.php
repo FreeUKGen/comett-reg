@@ -674,3 +674,18 @@ function get_image_for_parameters($image_record)
 		// encode to base 64
 		$session->params_fileEncode = base64_encode(file_get_contents($url));
 	}
+
+
+/**
+ * Gets the image info from the session $session->allocation_images array
+ * @param int $offset
+ * @return array|null
+ */
+function get_image_info(int $offset) :?array
+{
+	// initialise
+	$session = session();
+	if (isset($session->allocation_images[$offset]))
+		return $session->allocation_images[$offset];
+	return null;
+}

@@ -16,8 +16,8 @@ class Image extends BaseController
 	 */
 	public function rotate(): ResponseInterface
 	{
-		$imageIndex = $this->request->getPost('image_index');
-		$degrees = $this->request->getPost('degrees');
+		$imageIndex = (int)$this->request->getPost('image_index');
+		$degrees = (int)$this->request->getPost('degrees');
 
 		if (!is_numeric($imageIndex) || !is_numeric($degrees)) {
 			return $this->response->setStatusCode(400)->setJSON(['ok' => false, 'error' => 'invalid_input']);
@@ -37,22 +37,24 @@ class Image extends BaseController
 			return $this->response->setStatusCode(400)->setJSON(['ok' => false, 'error' => 'invalid_degrees']);
 		}
 
-		$model = new Allocation_Images_Model();
-		$image = $model->find($imageIndex);
-		if (empty($image)) {
+		$image = get_image_info($imageIndex);
+		if (!$image) {
 			return $this->response->setStatusCode(404)->setJSON(['ok' => false, 'error' => 'not_found']);
 		}
+//		$model = new Allocation_Images_Model();
+//		$image = $model->find($imageIndex);
 
 		$imageUrl = $image['image_url'] ?? '';
 		$imageFile = $image['image_file_name'] ?? '';
 		$allocationIndex = $image['allocation_index'] ?? 'unknown';
 
-		// Determine path relative to public
-		$webPath = $imageUrl !== '' ? $imageUrl : ('uploads/' . ltrim($imageFile, '/\\'));
-		if (strpos($webPath, '://') !== false) {
-			$path = parse_url($webPath, PHP_URL_PATH);
+		log_message('info', 'URL:' . $imageUrl);
+		log_message('info', 'FIL:' . $imageFile);
+
+		if (str_contains($imageUrl, '://')) {
+			$path = parse_url($imageUrl, PHP_URL_PATH);
 		} else {
-			$path = $webPath;
+			$path = $imageUrl;
 		}
 
 		$publicPath = rtrim(FCPATH, '/\\') . DIRECTORY_SEPARATOR . ltrim($path, '/\\');
@@ -141,10 +143,10 @@ class Image extends BaseController
 		$newUrl = '/uploads/rotated/' . $allocationIndex . '/' . $newFilename;
 
 		// Update DB record (image_file_name and image_url)
-		$model->update($imageIndex, [
-			'image_file_name' => $newFilename,
-			'image_url' => $newUrl,
-		]);
+//		$model->update($imageIndex, [
+//			'image_file_name' => $newFilename,
+//			'image_url' => $newUrl,
+//		]);
 
 		return $this->response->setJSON(['ok' => true, 'image_url' => $newUrl]);
 	}

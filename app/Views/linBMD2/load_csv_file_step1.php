@@ -12,7 +12,7 @@
 	<div class="row text-center table-responsive w-auto" style="max-height: 500px;">
 		<table class="table table-hover table-borderless" style="border-collapse: separate; border-spacing: 0;">
 			<thead class="sticky-top bg-white">
-				<tr class="text-primary">
+				<th class="text-primary">
 					<th><input class="" id="search" type="text" placeholder="Search..." ></th>
 					<th></th>
 					<th></th>

@@ -3,10 +3,6 @@
 use App\Models\Identity_Model;
 use App\Models\Submitters_Model;				
 use App\Models\Parameter_Model;
-use App\Models\Detail_Data_Model;
-use App\Models\Detail_Comments_Model;
-use App\Models\Transcription_Detail_Def_Model;
-use App\Models\Transcription_Model;
 use App\Models\Allocation_Model;
 use App\Models\Syndicate_Model;
 use App\Models\Messaging_Model;
@@ -96,10 +92,7 @@ class Identity extends BaseController
 	{
 		// initialise method
 		$session = session();
-		$identity_model = new Identity_Model();
 		$syndicate_model = new Syndicate_Model();
-		$submitters_model = new Submitters_Model();
-		$parameter_model = new Parameter_Model();
 		$session->signon_success = 0;
 		
 		// what OS is this?
@@ -357,6 +350,7 @@ class Identity extends BaseController
 
 	private function imageServer() :string
 	{
+		$session = session();
 		return getenv('app.imageServer') ?? $session->freeukgen_source_values['image_server'];
 	}
 
@@ -365,9 +359,7 @@ class Identity extends BaseController
 		// initialise method
 		$session = session();
 		$identity_model = new Identity_Model();
-		$syndicate_model = new Syndicate_Model();
 		$allocation_model = new Allocation_Model();
-		$submitters_model = new Submitters_Model();
 		$parameter_model = new Parameter_Model();
 		$projects_model = new Projects_Model();
 		$signins_model = new Signins_Model();
