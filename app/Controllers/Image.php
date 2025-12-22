@@ -113,7 +113,8 @@ class Image extends BaseController
 //		if (!is_dir($destDir)) {
 //			mkdir($destDir, 0755, true);
 //		}
-		$destDir = getenv('app.userDir') . '/Rotated/';
+		$session = session();
+		$destDir = getenv('app.userDir') . '/' . $session->identity_userid .  '/Rotated/';
 
 		$ext = pathinfo($publicPath, PATHINFO_EXTENSION) ?: 'jpg';
 		$newFilename = 'rotated_' . time() . '_' . $imageIndex . '.' . $ext;
