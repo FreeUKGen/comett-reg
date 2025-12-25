@@ -91,7 +91,7 @@ class Transcribe extends BaseController
 				default:
 			}
 		
-		// for open transcriptions check verfied status
+		// for open transcriptions check verified status
 		if ( $session->status == '0' )
 			{
 				$transcriptions = $transcription_model	
@@ -172,8 +172,6 @@ class Transcribe extends BaseController
 		// check status of transcription in project DB
 		switch ( $session->current_project['project_index'] )
 			{
-				case 1:
-					break;
 				case 2:
 					define_environment(3);
 					get_upload_status();
@@ -194,8 +192,6 @@ class Transcribe extends BaseController
 							$transcriptions[$key]['image_source'] = $image_source[0]['source_description'];
 						}
 					$session->transcriptions = $transcriptions;
-					break;
-				case 3:
 					break;
 				default:
 					break;
@@ -241,8 +237,6 @@ class Transcribe extends BaseController
 		$detail_data_model = new Detail_Data_Model;
 		$allocation_model = new Allocation_Model();
 		$syndicate_model = new Syndicate_Model();
-		$identity_model = new Identity_Model();
-		$identity_last_indexes_model = new Identity_Last_Indexes_Model();
 		$transcription_cycle_model = new Transcription_Cycle_Model();
 		$allocation_images_model = new Allocation_Images_Model();
 		$allocation_image_sources_model = new Allocation_Image_Sources_Model();
@@ -3047,7 +3041,7 @@ class Transcribe extends BaseController
 		return json_encode($volume);
 	}
 	
-	public function toogle_transcriptions()
+	public function toggle_transcriptions()
 	{
 		// initialise
 		$session = session();

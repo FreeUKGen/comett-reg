@@ -9,13 +9,13 @@
 				if ( $session->status == '0' ) 
 					{ 
 						?>
-						<a href="<?=(base_url('transcribe/toogle_transcriptions'))?>"><?php echo 'Your ACTIVE transcriptions' ?></a>
+						<a href="<?=(base_url('transcribe/toggle_transcriptions'))?>"><?php echo 'Your ACTIVE transcriptions' ?></a>
 					<?php
 					}
 				else
 					{
 						?>
-						<a href="<?=(base_url('transcribe/toogle_transcriptions'))?>"><?php echo 'Your CLOSED transcriptions' ?></a>
+						<a href="<?=(base_url('transcribe/toggle_transcriptions'))?>"><?php echo 'Your CLOSED transcriptions' ?></a>
 					<?php
 					}
 					?>

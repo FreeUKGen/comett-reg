@@ -1,7 +1,6 @@
 
-	<?php $session = session();
-	use App\Models\Transcription_Comments_Model; ?>
-	
+	<?php $session = session(); ?>
+
 	<div class="row mt-2 mb-2">		
 		<header>	
 		<aside>
@@ -9,13 +8,13 @@
 				if ( $session->status == '0' ) 
 					{ 
 						?>
-						<a href="<?=(base_url('transcribe/toogle_transcriptions'))?>"><?php echo 'Your ACTIVE transcriptions' ?></a>
+						<a href="<?=(base_url('transcribe/toggle_transcriptions'))?>"><?php echo 'Your ACTIVE transcriptions' ?></a>
 					<?php
 					}
 				else
 					{
 						?>
-						<a href="<?=(base_url('transcribe/toogle_transcriptions'))?>"><?php echo 'Your CLOSED transcriptions' ?></a>
+						<a href="<?=(base_url('transcribe/toggle_transcriptions'))?>"><?php echo 'Your CLOSED transcriptions' ?></a>
 					<?php
 					}
 					?>
@@ -27,7 +26,7 @@
 		<table class="table table-borderless" style="border-collapse: separate; border-spacing: 0;" id="show_table">
 			<thead class="sticky-top bg-white">
 				<tr class="pb-1 text-primary">
-					<th><?php echo $session->current_project['allocation_text'].' Name'?></th>
+<!--					<th>--><?php //echo $session->current_project['allocation_text'].' Name'?><!--</th>-->
 					<th>File</th>
 					<?php
 					if ( $session->current_project['project_index'] == 2 )
@@ -57,11 +56,11 @@
 								<tr class="alert alert-light">
 							<?php 
 							} ?>
-									<td class="edit_assignment" title="ClickMe to edit assignment if in FreeREG"
-										data-id="<?=esc($transcription['BMD_allocation_index'])?>"
-										data-action='CHGEA'>
-										<?= esc($transcription['BMD_allocation_name'])?>
-									</td>
+<!--									<td class="edit_assignment" title="ClickMe to edit assignment if in FreeREG"-->
+<!--										data-id="--><?php //=esc($transcription['BMD_allocation_index'])?><!--"-->
+<!--										data-action='CHGEA'>-->
+<!--										--><?php //= esc($transcription['BMD_allocation_name'])?>
+<!--									</td>-->
 									<td><?= esc($transcription['BMD_file_name'])?></td>
 									
 									<?php

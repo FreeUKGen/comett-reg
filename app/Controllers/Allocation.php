@@ -17,8 +17,6 @@ use App\Models\Transcription_Detail_Def_Model;
 use App\Models\Transcription_CSV_File_Model;
 use App\Models\Detail_Data_Model;
 use App\Models\Detail_Comments_Model;
-use App\Models\Def_Fields_Model;
-use MongoDB\BSON\Regex;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\UTCDateTime;
 use \Datetime;
@@ -36,6 +34,17 @@ class Allocation extends BaseController
 	{
 		// initialise method
 		$session = session();
+	}
+
+
+	/**
+	 * Generate allocation CSV filename
+	 * comprises of [chapman county code][church code]_[timestamp].csv
+	 * @return string
+	 */
+	public static function generate_filename(string $chapman, string $church) :string
+	{
+		return "{$chapman}{$church}_" . time() . '.csv';
 	}
 
 
@@ -1232,7 +1241,7 @@ load_variables();
 								}
 						}
 					$session->county_groups = $county_groups;
-log_message('info', 'groups:' . print_r($session->county_groups, true));
+// log_message('info', 'groups:' . print_r($session->county_groups, true));
 				
 					// get register types
 					$session->register_types = $register_type_model
@@ -1274,7 +1283,14 @@ log_message('info', 'groups:' . print_r($session->county_groups, true));
 		echo view('linBMD2/manage_assignment_step1'); // same view used for both create and change
 		echo view('templates/footer');
 	}
-	
+
+
+	/**
+	 * Handle the Create Assignment form submission
+	 * @param $start_message
+	 * @return void
+	 * @throws \ReflectionException
+	 */
 	public function create_assignment_step2($start_message)
 	{				
 		// initialise method
@@ -1293,7 +1309,8 @@ log_message('info', 'groups:' . print_r($session->county_groups, true));
 			}
 			
 		// load general input values
-		$ass_name = $_POST['ass_name'];
+		// @TODO sanitisation of form POST
+
 		$county_group = $_POST['county_group'];
 		$county = $_POST['county'];
 		$chapman_code = $_POST['chapman_code'];
@@ -1305,6 +1322,8 @@ log_message('info', 'groups:' . print_r($session->county_groups, true));
 		$register_code = $_POST['register'];
 		$session->document_source = $_POST['doc_source'];
 		$session->document_comment = $_POST['doc_comment'];
+
+		$ass_name = self::generate_filename($chapman_code, $church_code);
 		
 		// add it to the freecomett allocations table
 		$allocation_model

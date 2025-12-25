@@ -104,7 +104,7 @@ $routes->group
 			$routes->get('toggle_line_step1/(:segment)', 'Transcribe::toogle_line_step1/$1');
 			$routes->post('toogle_line_step2', 'Transcribe::toogle_line_step2');
 			$routes->post('insert_line_step1/(:segment)', 'Transcribe::insert_line_step1/$1');
-			$routes->get('toogle_transcriptions', 'Transcribe::toogle_transcriptions');
+			$routes->get('toggle_transcriptions', 'Transcribe::toggle_transcriptions');
 			$routes->get('calibrate_step1/(:segment)', 'Transcribe::calibrate_step1/$1');
 			$routes->post('calibrate_step2', 'Transcribe::calibrate_step2');
 			$routes->post('sort/(:segment)', 'Transcribe::sort/$1');

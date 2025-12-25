@@ -90,11 +90,11 @@
 
      <!-- progress -->
 	<section>
-     <div id="progress_wrapper" class="row none">
-            <label id="progress_label" for="progress_bar">Upload file:
-            <progress class="" id="progress_bar" value="0" max="100"></progress>
-			</label>
-	 </div>
+         <div id="progress_wrapper" class="row none">
+                <label id="progress_label" for="progress_bar">Upload file:
+                <progress class="" id="progress_bar" value="0" max="100"></progress>
+                </label>
+         </div>
      </section>
 
 	</form>
