@@ -45,7 +45,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ( $session->physical_files as $physical_file )
+					<?php if (isset($session->physical_files)) : 
+                    foreach ( $session->physical_files as $physical_file )
 					{ ?>
                         <tr>
                             <td class="align-middle"><?= esc($physical_file['file_name'])?></td>
@@ -62,6 +63,7 @@
                         <?php
                     } ?>
                     </tbody>
+					<?php endif; ?>
                 </table>
             </div>
         </section>
@@ -89,7 +91,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ( $session->physical_files as $physical_file )
+					<?php if (isset($session->physical_files)) : 
+                    foreach ( $session->physical_files as $physical_file )
                     { ?>
                         <tr>
                             <td class="align-middle"><?= esc($physical_file['file_name'])?></td>
@@ -106,6 +109,7 @@
                         <?php
                     } ?>
                     </tbody>
+					<?php endif; ?>
                 </table>
             </div>
         </section>
