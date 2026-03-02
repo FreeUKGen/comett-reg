@@ -4357,4 +4357,15 @@ class Transcribe extends BaseController
 			transcribe_initialise_step1(0, $session->controller, $session->table_title);
 			transcribe_show_step1($session->controller);
 		}
+
+		/**
+		 * upload_status
+		 * @note DS 02Mar26 not sure what controller this should be in
+		*/
+		public function upload_status()
+		{
+			echo view('templates/header'); 
+			echo view('linBMD2/new_upload_status');
+			echo view('templates/footer');	
+		}
 }

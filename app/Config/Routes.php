@@ -80,6 +80,7 @@ $routes->group
 	("transcribe", ['filter' => 'sessionexists'], function($routes)
 		{
 			$routes->get('/', 'Transcribe::index');
+			$routes->get('upload_status', 'Transcribe::upload_status');
 			$routes->get('transcribe_step1/(:segment)', 'Transcribe::transcribe_step1/$1');
 			$routes->post('next_action', 'Transcribe::transcribe_next_action');
 			$routes->get('create_BMD_file/(:segment)', 'Transcribe::create_BMD_file/$1');

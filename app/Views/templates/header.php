@@ -11,9 +11,7 @@
 
 	<link rel="stylesheet" href="<?php echo base_url().'css/fc-reg.css'; ?>">
 	<style>
-		.allocation-thumbnail {
-			height:150px;
-		}
+		.allocation-thumbnail { height:150px; }
 	</style>
 </head>
 
@@ -35,7 +33,7 @@
           <li>Tools
 			<ul>
 				<li><a href="<?php echo base_url('allocation/load_csv_file')?>">Load CSV</a></li>
-				<li>View Upload Status</li>
+				<li><a href="<?php echo base_url('transcribe/upload_status')?>">View Upload Status</a></li>
 				<li><a href="<?php echo base_url('allocation/new_list_images')?>">List Images</a></li>
 				<li>Refresh Page</li>
 				<li>Log into FreeREG</li>
