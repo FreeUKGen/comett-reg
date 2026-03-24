@@ -1817,7 +1817,7 @@ load_variables();
 		
 		// show views			
 		echo view('templates/header');
-		echo view('linBMD2/manage_assignment_step1'); // same view used for both create and change
+		echo view('linBMD2/new_manage_assignment'); // same view used for both create and change
 		echo view('linBMD2/searchTableNew');
 		echo view('templates/footer');
 	}	
