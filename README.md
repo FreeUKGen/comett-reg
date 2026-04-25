@@ -1,4 +1,3 @@
 # FreeComETT REG
 
-Online transcription tool, FreeComETT connects to the FreeBMD master server’s database to access transcriber accounts and syndicate info. FreeComETT fetches scan data from the image servers.
-Assignment and related records are read from the FreeREG MongoDB.
+Online transcription tool, FreeComETT is a transcription frontend for the FreeREG backend and client facing family history search database. It is used to transcribe birsth, marriages and deaths data found in church registers in order to populate a searchable database of records to help research family history.
